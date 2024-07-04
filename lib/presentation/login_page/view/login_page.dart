@@ -1,24 +1,40 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
+import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String isLoggined = "";
+
   bool isObscured = true;
   void _obscureText() {
     setState(() {
       isObscured = !isObscured;
     });
+  }
+
+  Future<String> login() async {
+    try {
+      var url = "https://cybot.avanzosolutions.in/hms/loginverify.php";
+      var res = await http.post(Uri.parse(url), body: {
+        "loginusernamecontroller": _usernameController.text.trim(),
+        "loginpasswordcontroller": _passwordController.text.trim(),
+      });
+      isLoggined = res.body;
+    } on Exception catch (e) {
+      print(e);
+    }
+    print(isLoggined);
+    return isLoggined;
   }
 
   @override
@@ -167,13 +183,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Spacer(),
                           ElevatedButton(
-                            onPressed: () {
-                              // Handle login logic here
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Dashboardscreen(),
-                                  ));
+                            onPressed: () async {
+                              String response = await login();
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => Dashboardscreen(),
+                              //     ));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
