@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -168,6 +169,11 @@ class _HomePageState extends State<HomePage> {
                           ElevatedButton(
                             onPressed: () {
                               // Handle login logic here
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Dashboardscreen(),
+                                  ));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
