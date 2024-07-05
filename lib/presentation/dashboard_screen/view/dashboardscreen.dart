@@ -15,6 +15,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorConstants.mainBlue,
+        automaticallyImplyLeading: false,
         title: Text(
           'Highland Hospital',
           style: MyTextStyle.appbartext,
