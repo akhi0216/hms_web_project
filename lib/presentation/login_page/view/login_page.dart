@@ -55,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: ColorConstants.mainwhite,
       appBar: AppBar(
         backgroundColor: ColorConstants.mainBlue,
         elevation: 0,
