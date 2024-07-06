@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
+import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
+import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
 
 class Dashboardscreen extends StatefulWidget {
   const Dashboardscreen({super.key});
@@ -175,6 +177,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
             width: 11,
           ),
           InkWell(
+            onTap: () {},
             child: Text(
               'Settings',
               style: MyTextStyle.appbartext,
@@ -222,17 +225,20 @@ class _DashboardscreenState extends State<Dashboardscreen> {
       ),
       endDrawer: Drawer(
         backgroundColor: ColorConstants.mainwhite,
+        elevation: 0,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
+              margin: EdgeInsets.all(0),
               decoration: BoxDecoration(
-                color: ColorConstants.mainBlue,
+                color: ColorConstants.mainwhite,
+                backgroundBlendMode: BlendMode.clear,
               ),
               child: Text(
                 'Menu',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: ColorConstants.mainBlack,
                   fontSize: 24,
                 ),
               ),
@@ -241,13 +247,54 @@ class _DashboardscreenState extends State<Dashboardscreen> {
               leading: Icon(Icons.account_circle),
               title: Text('Profile'),
             ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsScreen(),
+                  ),
+                );
+              },
+              child: ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+              ),
             ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
+            InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    // title: Text("Do you really want to logout"),
+                    actions: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("No"),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          child: Text("Yes")),
+                    ],
+                    title: Text("Logout"),
+                    content: Text("Are you sure you want to logout"),
+                  ),
+                );
+              },
+              child: ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+              ),
             ),
           ],
         ),

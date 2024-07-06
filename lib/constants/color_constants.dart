@@ -9,4 +9,5 @@ class ColorConstants {
   static const Color mainLightBlue = Color.fromARGB(255, 133, 206, 202);
   static const Color mainOrange = Color(0xffe89700);
   static const Color mainRed = Color(0xFFF44336);
+  static const Color mainGreen = Color(0xFF4CAF50);
 }

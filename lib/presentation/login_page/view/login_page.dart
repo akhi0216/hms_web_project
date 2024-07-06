@@ -36,11 +36,23 @@ class _LoginPageState extends State<LoginPage> {
     }
     print(isLoggined);
     if (isLoggined == "success") {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Dashboardscreen(),
-          ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Login Successful"),
+          backgroundColor: ColorConstants.mainGreen,
+        ),
+      );
+      Future.delayed(
+        Duration(milliseconds: 1500),
+        () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Dashboardscreen(),
+            ),
+          );
+        },
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
