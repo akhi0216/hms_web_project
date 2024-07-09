@@ -15,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String isLoggined = "";
+  String userName = "";
+  String empId = "";
 
   bool isObscured = true;
   void _obscureText() {
@@ -34,8 +36,29 @@ class _LoginPageState extends State<LoginPage> {
     } on Exception catch (e) {
       print(e);
     }
+
     print(isLoggined);
     if (isLoggined == "success") {
+      try {
+        var url = "https://cybot.avanzosolutions.in/hms/loginname.php";
+        var res = await http.post(Uri.parse(url), body: {
+          "loginusernamecontroller": _usernameController.text.trim(),
+          "loginpasswordcontroller": _passwordController.text.trim(),
+        });
+        userName = res.body;
+      } on Exception catch (e) {
+        print(e);
+      }
+      try {
+        var url = "https://cybot.avanzosolutions.in/hms/loginemp.php";
+        var res = await http.post(Uri.parse(url), body: {
+          "loginusernamecontroller": _usernameController.text.trim(),
+          "loginpasswordcontroller": _passwordController.text.trim(),
+        });
+        empId = res.body;
+      } on Exception catch (e) {
+        print(e);
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Login Successful"),
@@ -48,11 +71,16 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Dashboardscreen(),
+              builder: (context) => Dashboardsecondscreen(
+                userName: userName,
+                empId: empId,
+              ),
             ),
           );
         },
       );
+      print(userName);
+      print(empId);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
