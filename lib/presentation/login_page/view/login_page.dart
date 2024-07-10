@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   String isLoggined = "";
   String userName = "";
   String empId = "";
+  String designation = "";
 
   bool isObscured = true;
   void _obscureText() {
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     print(isLoggined);
-    if (isLoggined == "success") {
+    if (isLoggined == "success") { 
       try {
         var url = "https://cybot.avanzosolutions.in/hms/loginname.php";
         var res = await http.post(Uri.parse(url), body: {
@@ -59,6 +60,16 @@ class _LoginPageState extends State<LoginPage> {
       } on Exception catch (e) {
         print(e);
       }
+      try {
+        var url = "https://cybot.avanzosolutions.in/hms/logindes.php";
+        var res = await http.post(Uri.parse(url), body: {
+          "loginusernamecontroller": _usernameController.text.trim(),
+          "loginpasswordcontroller": _passwordController.text.trim(),
+        });
+        designation = res.body;
+      } on Exception catch (e) {
+        print(e);
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Login Successful"),
@@ -74,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context) => Dashboardsecondscreen(
                 userName: userName,
                 empId: empId,
+                // designation: designation,
               ),
             ),
           );
