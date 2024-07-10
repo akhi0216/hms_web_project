@@ -5,7 +5,7 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class Dashboardsecondscreen extends StatefulWidget {
   const Dashboardsecondscreen(
@@ -59,7 +59,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     },
     {
       "New patient": DummyPage(),
-      "Existing patient": SearchPage(),
+      // "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
     {
@@ -345,87 +345,155 @@ class DummyPage extends StatelessWidget {
   }
 }
 
-class SearchPage extends StatelessWidget {
-  SearchPage({super.key});
 
-  TextEditingController searchController = TextEditingController();
-  String ret = "";
-  Future<String> searchPatient() async {
-    var res = await http.post(
-        Uri.parse('https://cybot.avanzosolutions.in/hms/patientname.php'),
-        body: {
-          "patientnamecontroller": searchController.text,
-        });
-    print(res.body);
+// class SearchPage extends StatelessWidget {
+//   SearchPage({super.key});
+//   TextEditingController searchController = TextEditingController();
+//   String ret = "";
+//   Future<String> searchPatient() async {
+//     String url = "https://cybot.avanzosolutions.in/hms/patientname.php";
+//     try {
+//       var res = await http.post(Uri.parse(url), body: {
+//         "patientnamecontroller": searchController.text.trim(),
+//       });
+//       print(res.body);
+//       ret = res.body;
+//     } on Exception catch (e) {
+//       print(e);
+//     }
+//     return ret;
+//   }
 
-    return res.body;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //       enabledBorder: OutlineInputBorder(
-          //           borderRadius: BorderRadius.all(Radius.circular(5)),
-          //           borderSide: BorderSide(color: ColorConstants.mainBlue)),
-          //       focusedBorder: OutlineInputBorder(
-          //           borderRadius: BorderRadius.all(Radius.circular(5)),
-          //           borderSide: BorderSide(color: ColorConstants.mainBlue)),
-          //       suffixIcon: Icon(
-          //         Icons.search,
-          //         color: ColorConstants.mainBlue,
-          //       ),
-          //       // label: Text(
-          //       //   "search patient by name/id/username",
-          //       //   style: TextStyle(color: ColorConstants.mainBlue),
-          //       // ),
-          //       hintText: "search patient by name/id/username"),
-          // ),
-
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(color: ColorConstants.mainBlue),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide:
-                      BorderSide(color: ColorConstants.mainBlue, width: 2),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    searchPatient();
-                  },
-                  icon: Icon(Icons.search),
-                  color: ColorConstants.mainBlue,
-                ),
-                hintText: "Search patient by name/id/username",
-                hintStyle: TextStyle(color: Colors.grey[400]),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(12),
+//       child: Column(
+//         children: [
+//           Container(
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//               borderRadius: BorderRadius.circular(10),
+//               boxShadow: [
+//                 BoxShadow(
+//                   color: Colors.grey.withOpacity(0.5),
+//                   spreadRadius: 2,
+//                   blurRadius: 5,
+//                   offset: Offset(0, 3),
+//                 ),
+//               ],
+//             ),
+//             child: TextFormField(
+//               controller: searchController,
+//               onFieldSubmitted: (value) {
+//                 searchPatient();
+//               },
+//               decoration: InputDecoration(
+//                 enabledBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.all(Radius.circular(10)),
+//                   borderSide: BorderSide(color: ColorConstants.mainBlue),
+//                 ),
+//                 focusedBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.all(Radius.circular(10)),
+//                   borderSide:
+//                       BorderSide(color: ColorConstants.mainBlue, width: 2),
+//                 ),
+//                 suffixIcon: IconButton(
+//                   onPressed: () {
+//                     searchPatient();
+//                   },
+//                   icon: Icon(Icons.search),
+//                   color: ColorConstants.mainBlue,
+//                 ),
+//                 hintText: "Search patient by name/id/username",
+//                 hintStyle: TextStyle(color: Colors.grey[400]),
+//                 contentPadding:
+//                     EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+//               ),
+//             ),
+//           ),
+//           SizedBox(
+//             height: 44,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("Name : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("Email : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("ph no : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("Address : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("Doctor name : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("DEPT : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//           Container(
+//             height: 60,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(5))),
+//             child: Row(
+//               children: [Text("Attachments : ")],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 7,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
