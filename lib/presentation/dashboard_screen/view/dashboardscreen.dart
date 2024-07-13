@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients_page.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
 // import 'package:http/http.dart' as http;
@@ -61,7 +61,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Unhealthy billing": DummyPage(),
     },
     {
-      "New patient": DummyPage(),
+      "New patient": NewPatientReg(),
       "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
