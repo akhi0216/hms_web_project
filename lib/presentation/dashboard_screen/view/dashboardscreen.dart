@@ -1,21 +1,22 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients_page.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:http/http.dart' as http;
 
 class Dashboardsecondscreen extends StatefulWidget {
   const Dashboardsecondscreen(
-      {super.key, required this.userName, required this.empId});
+      {super.key,
+      required this.userName,
+      required this.empId,
+      required this.des});
 
   final String userName;
   final String empId;
+  final String des;
 
   @override
   State<Dashboardsecondscreen> createState() => _DashboardsecondscreenState();
@@ -30,7 +31,6 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     setState(() {
       _isHovered = isHovered;
     });
-    _isHovered == true ? print("true") : print("false");
   }
 
   List<String> tabLabels = [
@@ -117,6 +117,11 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
@@ -149,6 +154,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     ),
                     Text(widget.userName),
                     Text(widget.empId),
+                    Text(widget.des),
                   ],
                 ),
               ),
@@ -213,6 +219,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              floating: true,
               backgroundColor: ColorConstants.mainBlue,
               automaticallyImplyLeading: false,
               title: Text(

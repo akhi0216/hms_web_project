@@ -1,23 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/repositories/api/model/patient_search_model.dart';
 import 'package:http/http.dart' as http;
 
-class ExistingPatientsPage extends StatelessWidget {
+class ExistingPatientsPage extends StatefulWidget {
   ExistingPatientsPage({super.key});
+
+  @override
+  State<ExistingPatientsPage> createState() => _ExistingPatientsPageState();
+}
+
+class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
   TextEditingController searchController = TextEditingController();
-  String ret = "";
-  Future<String> searchPatient() async {
+
+  Map<String, dynamic> ret = {};
+  PatientSearchModel patientSearchModel = PatientSearchModel();
+
+  searchPatient() async {
     String url = "https://cybot.avanzosolutions.in/hms/patientname.php";
     try {
       var res = await http.post(Uri.parse(url), body: {
         "patientnamecontroller": searchController.text.trim(),
       });
-      print(res.body);
-      ret = res.body;
+      setState(() {
+        ret = jsonDecode(res.body);
+      });
+      print(ret);
+      patientSearchModel = PatientSearchModel.fromJson(ret);
     } on Exception catch (e) {
       print(e);
     }
     return ret;
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -41,8 +61,9 @@ class ExistingPatientsPage extends StatelessWidget {
             ),
             child: TextFormField(
               controller: searchController,
-              onFieldSubmitted: (value) {
-                searchPatient();
+              onFieldSubmitted: (value) async {
+                setState(() {});
+                await searchPatient();
               },
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -55,8 +76,9 @@ class ExistingPatientsPage extends StatelessWidget {
                       BorderSide(color: ColorConstants.mainBlue, width: 2),
                 ),
                 suffixIcon: IconButton(
-                  onPressed: () {
-                    searchPatient();
+                  onPressed: () async {
+                    setState(() {});
+                    await searchPatient();
                   },
                   icon: Icon(Icons.search),
                   color: ColorConstants.mainBlue,
@@ -76,78 +98,96 @@ class ExistingPatientsPage extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
-              children: [Text("Name : ")],
+              children: [
+                Text("First name : "),
+                Text(patientSearchModel.list?[0].fname ?? "")
+              ],
             ),
-          ),
-          SizedBox(
-            height: 7,
           ),
           Container(
             height: 60,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
-              children: [Text("Email : ")],
+              children: [
+                Text("Last name : "),
+                Text(patientSearchModel.list?[0].lname ?? "")
+              ],
             ),
-          ),
-          SizedBox(
-            height: 7,
           ),
           Container(
             height: 60,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
-              children: [Text("ph no : ")],
+              children: [
+                Text("Your id : "),
+                Text(patientSearchModel.list?[0].pid ?? "")
+              ],
             ),
           ),
-          SizedBox(
-            height: 7,
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [Text("Email : ")],
+          //   ),
+          // ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [Text("ph no : ")],
+          //   ),
+          // ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [Text("Address : ")],
+          //   ),
+          // ),
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Row(
+              children: [
+                Text("Doctor name : "),
+                Text(patientSearchModel.list?[0].doc ?? "")
+              ],
+            ),
           ),
           Container(
             height: 60,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
-              children: [Text("Address : ")],
+              children: [
+                Text("Prescription : "),
+                Text(patientSearchModel.list?[0].presc ?? "")
+              ],
             ),
           ),
-          SizedBox(
-            height: 7,
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [Text("Doctor name : ")],
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [Text("DEPT : ")],
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [Text("Attachments : ")],
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [Text("DEPT : ")],
+          //   ),
+          // ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [Text("Attachments : ")],
+          //   ),
+          // ),
         ],
       ),
     );
