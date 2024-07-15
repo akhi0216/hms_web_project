@@ -306,8 +306,11 @@ class NewPatientReg extends StatefulWidget {
   State<NewPatientReg> createState() => _NewPatientRegState();
 }
 
+enum Gender { male, female }
+
 class _NewPatientRegState extends State<NewPatientReg> {
   final _formKey = GlobalKey<FormState>();
+  Gender? gender;
 
   @override
   Widget build(BuildContext context) {
@@ -398,9 +401,13 @@ class _NewPatientRegState extends State<NewPatientReg> {
             child: ListTile(
               title: Text('Male'),
               leading: Radio(
-                value: 'male',
-                groupValue: 'gender',
-                onChanged: (value) {},
+                value: Gender.male,
+                groupValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
               ),
             ),
           ),
@@ -408,9 +415,13 @@ class _NewPatientRegState extends State<NewPatientReg> {
             child: ListTile(
               title: Text('Female'),
               leading: Radio(
-                value: 'female',
-                groupValue: 'gender',
-                onChanged: (value) {},
+                value: Gender.female,
+                groupValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
               ),
             ),
           ),
@@ -436,4 +447,8 @@ class _NewPatientRegState extends State<NewPatientReg> {
       child: Text('Submit', style: TextStyle(color: ColorConstants.mainwhite)),
     );
   }
+}
+
+Widget buildDatePicker() {
+  return TextFormField();
 }
