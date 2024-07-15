@@ -19,6 +19,7 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
   PatientSearchModel patientSearchModel = PatientSearchModel();
 
   searchPatient() async {
+    ret.clear();
     String url = "https://cybot.avanzosolutions.in/hms/patientname.php";
     try {
       var res = await http.post(Uri.parse(url), body: {
