@@ -58,7 +58,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
   List<Map<String, Widget>> tabItems = [
     {
-      "Ip billing": IpBilling(),
+      // "Ip billing": IpBilling(),
       "Op billing": DummyPage(),
       "Unhealthy billing": DummyPage(),
     },

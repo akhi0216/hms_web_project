@@ -1,724 +1,556 @@
 import 'package:flutter/material.dart';
 
-class IpBilling extends StatefulWidget {
+class BillingDetailsForm extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BillingDetailsFormState createState() => _BillingDetailsFormState();
 }
 
-class _MyHomePageState extends State<IpBilling> {
-  final List<List<TextEditingController>> _firstTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(4, (j) => TextEditingController()),
-  );
+class _BillingDetailsFormState extends State<BillingDetailsForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _sexController = TextEditingController();
+  final _ipNoController = TextEditingController();
+  final _roomNoController = TextEditingController();
+  final _admissionDateController = TextEditingController();
+  final _dischargeDateController = TextEditingController();
 
-  final List<List<TextEditingController?>> _secondTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(4, (j) => j != 1 ? TextEditingController() : null),
-  );
+  final List<List<TextEditingController>> table1Controllers =
+      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table2Controllers =
+      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table3Controllers =
+      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table4Controllers =
+      List.generate(3, (_) => List.generate(6, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table5Controllers =
+      List.generate(4, (_) => List.generate(0, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table6Controllers =
+      List.generate(4, (_) => List.generate(8, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table7Controllers =
+      List.generate(3, (_) => List.generate(4, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table8Controllers =
+      List.generate(4, (_) => List.generate(8, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table9Controllers =
+      List.generate(4, (_) => List.generate(6, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table10Controllers =
+      List.generate(3, (_) => List.generate(8, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table11Controllers =
+      List.generate(8, (_) => List.generate(6, (_) => TextEditingController()));
 
-  final List<List<TextEditingController?>> _thirdTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(4, (j) => j != 1 ? TextEditingController() : null),
-  );
+  final List<List<TextEditingController>> table12Controllers =
+      List.generate(7, (_) => List.generate(2, (_) => TextEditingController()));
 
-  final List<List<TextEditingController>> _fourthTableControllers =
-      List.generate(
-    3,
-    (i) => List.generate(6, (j) => TextEditingController()),
-  );
+  final List<List<TextEditingController>> table13Controllers =
+      List.generate(7, (_) => List.generate(3, (_) => TextEditingController()));
 
-  final List<List<TextEditingController>> _fifthTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(1, (j) => TextEditingController()),
-  );
+  final List<List<TextEditingController>> table14Controllers =
+      List.generate(7, (_) => List.generate(2, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table15Controllers =
+      List.generate(7, (_) => List.generate(2, (_) => TextEditingController()));
+  final List<List<TextEditingController>> table16Controllers =
+      List.generate(7, (_) => List.generate(3, (_) => TextEditingController()));
 
-  final List<List<TextEditingController>> _sixthTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(8, (j) => TextEditingController()),
-  );
+  final List<List<TextEditingController>> table17Controllers =
+      List.generate(8, (_) => List.generate(6, (_) => TextEditingController()));
 
-  final List<List<TextEditingController>> _seventhTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(4, (j) => TextEditingController()),
-  );
-
-  final List<List<TextEditingController>> _eighthTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(8, (j) => TextEditingController()),
-  );
-
-  final List<List<TextEditingController>> _ninthTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(6, (j) => TextEditingController()),
-  );
-
-  final List<List<TextEditingController>> _tenthTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(8, (j) => TextEditingController()),
-  );
-
-  final List<List<TextEditingController>> _eleventhTableControllers =
-      List.generate(
-    4,
-    (i) => List.generate(6, (j) => TextEditingController()),
-  );
-
-  final TextEditingController _sixthTotalController = TextEditingController();
-  final TextEditingController _seventhTotalController = TextEditingController();
-  final TextEditingController _eighthTotalController = TextEditingController();
-  final TextEditingController _ninthTotalController = TextEditingController();
-  final TextEditingController _tenthTotalController = TextEditingController();
-  final TextEditingController _eleventhTotalController =
-      TextEditingController();
+  final _totalXRAYController = TextEditingController();
+  final _totalCTScanController = TextEditingController();
+  final _totalUSGController = TextEditingController();
+  final _totalDialysisController = TextEditingController();
+  final _totalABGController = TextEditingController();
+  final _totalGRBSController = TextEditingController();
+  final _totalNEBULIZATIONController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.0),
-      child: Center(
-        child: Column(
-          children: [
-            _buildTitle('First Table'),
-            _buildFirstTable(),
-            SizedBox(height: 32),
-            _buildTitle('Second Table'),
-            _buildSecondTable(),
-            _buildTitle('Third Table'),
-            _buildThirdTable(),
-            SizedBox(height: 32),
-            _buildTitle('Fourth Table'),
-            _buildFourthTable(),
-            SizedBox(height: 32),
-            _buildTitle('Fifth Table'),
-            _buildFifthTable(),
-            SizedBox(height: 32),
-            _buildTitle('Sixth Table'),
-            _buildSixthTable(),
-            _buildTotalField(_sixthTotalController),
-            SizedBox(height: 32),
-            _buildTitle('Seventh Table'),
-            _buildSeventhTable(),
-            _buildTotalField(_seventhTotalController),
-            SizedBox(height: 32),
-            _buildTitle('Eighth Table'),
-            _buildEighthTable(),
-            _buildTotalField(_eighthTotalController),
-            SizedBox(height: 32),
-            _buildTitle('Ninth Table'),
-            _buildNinthTable(),
-            _buildTotalField(_ninthTotalController),
-            SizedBox(height: 32),
-            _buildTitle('Tenth Table'),
-            _buildTenthTable(),
-            _buildTotalField(_tenthTotalController),
-            SizedBox(height: 32),
-            _buildTitle('Eleventh Table'),
-            _buildEleventhTable(),
-            _buildTotalField(_eleventhTotalController),
-          ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+              ),
+              TextFormField(
+                controller: _ageController,
+                decoration: InputDecoration(labelText: 'Age'),
+              ),
+              TextFormField(
+                controller: _sexController,
+                decoration: InputDecoration(labelText: 'Sex'),
+              ),
+              TextFormField(
+                controller: _ipNoController,
+                decoration: InputDecoration(labelText: 'IP No.'),
+              ),
+              TextFormField(
+                controller: _roomNoController,
+                decoration: InputDecoration(labelText: 'Room No.'),
+              ),
+              TextFormField(
+                controller: _admissionDateController,
+                decoration: InputDecoration(labelText: 'Date of Admission'),
+              ),
+              TextFormField(
+                controller: _dischargeDateController,
+                decoration: InputDecoration(labelText: 'Date of Discharge'),
+              ),
+              SizedBox(height: 20),
+              Text(
+                '1. WARD TRANSFERS (to be filled by nurses)',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Date & Time', 'From', 'To', 'Name'],
+                controllers: table1Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '2. ICU CARE (to be filled by nurses)',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTableWithSecondColumnText(
+                titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
+                controllers: table2Controllers,
+                secondColumnText: 'till',
+              ),
+              SizedBox(height: 20),
+              Text(
+                '3. POR CARE (to be filled by nurses)',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTableWithSecondColumnText(
+                titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
+                controllers: table3Controllers,
+                secondColumnText: 'till',
+              ),
+              SizedBox(height: 20),
+              Text(
+                '4. OT BILL DETAILS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Date',
+                  'Bill No.',
+                  'Name (of staff)',
+                  'Date',
+                  'Bill No.',
+                  'Name (of staff)'
+                ],
+                controllers: table4Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '5. SURGICAL/IMPLANT/OTHER BILLS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [''],
+                controllers: table5Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '6. X-RAY',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount'
+                ],
+                controllers: table6Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalXRAYController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '7. CT SCAN',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Date', 'Amount', 'Date', 'Amount'],
+                controllers: table7Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalCTScanController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '8. USG',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount'
+                ],
+                controllers: table8Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalUSGController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '9. DIALYSIS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Date', 'Amount', 'Date', 'Amount', 'Date', 'Amount'],
+                controllers: table9Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalDialysisController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '10. ABG',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount',
+                  'Date',
+                  'Amount'
+                ],
+                controllers: table10Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalABGController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '11. GRBS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Date', 'Amount', 'Date', 'Amount', 'Date', 'Amount'],
+                controllers: table11Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalGRBSController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                '12. OXYGEN',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Starting date and time', 'Ending date and time'],
+                controllers: table12Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '13. NIV/BIPAP',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Starting date and time',
+                  'Ending date and time',
+                  'Name'
+                ],
+                controllers: table13Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '14. SYRINGE PUMP',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Starting date and time', 'Ending date and time'],
+                controllers: table14Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '15. VENTILATOR',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: ['Starting date and time', 'Ending date and time'],
+                controllers: table15Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '16. CARDIAC MONITOR (NIBP)',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Starting date and time',
+                  'Ending date and time',
+                  'Name'
+                ],
+                controllers: table16Controllers,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '17. NEBULIZATION',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              buildTable(
+                titles: [
+                  'Date',
+                  'Quantity',
+                  'Date',
+                  'Quantity',
+                  'Date',
+                  'Quantity',
+                  'Date',
+                  'Quantity'
+                ],
+                controllers: table17Controllers,
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Total: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _totalNEBULIZATIONController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Process form data here
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.blue,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTableHeader(String text) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
-  TableRow _buildFirstTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 4; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _firstTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildFirstTable() {
+  Widget buildTable({
+    required List<String> titles,
+    required List<List<TextEditingController>> controllers,
+  }) {
+    int numColumns = titles.length;
     return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(100),
-        3: FixedColumnWidth(150),
+      border: TableBorder.all(),
+      columnWidths: {
+        for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
       },
       children: [
         TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('Date & Time'),
-            _buildTableHeader('From'),
-            _buildTableHeader('To'),
-            _buildTableHeader('Name'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildFirstTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildSecondTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        _buildSecondTableCell(rowIndex, 0),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text('till', style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-        ),
-        _buildSecondTableCell(rowIndex, 2),
-        _buildSecondTableCell(rowIndex, 3),
-      ],
-    );
-  }
-
-  Widget _buildSecondTableCell(int rowIndex, int colIndex) {
-    final controller = _secondTableControllers[rowIndex][colIndex];
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: controller != null
-          ? TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+          children: titles.map((title) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                titles.isEmpty ? "#" : title,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            )
-          : Center(
-              child: Text('till'),
-            ),
+            );
+          }).toList(),
+        ),
+        ...controllers.map((rowControllers) {
+          // Pad the row with empty controllers if needed
+          int difference = numColumns - rowControllers.length;
+          List<Widget> row = rowControllers.map((controller) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            );
+          }).toList();
+          if (difference > 0) {
+            for (int i = 0; i < difference; i++) {
+              row.add(Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(),
+              ));
+            }
+          }
+          return TableRow(children: row);
+        }).toList(),
+      ],
     );
   }
 
-  Widget _buildSecondTable() {
+  Widget buildTableWithSecondColumnText({
+    required List<String> titles,
+    required List<List<TextEditingController>> controllers,
+    required String secondColumnText,
+  }) {
+    int numColumns = titles.length;
     return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
+      border: TableBorder.all(),
+      columnWidths: {
+        for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
       },
       children: [
         TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('Date & Time'),
-            _buildTableHeader(''),
-            _buildTableHeader('Date & Time'),
-            _buildTableHeader('Name'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildSecondTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildThirdTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        _buildThirdTableCell(rowIndex, 0),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text('till', style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-        ),
-        _buildThirdTableCell(rowIndex, 2),
-        _buildThirdTableCell(rowIndex, 3),
-      ],
-    );
-  }
-
-  Widget _buildThirdTableCell(int rowIndex, int colIndex) {
-    final controller = _thirdTableControllers[rowIndex][colIndex];
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: controller != null
-          ? TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+          children: titles.map((title) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                titles.isEmpty ? "#" : title,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            )
-          : Center(
-              child: Text('till'),
-            ),
-    );
-  }
-
-  Widget _buildThirdTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('Date & Time'),
-            _buildTableHeader(''),
-            _buildTableHeader('Date & Time'),
-            _buildTableHeader('Name'),
-          ],
+            );
+          }).toList(),
         ),
-        for (var i = 0; i < 4; i++) _buildThirdTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildFourthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 6; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _fourthTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+        ...controllers.map((rowControllers) {
+          // Pad the row with empty controllers if needed
+          int difference = numColumns - rowControllers.length;
+          List<Widget> row = rowControllers.map((controller) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-          ),
+            );
+          }).toList();
+          if (difference > 0) {
+            for (int i = 0; i < difference; i++) {
+              row.add(Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(),
+              ));
+            }
+          }
+          // Insert the second column text in the correct position
+          row.insert(
+              1,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text(secondColumnText)),
+              ));
+          return TableRow(children: row);
+        }).toList(),
       ],
-    );
-  }
-
-  Widget _buildFourthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
-        4: FixedColumnWidth(150),
-        5: FixedColumnWidth(150),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('BILL No.'),
-            _buildTableHeader('NAME(OT STAFF)'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('BILL No.'),
-            _buildTableHeader('NAME(OT STAFF)'),
-          ],
-        ),
-        for (var i = 0; i < 3; i++) _buildFourthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildFifthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: _fifthTableControllers[rowIndex][0],
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFifthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FlexColumnWidth(),
-      },
-      children: [
-        for (var i = 0; i < 4; i++) _buildFifthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildSixthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 8; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _sixthTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildSixthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(100),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(100),
-        3: FixedColumnWidth(100),
-        4: FixedColumnWidth(100),
-        5: FixedColumnWidth(100),
-        6: FixedColumnWidth(100),
-        7: FixedColumnWidth(100),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildSixthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildSeventhTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 4; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _seventhTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildSeventhTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(150),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildSeventhTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildEighthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 8; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _eighthTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildEighthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(100),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(100),
-        3: FixedColumnWidth(100),
-        4: FixedColumnWidth(100),
-        5: FixedColumnWidth(100),
-        6: FixedColumnWidth(100),
-        7: FixedColumnWidth(100),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildEighthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildNinthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 6; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _ninthTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildNinthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(150),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
-        4: FixedColumnWidth(150),
-        5: FixedColumnWidth(150),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildNinthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildTenthTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 8; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _tenthTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildTenthTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(100),
-        1: FixedColumnWidth(100),
-        2: FixedColumnWidth(100),
-        3: FixedColumnWidth(100),
-        4: FixedColumnWidth(100),
-        5: FixedColumnWidth(100),
-        6: FixedColumnWidth(100),
-        7: FixedColumnWidth(100),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('AMOUNT'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildTenthTableRow(i),
-      ],
-    );
-  }
-
-  TableRow _buildEleventhTableRow(int rowIndex) {
-    return TableRow(
-      children: [
-        for (var colIndex = 0; colIndex < 6; colIndex++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _eleventhTableControllers[rowIndex][colIndex],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildEleventhTable() {
-    return Table(
-      border: TableBorder.all(color: Colors.black),
-      columnWidths: const {
-        0: FixedColumnWidth(150),
-        1: FixedColumnWidth(150),
-        2: FixedColumnWidth(150),
-        3: FixedColumnWidth(150),
-        4: FixedColumnWidth(150),
-        5: FixedColumnWidth(150),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(color: Colors.grey[300]),
-          children: [
-            _buildTableHeader('DATE'),
-            _buildTableHeader('QUANTITY'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('QUANTITY'),
-            _buildTableHeader('DATE'),
-            _buildTableHeader('QUANTITY'),
-          ],
-        ),
-        for (var i = 0; i < 4; i++) _buildEleventhTableRow(i),
-      ],
-    );
-  }
-
-  Widget _buildTotalField(TextEditingController controller) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: 800),
-      child: Row(
-        children: [
-          Text(
-            'Total:',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
