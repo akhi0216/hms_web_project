@@ -312,6 +312,41 @@ class _NewPatientRegState extends State<NewPatientReg> {
   final _formKey = GlobalKey<FormState>();
   Gender? gender;
 
+  final TextEditingController patientNameController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController bloodGroupController = TextEditingController();
+  final TextEditingController occupationController = TextEditingController();
+  final TextEditingController maritalStatusController = TextEditingController();
+  final TextEditingController fatherHusbandNameController =
+      TextEditingController();
+  final TextEditingController nationalityController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController doctorsController = TextEditingController();
+  final TextEditingController idDocumentController = TextEditingController();
+  final TextEditingController departmentController = TextEditingController();
+
+  @override
+  void dispose() {
+    patientNameController.dispose();
+    dobController.dispose();
+    bloodGroupController.dispose();
+    occupationController.dispose();
+    maritalStatusController.dispose();
+    fatherHusbandNameController.dispose();
+    nationalityController.dispose();
+    addressController.dispose();
+    phoneController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    doctorsController.dispose();
+    idDocumentController.dispose();
+    departmentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -324,26 +359,34 @@ class _NewPatientRegState extends State<NewPatientReg> {
             child: Column(
               children: <Widget>[
                 _buildTitle('Personal Information'),
-                _buildTextFormField('Patient Name', Icons.person),
-                _buildTextFormField('Date of Birth', Icons.calendar_today),
+                _buildTextFormField(
+                    'Patient Name', Icons.person, patientNameController),
+                _buildTextFormField(
+                    'Date of Birth', Icons.calendar_today, dobController),
                 _buildGenderField(),
-                _buildTextFormField('Blood Group', Icons.bloodtype),
-                _buildTextFormField('Occupation', Icons.work),
-                _buildTextFormField('Marital Status', Icons.family_restroom),
                 _buildTextFormField(
-                    'Father/Husband Name', Icons.person_outline),
-                _buildTextFormField('Nationality', Icons.flag),
-                _buildTextFormField('Address', Icons.home),
+                    'Blood Group', Icons.bloodtype, bloodGroupController),
+                _buildTextFormField(
+                    'Occupation', Icons.work, occupationController),
+                _buildTextFormField('Marital Status', Icons.family_restroom,
+                    maritalStatusController),
+                _buildTextFormField('Father/Husband Name', Icons.person_outline,
+                    fatherHusbandNameController),
+                _buildTextFormField(
+                    'Nationality', Icons.flag, nationalityController),
+                _buildTextFormField('Address', Icons.home, addressController),
                 _buildTitle('Contact Information'),
-                _buildTextFormField('Phone', Icons.phone),
-                _buildTextFormField('Mobile', Icons.phone_android),
-                _buildTextFormField('Email', Icons.email),
+                _buildTextFormField('Phone', Icons.phone, phoneController),
+                _buildTextFormField(
+                    'Mobile', Icons.phone_android, mobileController),
+                _buildTextFormField('Email', Icons.email, emailController),
                 _buildTitle('Medical Information'),
+                _buildTextFormField('Doctors to be Consulted',
+                    Icons.medical_services, doctorsController),
+                _buildTextFormField('Identification Document Provided',
+                    Icons.description, idDocumentController),
                 _buildTextFormField(
-                    'Doctors to be Consulted', Icons.medical_services),
-                _buildTextFormField(
-                    'Identification Document Provided', Icons.description),
-                _buildTextFormField('Department', Icons.local_hospital),
+                    'Department', Icons.local_hospital, departmentController),
                 SizedBox(height: 20),
                 _buildSubmitButton(),
               ],
@@ -368,13 +411,15 @@ class _NewPatientRegState extends State<NewPatientReg> {
     );
   }
 
-  Widget _buildTextFormField(String label, IconData icon) {
+  Widget _buildTextFormField(
+      String label, IconData icon, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(icon),
+          prefixIcon: Icon(icon, color: ColorConstants.mainBlue),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
