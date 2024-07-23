@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients_page.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
@@ -71,9 +73,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Dept. wise availability": DummyPage(),
       "Doctors list": DummyPage(),
       "Doctors on call": DummyPage(),
+      "New Doctor": NewDoctor()
     },
     {
-      "New bookings": DummyPage(),
+      "New bookings": NewBookings(),
       "Existing bookings": DummyPage(),
       "Previous bookings": DummyPage(),
     },
@@ -118,9 +121,12 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     },
   ];
 
+  Widget? screen;
+
   @override
   void initState() {
     super.initState();
+    screen = NewPatientReg();
   }
 
   @override
@@ -222,6 +228,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           slivers: <Widget>[
             SliverAppBar(
               floating: true,
+              snap: false,
+              pinned: true,
               backgroundColor: ColorConstants.mainBlue,
               automaticallyImplyLeading: false,
               title: Text(
@@ -229,7 +237,6 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 style: MyTextStyle.appbartext,
               ),
               expandedHeight: 150,
-              pinned: true,
               flexibleSpace: LayoutBuilder(
                 builder: (context, constraints) => FlexibleSpaceBar(
                   expandedTitleScale: 1,
@@ -285,7 +292,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 ),
               ],
             ),
-            SliverToBoxAdapter(child: tabItems[itemIndex][selectedData]
+            SliverToBoxAdapter(child: screen
                 // child: Center(
                 //   child: Container(
                 //     height: 670,
@@ -319,10 +326,12 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         //   items.length,
         //   (index) => DummyPage(title: title),
         // ));
+
         if (value.isNotEmpty && value != null) {
           setState(() {
             selectedData = value;
             itemIndex = index;
+            screen = tabItems[itemIndex][selectedData];
           });
         }
       },
