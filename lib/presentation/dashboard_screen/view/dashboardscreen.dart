@@ -5,6 +5,7 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
@@ -137,7 +138,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 // -------------------------------------------------------------------------
 
     {
-      "Booking": DummyPage(),
+      "Booking": NewBookings(),
       "Records": DummyPage(),
       "Availability": DummyPage(),
     },
