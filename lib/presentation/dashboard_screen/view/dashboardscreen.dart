@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients_page.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
@@ -36,91 +38,158 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   }
 
   List<String> tabLabels = [
-    'Billing',
-    'Patients',
-    'Doctors',
+    // 'Billing',
+    // 'Patients',
+    // 'Doctors',
+    // 'Appointments',
+    // 'EMR',
+    // 'E-consult',
+    // 'Lab',
+    // 'Radiology',
+    // 'Store',
+    // 'Pharmacy',
+    // 'Reminders',
+    // 'Analysis',
+    // 'SMS Center',
+    // 'Settings',
+    // 'Accounts'
+
+    // --------
+
     'Appointments',
+    'Doctors',
+    'Patients',
     'EMR',
-    'E-consult',
-    'Lab',
-    'Radiology',
-    'Store',
+    'Lab/Radiology',
+    'Dialysis',
+    'Operation Theatre',
+    'Billing',
+    'Insurance',
     'Pharmacy',
-    'Reminders',
-    'Analysis',
-    'SMS Center',
-    'Settings',
-    'Accounts'
+    'General'
   ];
 
   String selectedData = "";
   int itemIndex = 0;
 
   List<Map<String, Widget>> tabItems = [
+    // {
+    //   // "Ip billing": IpBilling(),
+    //   "Op billing": DummyPage(),
+    //   "Unhealthy billing": DummyPage(),
+    // },
+    // {
+    //   "New patient": NewPatientReg(),
+    //   "Existing patient": ExistingPatientsPage(),
+    //   "discharged": DummyPage(),
+    // },
+    // {
+    //   "Dept. wise availability": DummyPage(),
+    //   "Doctors list": DummyPage(),
+    //   "Doctors on call": DummyPage(),
+    //   "New Doctor": NewDoctor()
+    // },
+    // {
+    //   "New bookings": NewBookings(),
+    //   "Existing bookings": CurrentBookingPage(),
+    //   "Previous bookings": DummyPage(),
+    // },
+    // {
+    //   "Ip records": DummyPage(),
+    //   "Op records": DummyPage(),
+    //   "Medical history": DummyPage(),
+    //   "Discribe advice": DummyPage(),
+    //   "Data analysis": DummyPage(),
+    //   "Graphs": DummyPage(),
+    // },
+    // {}, //--------- E-consult
+    // {
+    //   "Booking": DummyPage(),
+    //   "Records": DummyPage(),
+    //   "Availability": DummyPage(),
+    // },
+    // {}, //--------------- Radiology
+    // {
+    //   "New stock": DummyPage(),
+    //   "Open stock": DummyPage(),
+    //   "Main stock": DummyPage(),
+    //   "Expired stock": DummyPage(),
+    // },
+    // {}, //-------------------- Pharmacy
+    // {
+    //   "Pending booking": DummyPage(),
+    //   "Upcoming events": DummyPage(),
+    //   "Dept. notifications": DummyPage(),
+    // },
+    // {}, //------------------ Analysis
+    // {
+    //   "Greetings": DummyPage(),
+    //   "History": DummyPage(),
+    // },
+    // {}, //----------------Settings
+    // {
+    //   "Staff list": DummyPage(),
+    //   "Duty assignment": DummyPage(),
+    //   "Hr & payroll": DummyPage(),
+    //   "Miscellaneous": DummyPage(),
+    // },
+
+// -------------------------------------------------------------------------
+
     {
-      // "Ip billing": IpBilling(),
-      "Op billing": DummyPage(),
-      "Unhealthy billing": DummyPage(),
+      "Booking": DummyPage(),
+      "Records": DummyPage(),
+      "Availability": DummyPage(),
+    },
+    {
+      "Dept. wise availability": DummyPage(),
+      "Doctors list": DummyPage(),
+      "Doctors on call": DummyPage(),
+      "New Doctor": NewDoctor()
     },
     {
       "New patient": NewPatientReg(),
       "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
+//  emr
+    {},
+    //lAB
+    {},
+// DIALYSIS
+    {},
+// OPERATION THEATRE
+    {},
     {
-      "Dept. wise availability": DummyPage(),
-      "Doctors list": DummyPage(),
-      "Doctors on call": DummyPage(),
+      // "Ip billing": IpBilling(),
+      "Op billing": DummyPage(),
+      "Unhealthy billing": DummyPage(),
     },
+    // INSURANCE
+    {},
+    // PHARMACY
+    {},
+    // GENERAL
     {
-      "New bookings": DummyPage(),
-      "Existing bookings": DummyPage(),
-      "Previous bookings": DummyPage(),
-    },
-    {
-      "Ip records": DummyPage(),
-      "Op records": DummyPage(),
-      "Medical history": DummyPage(),
-      "Discribe advice": DummyPage(),
-      "Data analysis": DummyPage(),
-      "Graphs": DummyPage(),
-    },
-    {}, //--------- E-consult
-    {
-      "Booking": DummyPage(),
-      "Records": DummyPage(),
-      "Availability": DummyPage(),
-    },
-    {}, //--------------- Radiology
-    {
-      "New stock": DummyPage(),
-      "Open stock": DummyPage(),
-      "Main stock": DummyPage(),
-      "Expired stock": DummyPage(),
-    },
-    {}, //-------------------- Pharmacy
-    {
-      "Pending booking": DummyPage(),
-      "Upcoming events": DummyPage(),
-      "Dept. notifications": DummyPage(),
-    },
-    {}, //------------------ Analysis
-    {
-      "Greetings": DummyPage(),
-      "History": DummyPage(),
-    },
-    {}, //----------------Settings
-    {
-      "Staff list": DummyPage(),
-      "Duty assignment": DummyPage(),
-      "Hr & payroll": DummyPage(),
-      "Miscellaneous": DummyPage(),
+      "Accounts": DummyPage(),
+      "HR": DummyPage(),
+      "Stores": DummyPage(),
+      "House Keeping": DummyPage(),
+      "Analysis": DummyPage(),
+      "Nurse": DummyPage(),
+      "SMS Center": DummyPage(),
+      "Reminders": DummyPage(),
+      "Feedback": DummyPage(),
     },
   ];
+
+  Widget? screen;
 
   @override
   void initState() {
     super.initState();
+    // screen that comes first while opening dashboard
+    screen = NewPatientReg();
   }
 
   @override
@@ -162,7 +231,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
               ),
               ListTile(
                 leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
+                title: Text('Admin'),
               ),
               InkWell(
                 onTap: () {
@@ -222,6 +291,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           slivers: <Widget>[
             SliverAppBar(
               floating: true,
+              snap: false,
+              pinned: true,
               backgroundColor: ColorConstants.mainBlue,
               automaticallyImplyLeading: false,
               title: Text(
@@ -229,7 +300,6 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 style: MyTextStyle.appbartext,
               ),
               expandedHeight: 150,
-              pinned: true,
               flexibleSpace: LayoutBuilder(
                 builder: (context, constraints) => FlexibleSpaceBar(
                   expandedTitleScale: 1,
@@ -285,7 +355,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 ),
               ],
             ),
-            SliverToBoxAdapter(child: tabItems[itemIndex][selectedData]
+            SliverToBoxAdapter(child: screen
                 // child: Center(
                 //   child: Container(
                 //     height: 670,
@@ -319,10 +389,12 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         //   items.length,
         //   (index) => DummyPage(title: title),
         // ));
+
         if (value.isNotEmpty && value != null) {
           setState(() {
             selectedData = value;
             itemIndex = index;
+            screen = tabItems[itemIndex][selectedData];
           });
         }
       },
@@ -356,156 +428,3 @@ class DummyPage extends StatelessWidget {
     return Center(child: Text("Dummy"));
   }
 }
-
-
-// class SearchPage extends StatelessWidget {
-//   SearchPage({super.key});
-//   TextEditingController searchController = TextEditingController();
-//   String ret = "";
-//   Future<String> searchPatient() async {
-//     String url = "https://cybot.avanzosolutions.in/hms/patientname.php";
-//     try {
-//       var res = await http.post(Uri.parse(url), body: {
-//         "patientnamecontroller": searchController.text.trim(),
-//       });
-//       print(res.body);
-//       ret = res.body;
-//     } on Exception catch (e) {
-//       print(e);
-//     }
-//     return ret;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(12),
-//       child: Column(
-//         children: [
-//           Container(
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(10),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.grey.withOpacity(0.5),
-//                   spreadRadius: 2,
-//                   blurRadius: 5,
-//                   offset: Offset(0, 3),
-//                 ),
-//               ],
-//             ),
-//             child: TextFormField(
-//               controller: searchController,
-//               onFieldSubmitted: (value) {
-//                 searchPatient();
-//               },
-//               decoration: InputDecoration(
-//                 enabledBorder: OutlineInputBorder(
-//                   borderRadius: BorderRadius.all(Radius.circular(10)),
-//                   borderSide: BorderSide(color: ColorConstants.mainBlue),
-//                 ),
-//                 focusedBorder: OutlineInputBorder(
-//                   borderRadius: BorderRadius.all(Radius.circular(10)),
-//                   borderSide:
-//                       BorderSide(color: ColorConstants.mainBlue, width: 2),
-//                 ),
-//                 suffixIcon: IconButton(
-//                   onPressed: () {
-//                     searchPatient();
-//                   },
-//                   icon: Icon(Icons.search),
-//                   color: ColorConstants.mainBlue,
-//                 ),
-//                 hintText: "Search patient by name/id/username",
-//                 hintStyle: TextStyle(color: Colors.grey[400]),
-//                 contentPadding:
-//                     EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 44,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("Name : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("Email : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("ph no : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("Address : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("Doctor name : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("DEPT : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//           Container(
-//             height: 60,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.all(Radius.circular(5))),
-//             child: Row(
-//               children: [Text("Attachments : ")],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 7,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
