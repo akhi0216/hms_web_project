@@ -11,6 +11,8 @@ class BookingPatientController with ChangeNotifier {
   BookingPatientModel patientBookingModel = BookingPatientModel();
   Doctorsmodelclass doctorsmodelclass = Doctorsmodelclass();
   List<String> deptList = [];
+  List<String> timeList = [];
+  bool isSuccessful = false;
 
   department() async {
     String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
@@ -38,6 +40,19 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
+  doctorTime(String? empid) async {
+    String uri = "https://cybot.avanzosolutions.in/hms/doctortiming.php";
+    try {
+      var res = await http
+          .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
+      timeList = List<String>.from(await jsonDecode(res.body));
+      print(timeList);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
+
   Future<void> patientdata(String searchText) async {
     notifyListeners();
     String uri = "https://cybot.avanzosolutions.in/hms/bookingpatient.php";
@@ -48,6 +63,39 @@ class BookingPatientController with ChangeNotifier {
       var json = await jsonDecode(res.body) as Map<String, dynamic>;
       print(json);
       patientBookingModel = BookingPatientModel.fromJson(json);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
+
+  patientBooking({
+    required String patientId,
+    required String fName,
+    required String lName,
+    required String eMail,
+    required String phNum,
+    required String dept,
+    required String doc,
+    required String reason,
+    required String date,
+    required String time,
+  }) async {
+    String uri = "https://cybot.avanzosolutions.in/hms/bookingpatient.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {
+        "patientidcontroller": patientId,
+        "FirstNamecontroller": fName,
+        "LastNamecontroller": lName,
+        "emailcontroller": eMail,
+        "mobilecontroller": phNum,
+        "departmentcontroller": dept,
+        "doctornamecontroller": doc,
+        "reasoncontroller": reason,
+        "datecontroller": date,
+        "timecontroller": time,
+      });
+      res.body == "Success" ? isSuccessful = true : isSuccessful = false;
     } catch (e) {
       log(e.toString());
     }

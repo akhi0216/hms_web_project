@@ -17,7 +17,7 @@ class _NewBookingsState extends State<NewBookings> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController firstnamecontroller = TextEditingController();
   final TextEditingController lastnamecontroller = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController phnumbercontroller = TextEditingController();
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -27,8 +27,6 @@ class _NewBookingsState extends State<NewBookings> {
   String? _selectedDepartment;
 
   List<String> _doctorList = [];
-
-  final List<String> _timeSlots = [];
 
   @override
   void initState() {
@@ -44,7 +42,7 @@ class _NewBookingsState extends State<NewBookings> {
   @override
   void dispose() {
     _nameController.dispose();
-    _addressController.dispose();
+    _emailController.dispose();
     _reasonController.dispose();
     _dateController.dispose();
     firstnamecontroller.dispose();
@@ -72,360 +70,382 @@ class _NewBookingsState extends State<NewBookings> {
     var functionprovider =
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
+    fieldSubmitted() async {
+      await functionprovider.patientdata(_nameController.text.trim());
+      firstnamecontroller.text =
+          varprovider.patientBookingModel.list?[0].fname ?? "";
+      lastnamecontroller.text =
+          varprovider.patientBookingModel.list?[0].lname ?? "";
+      _emailController.text =
+          varprovider.patientBookingModel.list?[0].email ?? "";
+      phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
+              ?.replaceRange(0, 6, "******") ??
+          "";
+      _selectedDepartment = varprovider.patientBookingModel.list?[0].dep ?? "";
+      _selectedDoctor = varprovider.patientBookingModel.list?[0].doc ?? "";
+    }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            constraints: BoxConstraints(maxWidth: 600),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Patient Id',
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () async {
-                          await functionprovider
-                              .patientdata(_nameController.text.trim());
-                          firstnamecontroller.text =
-                              varprovider.patientBookingModel.list?[0].fname ??
-                                  "";
-                          lastnamecontroller.text =
-                              varprovider.patientBookingModel.list?[0].lname ??
-                                  "";
-                          _addressController.text =
-                              varprovider.patientBookingModel.list?[0].addr ??
-                                  "";
-                          phnumbercontroller.text =
-                              varprovider.patientBookingModel.list?[0].phn ??
-                                  "";
-                          _selectedDepartment =
-                              varprovider.patientBookingModel.list?[0].dep ??
-                                  "";
-                          _selectedDoctor =
-                              varprovider.patientBookingModel.list?[0].doc ??
-                                  "";
-                          _reasonController.text =
-                              varprovider.patientBookingModel.list?[0].presc ??
-                                  "";
-                        },
-                        icon: const Icon(
-                          Icons.check,
-                          color: Colors.blue,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Patient Id',
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: ColorConstants.mainBlue,
                         ),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter a Valid Patient Id';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: firstnamecontroller,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'First Name',
-                      prefixIcon: Icon(
-                        Icons.person_outline,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.8),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    validator: (name) => name!.length < 3
-                        ? "Name should be at least 3 characters"
-                        : null,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: lastnamecontroller,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Last Name',
-                      prefixIcon: Icon(
-                        Icons.person_outline,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.8),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Address',
-                      prefixIcon: Icon(
-                        Icons.home,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your address';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: phnumbercontroller,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Phone Number',
-                      prefixIcon: Icon(
-                        Icons.phone,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.8),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value != null && value.length >= 7) {
-                        return null;
-                      } else {
-                        return "Mobile number is required";
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedDepartment,
-                    hint: const Text('Select Department'),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.local_hospital,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    items: varprovider.deptList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) async {
-                      setState(() {
-                        _selectedDepartment = newValue;
-                      });
-                      await Provider.of<BookingPatientController>(context,
-                              listen: false)
-                          .doctors(_selectedDepartment);
-                      _doctorList.clear();
-                      if (varprovider.doctorsmodelclass.list!.isNotEmpty) {
-                        for (var i = 0;
-                            i < varprovider.doctorsmodelclass.list!.length;
-                            i++) {
-                          _doctorList.add(
-                              varprovider.doctorsmodelclass.list?[i].name ??
-                                  "");
-                        }
-                      } else {
-                        _doctorList.add("no doctors found");
-                      }
-                      _selectedDoctor = _doctorList[0];
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a department';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedDoctor,
-                    hint: const Text('Select Doctor'),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.medical_services,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      suffix: TextButton(
-                          onPressed: () {},
-                          child: const Text("check availability")),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    items: _doctorList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) async {
-                      setState(() {
-                        _selectedDoctor = newValue;
-                      });
-                      await Provider.of<BookingPatientController>(context,
-                              listen: false)
-                          .doctors(_selectedDepartment);
-                      _timeSlots.clear();
-                      _timeSlots.add(
-                          varprovider.doctorsmodelclass.list?[0].time ?? ""); 
-                      // for (var i = 0;
-                      //     i < _doctorList.length;
-                      //     i++) {
-                      //   _timeSlots.add(
-                      //       varprovider.doctorsmodelclass.list?[i].time ??
-                      //           "");
-                      // }
-                      setState(() {
-                        _selectedTimeSlot = _timeSlots[0];
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a doctor';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _reasonController,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Reason (Optional)',
-                      prefixIcon: Icon(
-                        Icons.edit,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _dateController,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      labelText: 'Date',
-                      prefixIcon: Icon(
-                        Icons.timer,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    readOnly: true,
-                    onTap: () => _selectDate(context),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedTimeSlot,
-                    hint: const Text('Select Time Slot'),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    items: _timeSlots.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedTimeSlot = newValue;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a time slot';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // Implement appointment booking functionality here
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Appointment Booked')),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff0ea69f),
-                        shape: RoundedRectangleBorder(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50.0, vertical: 15.0),
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            fieldSubmitted();
+                          },
+                          icon: const Icon(
+                            Icons.check,
+                            color: Colors.blue,
+                          ),
+                        ),
                       ),
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.white),
+                      onFieldSubmitted: (value) {
+                        fieldSubmitted();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter a Valid Patient Id';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: firstnamecontroller,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'First Name',
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      validator: (name) => name!.length < 3
+                          ? "Name should be at least 3 characters"
+                          : null,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: lastnamecontroller,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Last Name',
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: _emailController,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Email',
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: phnumbercontroller,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Phone Number',
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.length >= 7) {
+                          return null;
+                        } else {
+                          return "Mobile number is required";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedDepartment,
+                      hint: const Text('Select Department'),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.local_hospital,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      items: varprovider.deptList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) async {
+                        setState(() {
+                          _selectedDepartment = newValue;
+                        });
+                        int itemid = 0;
+                        _doctorList.clear();
+                        varprovider.timeList.clear();
+                        await functionprovider.doctors(_selectedDepartment);
+                        for (var i = 0; i < _doctorList.length; i++) {
+                          if (_doctorList[i] == _selectedDoctor) {
+                            itemid = i;
+                          }
+                        }
+                        await functionprovider.doctorTime(varprovider
+                            .doctorsmodelclass.list?[itemid].empcode);
+                        if (varprovider.doctorsmodelclass.list!.isNotEmpty) {
+                          for (var i = 0;
+                              i < varprovider.doctorsmodelclass.list!.length;
+                              i++) {
+                            _doctorList.add(
+                                varprovider.doctorsmodelclass.list?[i].name ??
+                                    "");
+                          }
+                        }
+
+                        _selectedDoctor = _doctorList[0];
+                        _selectedTimeSlot = varprovider.timeList[0];
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a department';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedDoctor,
+                      hint: const Text('Select Doctor'),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.medical_services,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        suffix: TextButton(
+                            onPressed: () {},
+                            child: const Text("check availability")),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      items: _doctorList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) async {
+                        int itemid = 0;
+                        setState(() {
+                          _selectedDoctor = newValue;
+                        });
+                        for (var i = 0; i < _doctorList.length; i++) {
+                          if (_doctorList[i] == _selectedDoctor) {
+                            itemid = i;
+                          }
+                        }
+                        varprovider.timeList.clear();
+                        await functionprovider.doctorTime(varprovider
+                            .doctorsmodelclass.list?[itemid].empcode);
+                        _selectedTimeSlot = varprovider.timeList[0];
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a doctor';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: _reasonController,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Reason (Optional)',
+                        prefixIcon: Icon(
+                          Icons.edit,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      controller: _dateController,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        labelText: 'Date',
+                        prefixIcon: Icon(
+                          Icons.timer,
+                          color: ColorConstants.mainBlue,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a date';
+                        }
+                        return null;
+                      },
+                      readOnly: true,
+                      onTap: () => _selectDate(context),
+                    ),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedTimeSlot,
+                      hint: const Text('Select Time Slot'),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      items: varprovider.timeList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedTimeSlot = newValue;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a time slot';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              functionprovider.patientBooking(
+                                patientId: patientidcontroller.text.trim(),
+                                fName: firstnamecontroller.text.trim(),
+                                lName: lastnamecontroller.text.trim(),
+                                eMail: _emailController.text.trim(),
+                                phNum: phnumbercontroller.text.trim(),
+                                dept: _selectedDepartment!,
+                                doc: _selectedDoctor!,
+                                reason: _reasonController.text.trim(),
+                                date: _dateController.text.trim(),
+                                time: _selectedTimeSlot!,
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Appointment Booked')),
+                              );
+                            }
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff0ea69f),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50.0, vertical: 15.0),
+                        ),
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

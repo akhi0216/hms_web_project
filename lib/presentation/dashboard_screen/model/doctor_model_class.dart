@@ -34,20 +34,20 @@ class Doctorsmodelclass {
 
 class ListElement {
   String? name;
-  String? time;
+  String? empcode;
 
   ListElement({
     this.name,
-    this.time,
+    this.empcode,
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         name: json["name"],
-        time: json["time"],
+        empcode: json["empcode"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "time": time,
+        "empcode": empcode,
       };
 }

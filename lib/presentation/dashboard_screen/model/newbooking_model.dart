@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final bookingPatientModel = bookingPatientModelFromJson(jsonString);
-
 import 'dart:convert';
 
 BookingPatientModel bookingPatientModelFromJson(String str) =>
@@ -16,6 +12,7 @@ class BookingPatientModel {
   BookingPatientModel({
     this.list,
   });
+
   factory BookingPatientModel.fromJson(Map<String, dynamic> json) =>
       BookingPatientModel(
         list: json["list"] == null
@@ -35,38 +32,38 @@ class ListElement {
   String? fname;
   String? lname;
   String? doc;
-  String? presc;
-  String? addr;
+  String? email;
   String? phn;
   String? dep;
+  String? empid;
 
   ListElement({
     this.fname,
     this.lname,
     this.doc,
-    this.presc,
-    this.addr,
+    this.email,
     this.phn,
     this.dep,
+    this.empid,
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         fname: json["fname"],
         lname: json["lname"],
         doc: json["doc"],
-        presc: json["presc"],
-        addr: json["addr"],
+        email: json["email"],
         phn: json["phn"],
         dep: json["dep"],
+        empid: json["empid"],
       );
 
   Map<String, dynamic> toJson() => {
         "fname": fname,
         "lname": lname,
         "doc": doc,
-        "presc": presc,
-        "addr": addr,
+        "email": email,
         "phn": phn,
         "dep": dep,
+        "empid": empid,
       };
 }

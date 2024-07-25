@@ -197,7 +197,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 15,
+      length: 11,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
