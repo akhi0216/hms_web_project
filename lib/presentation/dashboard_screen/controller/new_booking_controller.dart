@@ -12,7 +12,7 @@ class BookingPatientController with ChangeNotifier {
   Doctorsmodelclass doctorsmodelclass = Doctorsmodelclass();
   List<String> deptList = [];
   List<String> timeList = [];
-  bool isSuccessful = false;
+  bool? isSuccessful;
 
   department() async {
     String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
@@ -76,12 +76,12 @@ class BookingPatientController with ChangeNotifier {
     required String eMail,
     required String phNum,
     required String dept,
-    required String doc,
+    required String docId,
     required String reason,
     required String date,
     required String time,
   }) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/bookingpatient.php";
+    String uri = "https://cybot.avanzosolutions.in/hms/bookingsave.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         "patientidcontroller": patientId,
@@ -90,12 +90,13 @@ class BookingPatientController with ChangeNotifier {
         "emailcontroller": eMail,
         "mobilecontroller": phNum,
         "departmentcontroller": dept,
-        "doctornamecontroller": doc,
+        "doctornamecontroller": docId,
         "reasoncontroller": reason,
         "datecontroller": date,
         "timecontroller": time,
       });
-      res.body == "Success" ? isSuccessful = true : isSuccessful = false;
+      print("booking : ${res.body}");
+      isSuccessful = res.body == "success" ? true : false;
     } catch (e) {
       log(e.toString());
     }
