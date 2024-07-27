@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
+import 'package:hms_web_project/repositories/api/model/user_details_model.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -15,8 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String isLoggined = "";
-  String userName = "";
   String empId = "";
+  String designation = "";
+  UserDetailsModel userDetailsModel = UserDetailsModel();
+  Map<String, dynamic> json = {};
 
   bool isObscured = true;
   void _obscureText() {
@@ -45,24 +50,20 @@ class _LoginPageState extends State<LoginPage> {
           "loginusernamecontroller": _usernameController.text.trim(),
           "loginpasswordcontroller": _passwordController.text.trim(),
         });
-        userName = res.body;
-      } on Exception catch (e) {
-        print(e);
-      }
-      try {
-        var url = "https://cybot.avanzosolutions.in/hms/loginemp.php";
-        var res = await http.post(Uri.parse(url), body: {
-          "loginusernamecontroller": _usernameController.text.trim(),
-          "loginpasswordcontroller": _passwordController.text.trim(),
+        print(res.body);
+        setState(() {
+          json = jsonDecode(res.body);
         });
-        empId = res.body;
+        userDetailsModel = UserDetailsModel.fromJson(json);
       } on Exception catch (e) {
         print(e);
       }
+      print(userDetailsModel.uname);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Login Successful"),
           backgroundColor: ColorConstants.mainGreen,
+          duration: Duration(milliseconds: 1500),
         ),
       );
       Future.delayed(
@@ -72,15 +73,14 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => Dashboardsecondscreen(
-                userName: userName,
-                empId: empId,
+                userName: userDetailsModel.uname ?? "",
+                empId: userDetailsModel.eid ?? "",
+                des: userDetailsModel.des ?? "",
               ),
             ),
           );
         },
       );
-      print(userName);
-      print(empId);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
