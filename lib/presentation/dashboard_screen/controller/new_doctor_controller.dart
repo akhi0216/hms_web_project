@@ -18,4 +18,121 @@ class NewDoctorController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // newDoctorRegistration({
+  //   required String title,
+  //   required String firstName,
+  //   required String lastName,
+  //   required String dob,
+  //   required String gender,
+  //   required String nationality,
+  //   required String mobile,
+  //   required String email,
+  //   required String resAddress,
+  //   required String medLicNumber,
+  //   required String department,
+  //   required String medSchool,
+  //   required String gradYear,
+  //   required String resInfo,
+  //   required String board,
+  //   required String currentPos,
+  //   required String currentEmp,
+  //   required String previousPos,
+  //   required String yearOfExp,
+  //   required String startTime,
+  //   required String endTime,
+  //   required String onCall,
+  // }) async {
+  //   String uri = "https://cybot.avanzosolutions.in/hms/newdoctorbooking.php";
+  //   var res = await http.post(
+  //     Uri.parse(uri),
+  //     //  body: {
+  //     //   'titlecontroller': title,
+  //     //   'FirstNamecontroller': firstName,
+  //     //   'LastNamecontroller': lastName,
+  //     //   'dobcontroller': dob,
+  //     //   'gendercontroller': gender,
+  //     //   'nationalitycontroller': nationality,
+  //     //   'empcodecontroller': 100,
+  //     //   'mobilecontroller': mobile,
+  //     //   'emailcontroller': email,
+  //     //   'resaddresscontroller': resAddress,
+  //     //   'medlicnumbercontroller': medLicNumber,
+  //     //   'departmentcontroller': department,
+  //     //   'medschoolcontroller': medSchool,
+  //     //   'gradyearcontroller': gradYear,
+  //     //   'resinfocontroller': resInfo,
+  //     //   'boardcontroller': board,
+  //     //   'currentposcontroller': currentPos,
+  //     //   'currentempcontroller': currentEmp,
+  //     //   'previousposcontroller': previousPos,
+  //     //   'yearofexpcontroller': yearOfExp,
+  //     //   'starttimecontroller': startTime,
+  //     //   'endtimecontroller': endTime,
+  //     //   'oncallcontroller': onCall,
+  //     // }
+  //   );
+  //   print(res.body);
+  //   notifyListeners();
+  // }
+
+//
+
+  newDocReg({
+    required String title,
+    required String firstName,
+    required String lastName,
+    required String dob,
+    required String gender,
+    required String nationality,
+    required String mobile,
+    required String email,
+    required String resAddress,
+    required String medLicNumber,
+    required String department,
+    required String medSchool,
+    required String gradYear,
+    required String resInfo,
+    required String board,
+    required String currentPos,
+    required String currentEmp,
+    required String previousPos,
+    required String yearOfExp,
+    required String startTime,
+    required String endTime,
+    required String onCall,
+  }) async {
+    String uri = "https://cybot.avanzosolutions.in/hms/newdoctorbooking.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {
+        'titlecontroller': title,
+        'FirstNamecontroller': firstName,
+        'LastNamecontroller': lastName,
+        'dobcontroller': dob,
+        'gendercontroller': gender,
+        'nationalitycontroller': nationality,
+        'mobilecontroller': mobile,
+        'emailcontroller': email,
+        'resaddresscontroller': resAddress,
+        'medlicnumbercontroller': medLicNumber,
+        'departmentcontroller': department,
+        'medschoolcontroller': medSchool,
+        'gradyearcontroller': gradYear,
+        'resinfocontroller': resInfo,
+        'boardcontroller': board,
+        'currentposcontroller': currentPos,
+        'currentempcontroller': currentEmp,
+        'previousposcontroller': previousPos,
+        'yearofexpcontroller': yearOfExp,
+        'starttimecontroller': startTime,
+        'endtimecontroller': endTime,
+        'oncallcontroller': onCall,
+      });
+      print(res.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  notifyListeners();
 }
