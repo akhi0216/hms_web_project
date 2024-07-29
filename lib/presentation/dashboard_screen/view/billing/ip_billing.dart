@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class BillingDetailsForm extends StatefulWidget {
+class IpBilling extends StatefulWidget {
   @override
-  _BillingDetailsFormState createState() => _BillingDetailsFormState();
+  _IpBillingState createState() => _IpBillingState();
 }
 
-class _BillingDetailsFormState extends State<BillingDetailsForm> {
+class _IpBillingState extends State<IpBilling> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();

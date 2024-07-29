@@ -454,6 +454,13 @@ class _NewBookingsState extends State<NewBookings> {
                                         TextButton(
                                           child: Text("return"),
                                           onPressed: () {
+                                            patientidcontroller.clear();
+                                            _emailController.clear();
+                                            _reasonController.clear();
+                                            _dateController.clear();
+                                            firstnamecontroller.clear();
+                                            lastnamecontroller.clear();
+                                            phnumbercontroller.clear();
                                             Navigator.pop(context);
                                           },
                                         )

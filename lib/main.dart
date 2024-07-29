@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:provider/provider.dart';
 
 void main(List<String> args) {
@@ -28,8 +27,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        // home: NewBookings(),
+        // home: SplashScreen(),
+        home: Scaffold(
+          body: CurrentBookingPage(),
+        ),
       ),
     );
   }
