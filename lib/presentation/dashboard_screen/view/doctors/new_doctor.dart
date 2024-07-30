@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:provider/provider.dart';
 
 class NewDoctor extends StatefulWidget {
@@ -11,7 +12,9 @@ class NewDoctor extends StatefulWidget {
 
 class _NewDoctorState extends State<NewDoctor> {
   final _formKey = GlobalKey<FormState>();
-  final _fullNameController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _dobController = TextEditingController();
   final _contactNumberController = TextEditingController();
   final _emailController = TextEditingController();
@@ -25,12 +28,13 @@ class _NewDoctorState extends State<NewDoctor> {
   final _currentEmployerController = TextEditingController();
   final _previousPositionsController = TextEditingController();
   final _yearsOfExperienceController = TextEditingController();
-  final _preferredWorkHoursController = TextEditingController();
   final _availabilityOnCallController = TextEditingController();
-  final _preferredLocationsController = TextEditingController();
+  final _startTimeController = TextEditingController();
+  final _endTimeController = TextEditingController();
 
   String _gender = 'Male';
-  String _nationality = 'United States';
+  String _nationality = 'India';
+  String _onCall = "Yes";
   String _specialty = 'Cardiology'; // Default value for the dropdown
 
   @override
@@ -45,8 +49,10 @@ class _NewDoctorState extends State<NewDoctor> {
 
   @override
   void dispose() {
-    _fullNameController.dispose();
     _dobController.dispose();
+    _titleController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _contactNumberController.dispose();
     _emailController.dispose();
     _residentialAddressController.dispose();
@@ -59,15 +65,17 @@ class _NewDoctorState extends State<NewDoctor> {
     _currentEmployerController.dispose();
     _previousPositionsController.dispose();
     _yearsOfExperienceController.dispose();
-    _preferredWorkHoursController.dispose();
     _availabilityOnCallController.dispose();
-    _preferredLocationsController.dispose();
+    _startTimeController.dispose();
+    _endTimeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var varProvider = Provider.of<NewDoctorController>(context);
+    var functionProvider =
+        Provider.of<NewDoctorController>(context, listen: false);
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
       child: Center(
@@ -80,14 +88,22 @@ class _NewDoctorState extends State<NewDoctor> {
               children: <Widget>[
                 sectionHeader('Personal Information'),
                 buildTextFormField(
-                    'Full Name', Icons.person, _fullNameController),
+                    'First Name', Icons.person, _firstNameController),
+                buildTextFormField(
+                    'Last Name', Icons.person, _lastNameController),
                 buildDatePickerFormField(
                     'Date of Birth', Icons.calendar_today, _dobController),
                 buildGenderRadioButtons(),
                 buildDropdownFormField(
                   'Nationality',
                   _nationality,
-                  ['United States', 'Canada', 'United Kingdom', 'Australia'],
+                  [
+                    'India',
+                    'United States',
+                    'Canada',
+                    'United Kingdom',
+                    'Australia'
+                  ],
                   (String? newValue) {
                     setState(() {
                       _nationality = newValue!;
@@ -133,18 +149,75 @@ class _NewDoctorState extends State<NewDoctor> {
                 buildTextFormField('Years of Experience', Icons.access_time,
                     _yearsOfExperienceController),
                 sectionHeader('Availability'),
-                buildTextFormField('Preferred Work Hours', Icons.access_time,
-                    _preferredWorkHoursController),
-                buildTextFormField('Availability for On-call', Icons.call,
-                    _availabilityOnCallController),
-                buildTextFormField('Preferred Locations', Icons.location_on,
-                    _preferredLocationsController),
+                buildTextFormField(
+                    'Starting time', Icons.access_time, _startTimeController),
+                buildTextFormField(
+                    'Ending time', Icons.access_time, _endTimeController),
+                buildDropdownFormField(
+                  'Availability on call',
+                  _onCall,
+                  ['Yes', 'No'],
+                  (String? newValue) {
+                    setState(() {
+                      _onCall = newValue!;
+                    });
+                  },
+                  Icons.call,
+                ),
                 SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Process data
+                        functionProvider.newDocReg(
+                            title: _titleController.text
+                                .trim()
+                                .toString()
+                                .toString(),
+                            firstName: _firstNameController.text
+                                .trim()
+                                .toString()
+                                .toString(),
+                            lastName: _lastNameController.text.trim(),
+                            dob: _dobController.text.trim().toString(),
+                            gender: _gender.toString(),
+                            nationality: _nationality.toString(),
+                            mobile:
+                                _contactNumberController.text.trim().toString(),
+                            email: _emailController.text.trim().toString(),
+                            resAddress: _residentialAddressController.text
+                                .trim()
+                                .toString(),
+                            medLicNumber: _medicalLicenseNumberController.text
+                                .trim()
+                                .toString(),
+                            department: _specialty.toString(),
+                            medSchool:
+                                _medicalSchoolController.text.trim().toString(),
+                            gradYear: _yearOfGraduationController.text
+                                .trim()
+                                .toString(),
+                            resInfo:
+                                _residencyInfoController.text.trim().toString(),
+                            board: _boardCertificationsController.text
+                                .trim()
+                                .toString(),
+                            currentPos: _currentPositionController.text
+                                .trim()
+                                .toString(),
+                            currentEmp: _currentEmployerController.text
+                                .trim()
+                                .toString(),
+                            previousPos: _previousPositionsController.text
+                                .trim()
+                                .toString(),
+                            yearOfExp: _yearsOfExperienceController.text
+                                .trim()
+                                .toString(),
+                            startTime:
+                                _startTimeController.text.trim().toString(),
+                            endTime: _endTimeController.text.trim().toString(),
+                            onCall: _onCall.toString());
                       }
                     },
                     child: Text('Submit'),
