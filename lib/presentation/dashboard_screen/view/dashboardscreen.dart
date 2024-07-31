@@ -139,6 +139,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
     {
       "Booking": NewBookings(),
+      "current bookings": CurrentBookingPage(),
       "Records": DummyPage(),
       "Availability": DummyPage(),
     },
@@ -162,7 +163,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 // OPERATION THEATRE
     {},
     {
-      // "Ip billing": IpBilling(),
+      "Ip billing": IpBilling(),
       "Op billing": DummyPage(),
       "Unhealthy billing": DummyPage(),
     },

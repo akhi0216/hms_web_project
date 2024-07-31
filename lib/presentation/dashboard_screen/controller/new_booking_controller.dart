@@ -102,4 +102,16 @@ class BookingPatientController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+// 
+timeslotBooking({required String dept, required String docId,}
+
+){}
+
+// 
+
+
+
+
+
 }
