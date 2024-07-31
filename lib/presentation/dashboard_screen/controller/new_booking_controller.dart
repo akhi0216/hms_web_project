@@ -96,7 +96,7 @@ class BookingPatientController with ChangeNotifier {
         "timecontroller": time,
       });
       print("booking : ${res.body}");
-      isSuccessful = res.body == "success" ? true : false;
+      isSuccessful = res.statusCode == 200 ? true : false;
     } catch (e) {
       log(e.toString());
     }
