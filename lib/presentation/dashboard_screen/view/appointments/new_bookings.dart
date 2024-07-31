@@ -351,6 +351,23 @@ class _NewBookingsState extends State<NewBookings> {
                       return null;
                     },
                   ),
+
+                  // ----------------------------------------
+                  const SizedBox(height: 20.0),
+
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Book your slot",style: TextStyle(color: Colors.white),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff0ea69f),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50.0, vertical: 15.0),
+                    ),
+                  ),
+                  // ---------------------------------------
                   const SizedBox(height: 20.0),
                   TextFormField(
                     controller: _reasonController,

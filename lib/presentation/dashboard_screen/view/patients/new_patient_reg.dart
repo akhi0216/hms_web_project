@@ -621,7 +621,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: patientNameController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -640,7 +640,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: dobController,
-                  readOnly: true,
+              
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -661,7 +661,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: bloodGroupController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -680,7 +680,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: occupationController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -699,7 +699,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: maritalStatusController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -718,7 +718,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: fatherHusbandNameController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -737,7 +737,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: nationalityController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -756,7 +756,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: addressController,
-                  readOnly: true,
+                
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -775,7 +775,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: phoneController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -794,7 +794,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: mobileController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -813,7 +813,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: emailController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -832,7 +832,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: doctorsController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -851,7 +851,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: idDocumentController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -870,7 +870,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: aadharController,
-                  readOnly: true,
+                
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -889,7 +889,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: uhidController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -908,7 +908,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: panController,
-                  readOnly: true,
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -927,7 +927,7 @@ class _NewPatientRegState extends State<NewPatientReg> {
                 const SizedBox(height: 20.0),
                 TextFormField(
                   controller: departmentController,
-                  readOnly: true,
+                 
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
