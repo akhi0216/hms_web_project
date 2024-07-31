@@ -29,7 +29,7 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
         ret = jsonDecode(res.body);
       });
       print(ret);
-      patientSearchModel = PatientSearchModel.fromJson(ret);
+      // patientSearchModel = PatientSearchModel.fromJson(ret);
     } on Exception catch (e) {
       print(e);
     }
@@ -94,39 +94,26 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
           SizedBox(
             height: 44,
           ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [
-                Text("First name : "),
-                Text(patientSearchModel.list?[0].fname ?? "")
-              ],
-            ),
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [
-                Text("Last name : "),
-                Text(patientSearchModel.list?[0].lname ?? "")
-              ],
-            ),
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [
-                Text("Your id : "),
-                Text(patientSearchModel.list?[0].pid ?? "")
-              ],
-            ),
-          ),
+          // detailsContainer(
+          //     label: "Patient name : ",
+          //     title: patientSearchModel.list?[0].fname ?? ""),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [
+          //       Text("Last name : "),
+          //       Text(patientSearchModel.list?[0].lname ?? "")
+          //     ],
+          //   ),
+          // ),
+          // detailsContainer(
+          //     label: "Your id : ",
+          //     title: patientSearchModel.list?[0].pid ?? ""),
+          // detailsContainer(
+          //     label: "date of birth",
+          //     title: patientSearchModel.list?[0].lname ?? ""),
           // Container(
           //   height: 60,
           //   decoration: BoxDecoration(
@@ -151,28 +138,28 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
           //     children: [Text("Address : ")],
           //   ),
           // ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [
-                Text("Doctor name : "),
-                Text(patientSearchModel.list?[0].doc ?? "")
-              ],
-            ),
-          ),
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Row(
-              children: [
-                Text("Prescription : "),
-                Text(patientSearchModel.list?[0].presc ?? "")
-              ],
-            ),
-          ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [
+          //       Text("Doctor name : "),
+          //       Text(patientSearchModel.list?[0].doc ?? "")
+          //     ],
+          //   ),
+          // ),
+          // Container(
+          //   height: 60,
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(5))),
+          //   child: Row(
+          //     children: [
+          //       Text("Prescription : "),
+          //       Text(patientSearchModel.list?[0].presc ?? "")
+          //     ],
+          //   ),
+          // ),
           // Container(
           //   height: 60,
           //   decoration: BoxDecoration(
@@ -193,4 +180,15 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
       ),
     );
   }
+}
+
+Widget detailsContainer({required String label, required String title}) {
+  return Container(
+    height: 60,
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+    child: Row(
+      children: [Text(label), Text(title)],
+    ),
+  );
 }

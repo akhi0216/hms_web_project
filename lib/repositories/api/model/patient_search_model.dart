@@ -4,54 +4,82 @@
 
 import 'dart:convert';
 
-PatientSearchModel patientSearchModelFromJson(String str) => PatientSearchModel.fromJson(json.decode(str));
+PatientSearchModel patientSearchModelFromJson(String str) =>
+    PatientSearchModel.fromJson(json.decode(str));
 
-String patientSearchModelToJson(PatientSearchModel data) => json.encode(data.toJson());
+String patientSearchModelToJson(PatientSearchModel data) =>
+    json.encode(data.toJson());
 
 class PatientSearchModel {
-    List<ListElement>? list;
+  List<ListElement>? list;
 
-    PatientSearchModel({
-        this.list,
-    });
+  PatientSearchModel({
+    this.list,
+  });
 
-    factory PatientSearchModel.fromJson(Map<String, dynamic> json) => PatientSearchModel(
-        list: json["list"] == null ? [] : List<ListElement>.from(json["list"]!.map((x) => ListElement.fromJson(x))),
-    );
+  factory PatientSearchModel.fromJson(Map<String, dynamic> json) =>
+      PatientSearchModel(
+        list: json["list"] == null
+            ? []
+            : List<ListElement>.from(
+                json["list"]!.map((x) => ListElement.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
-        "list": list == null ? [] : List<dynamic>.from(list!.map((x) => x.toJson())),
-    };
+  Map<String, dynamic> toJson() => {
+        "list": list == null
+            ? []
+            : List<dynamic>.from(list!.map((x) => x.toJson())),
+      };
 }
 
 class ListElement {
-    String? fname;
-    String? lname;
-    String? pid;
-    String? doc;
-    String? presc;
+  String? fname;
+  String? lname;
+  String? pid;
+  String? doc;
+  String? presc;
+  String? mob;
+  String? dob;
+  String? address;
+  String? department;
+  String? email;
 
-    ListElement({
-        this.fname,
-        this.lname,
-        this.pid,
-        this.doc,
-        this.presc,
-    });
+  ListElement({
+    this.fname,
+    this.lname,
+    this.pid,
+    this.doc,
+    this.presc,
+    this.mob,
+    this.dob,
+    this.address,
+    this.department,
+    this.email,
+  });
 
-    factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         fname: json["fname"],
-        lname: json["name"],
+        lname: json["lname"],
         pid: json["pid"],
         doc: json["doc"],
         presc: json["presc"],
-    );
+        mob: json["mob"],
+        dob: json["dob"],
+        address: json["Address"],
+        department: json["Department"],
+        email: json["email"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "fname": fname,
-        "name": lname,
+        "lname": lname,
         "pid": pid,
         "doc": doc,
         "presc": presc,
-    };
+        "mob": mob,
+        "dob": dob,
+        "Address": address,
+        "Department": department,
+        "email": email,
+      };
 }

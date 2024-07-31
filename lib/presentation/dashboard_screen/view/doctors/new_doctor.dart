@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:provider/provider.dart';
 
 class NewDoctor extends StatefulWidget {
@@ -37,6 +36,9 @@ class _NewDoctorState extends State<NewDoctor> {
   String _onCall = "Yes";
   String _specialty = 'Cardiology'; // Default value for the dropdown
 
+  String startTimeFormat = "am";
+  String endTimeFormat = "am";
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +47,45 @@ class _NewDoctorState extends State<NewDoctor> {
 
   callFuction() async {
     await Provider.of<NewDoctorController>(context, listen: false).department();
+  }
+
+  String starttime(String startTime) {
+    String timeString = "";
+    // TimeOfDay timeOfDay = TimeOfDay(
+    //     hour: int.parse(startTime.split(".")[0]),
+    //     minute: int.parse(startTime.split(".")[1]));
+    if (double.parse(startTime) < 12.00
+        // int.parse(_startTimeController.text.trim()) <= 12.00
+        ) {
+      if (startTimeFormat == "pm") {
+        double time = double.parse(startTime) + 12;
+        // int finalTime = time + timeOfDay.minute;
+        print(time);
+        timeString = time.toString();
+      } else {
+        timeString = startTime;
+      }
+    }
+    // print(timeOfDay.format(context));
+    print(timeString);
+    return timeString;
+  }
+
+  String endtime() {
+    String timeString = "";
+    TimeOfDay timeOfDay = TimeOfDay(
+        hour: int.parse(_endTimeController.text.trim() + ".00".split(".")[0]),
+        minute:
+            int.parse(_endTimeController.text.trim() + ".00".split(".")[1]));
+    if (timeOfDay.hour <= 12.00) {
+      if (endTimeFormat == "pm") {
+        int time = int.parse(_endTimeController.text.trim()) + 12;
+        timeString = time.toString();
+      } else {
+        timeString = _startTimeController.text.trim();
+      }
+    }
+    return timeString;
   }
 
   @override
@@ -149,10 +190,40 @@ class _NewDoctorState extends State<NewDoctor> {
                 buildTextFormField('Years of Experience', Icons.access_time,
                     _yearsOfExperienceController),
                 sectionHeader('Availability'),
-                buildTextFormField(
-                    'Starting time', Icons.access_time, _startTimeController),
-                buildTextFormField(
-                    'Ending time', Icons.access_time, _endTimeController),
+                Row(
+                  children: [
+                    _buildDropDownButton(
+                      currentValue: startTimeFormat,
+                      items: ['am', 'pm'],
+                      onChanged: (value) {
+                        setState(() {
+                          startTimeFormat = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: buildTextFormField('Starting time',
+                          Icons.access_time, _startTimeController),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    _buildDropDownButton(
+                      currentValue: endTimeFormat,
+                      items: ['am', 'pm'],
+                      onChanged: (value) {
+                        setState(() {
+                          endTimeFormat = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: buildTextFormField(
+                          'Ending time', Icons.access_time, _endTimeController),
+                    ),
+                  ],
+                ),
                 buildDropdownFormField(
                   'Availability on call',
                   _onCall,
@@ -170,54 +241,41 @@ class _NewDoctorState extends State<NewDoctor> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         functionProvider.newDocReg(
-                            title: _titleController.text
-                                .trim()
-                                .toString()
-                                .toString(),
-                            firstName: _firstNameController.text
-                                .trim()
-                                .toString()
-                                .toString(),
+                            title: _titleController.text.trim(),
+                            firstName: _firstNameController.text.trim(),
                             lastName: _lastNameController.text.trim(),
-                            dob: _dobController.text.trim().toString(),
-                            gender: _gender.toString(),
-                            nationality: _nationality.toString(),
-                            mobile:
-                                _contactNumberController.text.trim().toString(),
-                            email: _emailController.text.trim().toString(),
-                            resAddress: _residentialAddressController.text
-                                .trim()
-                                .toString(),
-                            medLicNumber: _medicalLicenseNumberController.text
-                                .trim()
-                                .toString(),
-                            department: _specialty.toString(),
+                            dob: _dobController.text.trim(),
+                            gender: _gender,
+                            nationality: _nationality,
+                            mobile: _contactNumberController.text.trim(),
+                            email: _emailController.text.trim(),
+                            resAddress:
+                                _residentialAddressController.text.trim(),
+                            medLicNumber:
+                                _medicalLicenseNumberController.text.trim(),
+                            department: _specialty,
                             medSchool:
                                 _medicalSchoolController.text.trim().toString(),
-                            gradYear: _yearOfGraduationController.text
-                                .trim()
-                                .toString(),
+                            gradYear: _yearOfGraduationController.text.trim(),
                             resInfo:
                                 _residencyInfoController.text.trim().toString(),
-                            board: _boardCertificationsController.text
-                                .trim()
-                                .toString(),
-                            currentPos: _currentPositionController.text
-                                .trim()
-                                .toString(),
-                            currentEmp: _currentEmployerController.text
-                                .trim()
-                                .toString(),
-                            previousPos: _previousPositionsController.text
-                                .trim()
-                                .toString(),
-                            yearOfExp: _yearsOfExperienceController.text
-                                .trim()
-                                .toString(),
-                            startTime:
-                                _startTimeController.text.trim().toString(),
-                            endTime: _endTimeController.text.trim().toString(),
-                            onCall: _onCall.toString());
+                            board: _boardCertificationsController.text.trim(),
+                            currentPos: _currentPositionController.text.trim(),
+                            currentEmp: _currentEmployerController.text.trim(),
+                            previousPos:
+                                _previousPositionsController.text.trim(),
+                            yearOfExp: _yearsOfExperienceController.text.trim(),
+                            startTime: _startTimeController.text
+                                    .trim()
+                                    .contains(".")
+                                ? starttime(_startTimeController.text.trim())
+                                : starttime(
+                                    _startTimeController.text.trim() + ".00"),
+                            endTime:
+                                _endTimeController.text.trim().contains(".")
+                                    ? endtime()
+                                    : endtime() + ".00",
+                            onCall: _onCall);
                       }
                     },
                     child: Text('Submit'),
@@ -260,6 +318,11 @@ class _NewDoctorState extends State<NewDoctor> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(icon, color: Colors.teal),
         ),
+        onChanged: (value) {
+          _startTimeController.text.trim().contains(".")
+              ? starttime(_startTimeController.text.trim())
+              : starttime(_startTimeController.text.trim() + ".00");
+        },
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Please enter $label';
@@ -396,4 +459,39 @@ class _NewDoctorState extends State<NewDoctor> {
       ),
     );
   }
+}
+
+Widget _buildDropDownButton({
+  required String currentValue,
+  required List<String> items,
+  required ValueChanged<String?> onChanged,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+        color: Colors.white, border: Border.all(color: Colors.black)),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          iconEnabledColor: Colors.black,
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          // dropdownColor: Colors.deepPurple,
+          value: currentValue,
+          items: items
+              .map((String value) => DropdownMenuItem(
+                    value: value,
+                    child: Row(
+                      children: <Widget>[
+                        Text(value),
+                      ],
+                    ),
+                  ))
+              .toList(),
+          onChanged: onChanged,
+        ),
+      ),
+    ),
+  );
 }
