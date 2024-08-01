@@ -43,6 +43,7 @@ class ListElement {
   String? address;
   String? department;
   String? email;
+  String? img;
 
   ListElement({
     this.fname,
@@ -55,6 +56,7 @@ class ListElement {
     this.address,
     this.department,
     this.email,
+    this.img,
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
@@ -68,6 +70,7 @@ class ListElement {
         address: json["Address"],
         department: json["Department"],
         email: json["email"],
+        img: json["img"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +84,6 @@ class ListElement {
         "Address": address,
         "Department": department,
         "email": email,
+        "img": img,
       };
 }

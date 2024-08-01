@@ -58,10 +58,10 @@ class _NewDoctorState extends State<NewDoctor> {
         // int.parse(_startTimeController.text.trim()) <= 12.00
         ) {
       if (startTimeFormat == "pm") {
-        double time = double.parse(startTime) + 12;
+        double time = double.parse(startTime) + 12.00;
         // int finalTime = time + timeOfDay.minute;
         print(time);
-        timeString = time.toString();
+        timeString = time.toStringAsFixed(2);
       } else {
         timeString = startTime;
       }
@@ -71,20 +71,17 @@ class _NewDoctorState extends State<NewDoctor> {
     return timeString;
   }
 
-  String endtime() {
+  String endtime(String endTime) {
     String timeString = "";
-    TimeOfDay timeOfDay = TimeOfDay(
-        hour: int.parse(_endTimeController.text.trim() + ".00".split(".")[0]),
-        minute:
-            int.parse(_endTimeController.text.trim() + ".00".split(".")[1]));
-    if (timeOfDay.hour <= 12.00) {
-      if (endTimeFormat == "pm") {
-        int time = int.parse(_endTimeController.text.trim()) + 12;
-        timeString = time.toString();
+    if (double.parse(endTime) < 12.00) {
+      if (startTimeFormat == "pm") {
+        double time = double.parse(endTime) + 12.00;
+        timeString = time.toStringAsFixed(2);
       } else {
-        timeString = _startTimeController.text.trim();
+        timeString = endTime;
       }
     }
+    print(timeString);
     return timeString;
   }
 
@@ -273,8 +270,9 @@ class _NewDoctorState extends State<NewDoctor> {
                                     _startTimeController.text.trim() + ".00"),
                             endTime:
                                 _endTimeController.text.trim().contains(".")
-                                    ? endtime()
-                                    : endtime() + ".00",
+                                    ? endtime(_endTimeController.text.trim())
+                                    : endtime(
+                                        _endTimeController.text.trim() + ".00"),
                             onCall: _onCall);
                       }
                     },
@@ -318,11 +316,6 @@ class _NewDoctorState extends State<NewDoctor> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(icon, color: Colors.teal),
         ),
-        onChanged: (value) {
-          _startTimeController.text.trim().contains(".")
-              ? starttime(_startTimeController.text.trim())
-              : starttime(_startTimeController.text.trim() + ".00");
-        },
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Please enter $label';

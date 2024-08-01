@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +23,17 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BookingPatientController(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TextSearchController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        // home: SplashScreen(),
+        home: Scaffold(
+          body: NewDoctor(),
+        ),
       ),
     );
   }
