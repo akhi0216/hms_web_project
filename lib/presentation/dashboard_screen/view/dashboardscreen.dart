@@ -139,7 +139,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
     {
       "Booking": NewBookings(),
-      "current bookings": CurrentBookingPage(),
+      // "current bookings": CurrentBookingPage(),
       "Records": DummyPage(),
       "Availability": DummyPage(),
     },

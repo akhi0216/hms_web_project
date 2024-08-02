@@ -12,6 +12,7 @@ class BookingPatientController with ChangeNotifier {
   Doctorsmodelclass doctorsmodelclass = Doctorsmodelclass();
   List<String> deptList = [];
   List<String> timeList = [];
+  List<String> selectedtimeList = [];
   bool? isSuccessful;
 
   department() async {
@@ -47,6 +48,34 @@ class BookingPatientController with ChangeNotifier {
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
       timeList = List<String>.from(await jsonDecode(res.body));
       print(timeList);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
+
+  doctorTimeSlots({
+    required String? empid,
+    required String? dept,
+  }) async {
+    selectedtimeList.clear();
+    String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {
+        "doctoridcontroller": empid,
+        "departmentidcontroller": dept,
+        // "datecontroller": date
+      });
+      print(res.body);
+      // List timeSlotList = await jsonDecode(res.body);
+      // print(timeSlotList);
+      // for (var i = 0; i < timeList.length; i++) {
+      //   if (timeSlotList[0][i.toString()] == null) {
+      //     // selectedtimeList.add(timeSlotList[0][i.toString()]);
+      //     selectedtimeList.add(i.toString());
+      //   }
+      // }
+      // print("----$selectedtimeList");
     } catch (e) {
       log(e.toString());
     }
@@ -96,22 +125,31 @@ class BookingPatientController with ChangeNotifier {
         "timecontroller": time,
       });
       print("booking : ${res.body}");
-      isSuccessful = res.body == "success" ? true : false;
+      isSuccessful = res.statusCode == 200 ? true : false;
     } catch (e) {
       log(e.toString());
     }
     notifyListeners();
   }
 
-// 
-timeslotBooking({required String dept, required String docId,}
+//
 
-){}
+  // timeslotBooking({
+  //   required String dept,
+  //   required String docId,
+  // }) async {
+  //   String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+  //   try {
+  //     var res = await http.post(Uri.parse(uri), body: {
+  //       "departmentcontroller": dept,
+  //       "doctornamecontroller": docId,
+  //     });
+  //     print(res.body);
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  //   notifyListeners();
+  // }
 
-// 
-
-
-
-
-
+//
 }
