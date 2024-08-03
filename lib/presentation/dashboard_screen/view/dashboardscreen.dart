@@ -151,7 +151,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "New Doctor": NewDoctor()
     },
     {
-      "New patient": NewPatientReg(),
+      "New patient": NewPatientRegistrationscreen(),
       "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
@@ -192,7 +192,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   void initState() {
     super.initState();
     // screen that comes first while opening dashboard
-    screen = NewPatientReg();
+    screen = NewPatientRegistrationscreen();
   }
 
   @override

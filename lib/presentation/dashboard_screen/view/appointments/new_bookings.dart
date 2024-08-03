@@ -100,7 +100,7 @@ class _NewBookingsState extends State<NewBookings> {
             varprovider.patientBookingModel.list?[0].email ?? "";
         phoneNumber = varprovider.patientBookingModel.list?[0].phn ?? "";
         phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
-                ?.replaceRange(0, 6, "******") ??
+                ?.replaceRange(0, 6, "") ??
             "";
         _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
         await functionprovider.doctors(_selectedDepartment);
