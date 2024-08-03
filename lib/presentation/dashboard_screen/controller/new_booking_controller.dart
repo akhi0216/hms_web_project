@@ -67,37 +67,6 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
-<<<<<<< HEAD
-  doctorTimeSlots({
-    required String? empid,
-    required String? dept,
-  }) async {
-    selectedtimeList.clear();
-    String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
-    try {
-      var res = await http.post(Uri.parse(uri), body: {
-        "doctoridcontroller": empid,
-        "departmentidcontroller": dept,
-        // "datecontroller": date
-      });
-      print(res.body);
-      // List timeSlotList = await jsonDecode(res.body);
-      // print(timeSlotList);
-      // for (var i = 0; i < timeList.length; i++) {
-      //   if (timeSlotList[0][i.toString()] == null) {
-      //     // selectedtimeList.add(timeSlotList[0][i.toString()]);
-      //     selectedtimeList.add(i.toString());
-      //   }
-      // }
-      // print("----$selectedtimeList");
-    } catch (e) {
-      log(e.toString());
-    }
-    notifyListeners();
-  }
-
-||||||| dbb5f9d
-=======
   doctorTimeSlots({
     required String? empid,
     required String? dept,
@@ -127,7 +96,6 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
->>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
   Future<void> patientdata(String searchText) async {
     notifyListeners();
     String uri = "https://cybot.avanzosolutions.in/hms/bookingpatient.php";
