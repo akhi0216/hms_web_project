@@ -23,12 +23,18 @@ class _NewBookingsState extends State<NewBookings> {
   final TextEditingController patientidcontroller = TextEditingController();
   String? _selectedDoctor;
   String? _selectedDoctorId;
-  String? _selectedTimeSlot;
   String? _selectedDepartment;
   String phoneNumber = "";
+<<<<<<< HEAD
   List<String> _doctorList = [];
 //
   int? selectedindex;
+||||||| dbb5f9d
+  List<String> _doctorList = [];
+=======
+//
+  int? selectedindex;
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
 
   callFuction() async {
     await Provider.of<BookingPatientController>(context, listen: false)
@@ -73,7 +79,7 @@ class _NewBookingsState extends State<NewBookings> {
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
     fieldSubmitted() async {
-      _doctorList.clear();
+      varprovider.doctorList.clear();
       varprovider.deptList[0];
       varprovider.timeList.clear();
       varprovider.patientBookingModel.list?.clear();
@@ -93,21 +99,21 @@ class _NewBookingsState extends State<NewBookings> {
           ),
         );
       } else {
-        setState(() {
-          firstnamecontroller.text =
-              varprovider.patientBookingModel.list?[0].fname ?? "";
-          lastnamecontroller.text =
-              varprovider.patientBookingModel.list?[0].lname ?? "";
-          _emailController.text =
-              varprovider.patientBookingModel.list?[0].email ?? "";
-          phoneNumber = varprovider.patientBookingModel.list?[0].phn ?? "";
-          phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
-                  ?.replaceRange(0, 6, "******") ??
-              "";
-          _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
-          _selectedDoctor = varprovider.patientBookingModel.list?[0].doc;
-          _selectedDoctorId = varprovider.patientBookingModel.list?[0].empid;
-        });
+        setState(() {});
+        firstnamecontroller.text =
+            varprovider.patientBookingModel.list?[0].fname ?? "";
+        lastnamecontroller.text =
+            varprovider.patientBookingModel.list?[0].lname ?? "";
+        _emailController.text =
+            varprovider.patientBookingModel.list?[0].email ?? "";
+        phoneNumber = varprovider.patientBookingModel.list?[0].phn ?? "";
+        phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
+                ?.replaceRange(0, 6, "******") ??
+            "";
+        _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
+        await functionprovider.doctors(_selectedDepartment);
+        _selectedDoctor = varprovider.doctorList[0];
+        _selectedDoctorId = varprovider.doctorIdList[0];
       }
     }
 
@@ -277,17 +283,31 @@ class _NewBookingsState extends State<NewBookings> {
                         _selectedDepartment = newValue;
                       });
                       int itemid = 0;
+<<<<<<< HEAD
                       _doctorList.clear();
                       varprovider.timeList.clear();
 
+||||||| dbb5f9d
+                      _doctorList.clear();
+                      varprovider.timeList.clear();
+=======
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
                       await functionprovider.doctors(_selectedDepartment);
-                      for (var i = 0; i < _doctorList.length; i++) {
-                        if (_doctorList[i] == _selectedDoctor) {
+
+                      _selectedDoctor = varprovider.doctorList.isNotEmpty
+                          ? varprovider.doctorList[0]
+                          : null;
+                      _selectedDoctorId = varprovider.doctorList.isNotEmpty
+                          ? varprovider.doctorIdList[0]
+                          : null;
+                      for (var i = 0; i < varprovider.doctorList.length; i++) {
+                        if (varprovider.doctorList[i] == _selectedDoctor) {
                           itemid = i;
                         }
                       }
                       await functionprovider.doctorTime(
                           varprovider.doctorsmodelclass.list?[itemid].empcode);
+<<<<<<< HEAD
                       if (varprovider.doctorsmodelclass.list!.isNotEmpty) {
                         for (var i = 0;
                             i < varprovider.doctorsmodelclass.list!.length;
@@ -306,6 +326,27 @@ class _NewBookingsState extends State<NewBookings> {
 
                       _selectedDoctor = _doctorList[0];
                       _selectedTimeSlot = varprovider.timeList[0];
+||||||| dbb5f9d
+                      if (varprovider.doctorsmodelclass.list!.isNotEmpty) {
+                        for (var i = 0;
+                            i < varprovider.doctorsmodelclass.list!.length;
+                            i++) {
+                          _doctorList.add(
+                              varprovider.doctorsmodelclass.list?[i].name ??
+                                  "");
+                        }
+                      }
+
+                      _selectedDoctor = _doctorList[0];
+                      _selectedTimeSlot = varprovider.timeList[0];
+=======
+                      await functionprovider.doctorTimeSlots(
+                        empid:
+                            varprovider.doctorsmodelclass.list?[itemid].empcode,
+                        dept: _selectedDepartment,
+                        // _dateController.text.trim()
+                      );
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -334,7 +375,7 @@ class _NewBookingsState extends State<NewBookings> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    items: _doctorList.map((String value) {
+                    items: varprovider.doctorList.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -345,14 +386,15 @@ class _NewBookingsState extends State<NewBookings> {
                       setState(() {
                         _selectedDoctor = newValue;
                       });
-                      for (var i = 0; i < _doctorList.length; i++) {
-                        if (_doctorList[i] == _selectedDoctor) {
+                      for (var i = 0; i < varprovider.doctorList.length; i++) {
+                        if (varprovider.doctorList[i] == _selectedDoctor) {
                           itemid = i;
                         }
                       }
                       varprovider.timeList.clear();
                       await functionprovider.doctorTime(
                           varprovider.doctorsmodelclass.list?[itemid].empcode);
+<<<<<<< HEAD
                       _selectedTimeSlot = varprovider.timeList[0];
                       await functionprovider.doctorTimeSlots(
                         empid:
@@ -360,6 +402,17 @@ class _NewBookingsState extends State<NewBookings> {
                         dept: _selectedDepartment,
                         // _dateController.text.trim()
                       );
+||||||| dbb5f9d
+                      _selectedTimeSlot = varprovider.timeList[0];
+=======
+                      await functionprovider.doctorTimeSlots(
+                        empid:
+                            varprovider.doctorsmodelclass.list?[itemid].empcode,
+                        dept: _selectedDepartment,
+                        // _dateController.text.trim()
+                      );
+                      _selectedDoctorId = varprovider.doctorIdList[itemid];
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -431,6 +484,7 @@ class _NewBookingsState extends State<NewBookings> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
+<<<<<<< HEAD
                   // DropdownButtonFormField<String>(
                   //   value: _selectedTimeSlot,
                   //   hint: const Text('Select Time Slot'),
@@ -554,10 +608,141 @@ class _NewBookingsState extends State<NewBookings> {
 
                   // ------------------------------------------------------------------------------------------
                   const SizedBox(height: 20.0),
+||||||| dbb5f9d
+=======
+                  // DropdownButtonFormField<String>(
+                  //   value: _selectedTimeSlot,
+                  //   hint: const Text('Select Time Slot'),
+                  //   decoration: InputDecoration(
+                  //     contentPadding:
+                  //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  //     filled: true,
+                  //     fillColor: Colors.white,
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(8.0),
+                  //     ),
+                  //   ),
+                  //   items: varprovider.timeList.map((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(value),
+                  //     );
+                  //   }).toList(),
+                  //   onChanged: (newValue) {
+                  //     setState(() {
+                  //       _selectedTimeSlot = newValue;
+                  //     });
+                  //   },
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please select a time slot';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  //  -----------------------------------------------------------------------------
+                  // List.generate(
+                  //           doctorsList[index]['doctor_time'].length,
+                  //           (index2) {
+                  //             bool isSelected = selectedTimesList[index][
+                  //                     doctorsList[index]['doctor_time']
+                  //                         [index2]] ??
+                  //                 false; // Check if time is selected
+                  //             return InkWell(
+                  //               onTap: () {
+
+                  //               },
+                  //               child: Container(
+                  //                 padding: EdgeInsets.all(7),
+                  //                 decoration: BoxDecoration(
+                  //                   color: isSelected
+                  //                       ? Colors.red[700] // Selected color
+                  //                       : Colors.green, // Default color
+                  //                   border: Border.all(color: Colors.black),
+                  //                   borderRadius:
+                  //                       BorderRadius.all(Radius.circular(7)),
+                  //                 ),
+                  //                 child: Text(
+                  //                   doctorsList[index]['doctor_time'][index2],
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           },
+                  //         ),
+
+                  Wrap(
+                    children: List.generate(
+                      varprovider.timeList.length,
+                      (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            //
+                            // print(selectedindex);
+                            // print(varprovider.selectedtimeList[selectedindex!]);
+                            //
+                            // ------------------------------------------
+                            varprovider.selectedtimeList
+                                    .contains(index.toString())
+                                ? setState(() {
+                                    selectedindex = index;
+                                  })
+                                : setState(() {
+                                    selectedindex = null;
+                                  });
+                            log(varprovider.timeList[selectedindex!]);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 3),
+                            child: Container(
+                              padding: EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                // color:
+                                // index == selectedindex
+                                //     ? Colors.grey
+                                //     : Colors.green,
+                                // color: isSelected
+                                //     ? Colors.red[700] // Selected color
+                                //     : Colors.green, // Default color
+                                border: Border.all(
+                                    width: 2,
+                                    color: varprovider.selectedtimeList
+                                            .contains(index.toString())
+                                        ? selectedindex == index
+                                            ? Colors.green
+                                            : Colors.black
+                                        : Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7)),
+                              ),
+                              child: Text(
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: varprovider.selectedtimeList
+                                            .contains(index.toString())
+                                        ? selectedindex == index
+                                            ? Colors.green
+                                            : Colors.black
+                                        : Colors.grey),
+                                varprovider.timeList[index],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // ------------------------------------------------------------------------------------------
+                  const SizedBox(height: 20.0),
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
+                        print(_selectedDoctorId);
+                        print(_selectedDoctor);
                         if (_formKey.currentState?.validate() ?? false) {
+<<<<<<< HEAD
                           await functionprovider.patientBooking(
                             patientId: patientidcontroller.text.trim(),
                             fName: firstnamecontroller.text.trim(),
@@ -572,6 +757,36 @@ class _NewBookingsState extends State<NewBookings> {
                             time: varprovider.timeList[selectedindex!],
                           );
                           varprovider.isSuccessful == true
+||||||| dbb5f9d
+                          await functionprovider.patientBooking(
+                            patientId: patientidcontroller.text.trim(),
+                            fName: firstnamecontroller.text.trim(),
+                            lName: lastnamecontroller.text.trim(),
+                            eMail: _emailController.text.trim(),
+                            phNum: phoneNumber,
+                            dept: _selectedDepartment!,
+                            docId: _selectedDoctorId!,
+                            reason: _reasonController.text.trim(),
+                            date: _dateController.text.trim(),
+                            time: _selectedTimeSlot!,
+                          );
+                          varprovider.isSuccessful == true
+=======
+                          // await functionprovider.patientBooking(
+                          //   patientId: patientidcontroller.text.trim(),
+                          //   fName: firstnamecontroller.text.trim(),
+                          //   lName: lastnamecontroller.text.trim(),
+                          //   eMail: _emailController.text.trim(),
+                          //   phNum: phoneNumber,
+                          //   dept: _selectedDepartment!,
+                          //   docId: _selectedDoctorId!,
+                          //   reason: _reasonController.text.trim(),
+                          //   date: _dateController.text.trim(),
+                          //   // timeeee
+                          //   time: varprovider.timeList[selectedindex!],
+                          // );
+                          true == true
+>>>>>>> 040c01e8496892cb2f30426db72d92918cce8ad4
                               ? showDialog(
                                   context: context,
                                   builder: (context) {
@@ -589,6 +804,18 @@ class _NewBookingsState extends State<NewBookings> {
                                             firstnamecontroller.clear();
                                             lastnamecontroller.clear();
                                             phnumbercontroller.clear();
+                                            // varprovider.deptList.clear();
+                                            varprovider.doctorIdList.clear();
+                                            varprovider.doctorList.clear();
+                                            varprovider.timeList.clear();
+                                            varprovider.selectedtimeList
+                                                .clear();
+                                            _selectedDepartment = null;
+                                            _selectedDoctor = null;
+                                            _selectedDoctorId = null;
+                                            selectedindex = null;
+
+                                            setState(() {});
                                             Navigator.pop(context);
                                           },
                                         )
