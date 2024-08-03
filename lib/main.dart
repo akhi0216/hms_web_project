@@ -32,12 +32,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
-        home: Scaffold(
-          // body: IpBilling(),
-          // body: IpBillingNew(),
-          body: NewBookings(),
-        ),
+        home: SplashScreen(),
+        // home: Scaffold(
+        //   // body: IpBilling(),
+        //   // body: IpBillingNew(),
+        //   body: NewBookings(),
+        // ),
       ),
     );
   }
