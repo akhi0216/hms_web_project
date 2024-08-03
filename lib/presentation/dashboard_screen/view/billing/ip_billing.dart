@@ -15,12 +15,12 @@ class _IpBillingState extends State<IpBilling> {
   final _admissionDateController = TextEditingController();
   final _dischargeDateController = TextEditingController();
 
-  final List<List<TextEditingController>> table1Controllers =
-      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+  List<List<String>> table1Controllers =
+      List.generate(4, (_) => List.generate(4, (_) => "hahi"));
   final List<List<TextEditingController>> table2Controllers =
-      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+      List.generate(4, (_) => List.generate(3, (_) => TextEditingController()));
   final List<List<TextEditingController>> table3Controllers =
-      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
+      List.generate(4, (_) => List.generate(3, (_) => TextEditingController()));
   final List<List<TextEditingController>> table4Controllers =
       List.generate(3, (_) => List.generate(6, (_) => TextEditingController()));
   final List<List<TextEditingController>> table5Controllers =
@@ -64,6 +64,9 @@ class _IpBillingState extends State<IpBilling> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> hello = ["jdakjd", "fakdjfhjak"];
+    table1Controllers[0] = hello;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Form(
@@ -107,7 +110,7 @@ class _IpBillingState extends State<IpBilling> {
               ),
               buildTable(
                 titles: ['Date & Time', 'From', 'To', 'Name'],
-                controllers: table1Controllers,
+                name: table1Controllers,
               ),
               SizedBox(height: 20),
               Text(
@@ -448,7 +451,8 @@ class _IpBillingState extends State<IpBilling> {
 
   Widget buildTable({
     required List<String> titles,
-    required List<List<TextEditingController>> controllers,
+    List<List<String>>? name,
+    List<List<TextEditingController>>? controllers,
   }) {
     int numColumns = titles.length;
     return Table(
@@ -468,30 +472,33 @@ class _IpBillingState extends State<IpBilling> {
             );
           }).toList(),
         ),
-        ...controllers.map((rowControllers) {
-          // Pad the row with empty controllers if needed
-          int difference = numColumns - rowControllers.length;
-          List<Widget> row = rowControllers.map((controller) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            );
-          }).toList();
-          if (difference > 0) {
-            for (int i = 0; i < difference; i++) {
-              row.add(Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(),
-              ));
-            }
-          }
-          return TableRow(children: row);
-        }).toList(),
+        
+        ...name?.map((rowControllers) {
+              // Pad the row with empty controllers if needed
+              int difference = numColumns - rowControllers.length;
+              List<Widget> row = rowControllers.map((names) {
+                return Padding(
+                    padding: const EdgeInsets.all(8.0), child: Text(names)
+                    // TextFormField(
+                    //   controller: controller,
+                    //   decoration: InputDecoration(
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    // ),
+                    );
+              }).toList();
+              if (difference > 0) {
+                for (int i = 0; i < difference; i++) {
+                  row.add(Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(),
+                  ));
+                }
+              }
+              // return row;
+              return TableRow(children: row);
+            }).toList() ??
+            []
       ],
     );
   }
@@ -524,23 +531,19 @@ class _IpBillingState extends State<IpBilling> {
           int difference = numColumns - rowControllers.length;
           List<Widget> row = rowControllers.map((controller) {
             return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              padding: const EdgeInsets.all(8),
+              child: Text(controller.text.trim()),
             );
+            // return Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: TextFormField(
+            //     controller: controller,
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(),
+            //     ),
+            //   ),
+            // );
           }).toList();
-          if (difference > 0) {
-            for (int i = 0; i < difference; i++) {
-              row.add(Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(),
-              ));
-            }
-          }
           // Insert the second column text in the correct position
           row.insert(
               1,
@@ -548,6 +551,14 @@ class _IpBillingState extends State<IpBilling> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(child: Text(secondColumnText)),
               ));
+          if (difference > 1) {
+            for (int i = 0; i < difference; i++) {
+              row.add(Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(),
+              ));
+            }
+          }
           return TableRow(children: row);
         }).toList(),
       ],

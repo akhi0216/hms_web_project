@@ -11,10 +11,15 @@ class BookingPatientController with ChangeNotifier {
   BookingPatientModel patientBookingModel = BookingPatientModel();
   Doctorsmodelclass doctorsmodelclass = Doctorsmodelclass();
   List<String> deptList = [];
+  List<String> doctorList = [];
+  List<String> doctorIdList = [];
+
   List<String> timeList = [];
+  List<String> selectedtimeList = [];
   bool? isSuccessful;
 
   department() async {
+    deptList.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
     try {
       var res = await http.get(Uri.parse(uri));
@@ -26,7 +31,9 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
-  doctors(String? dept) async {
+  Future<void> doctors(String? dept) async {
+    doctorList.clear();
+    doctorIdList.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/department_select.php";
     try {
       var res =
@@ -34,6 +41,12 @@ class BookingPatientController with ChangeNotifier {
       print(res.body);
       var json = await jsonDecode(res.body) as Map<String, dynamic>;
       doctorsmodelclass = Doctorsmodelclass.fromJson(json);
+      if (doctorsmodelclass.list!.isNotEmpty) {
+        for (var i = 0; i < doctorsmodelclass.list!.length; i++) {
+          doctorList.add(doctorsmodelclass.list?[i].name ?? "");
+          doctorIdList.add(doctorsmodelclass.list?[i].empcode ?? "");
+        }
+      }
     } catch (e) {
       log(e.toString());
     }
@@ -41,12 +54,42 @@ class BookingPatientController with ChangeNotifier {
   }
 
   doctorTime(String? empid) async {
+    timeList.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/doctortiming.php";
     try {
       var res = await http
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
       timeList = List<String>.from(await jsonDecode(res.body));
       print(timeList);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
+
+  doctorTimeSlots({
+    required String? empid,
+    required String? dept,
+  }) async {
+    selectedtimeList.clear();
+    String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {
+        "doctoridcontroller": empid,
+        "departmentidcontroller": dept,
+        // "datecontroller": date
+      });
+      // print("-------------${res.body}");
+      Map<String, dynamic> timeSlotMap = await jsonDecode(res.body);
+      print(timeSlotMap);
+      for (var i = 1; i < timeList.length + 2; i++) {
+        if (timeSlotMap.containsKey(i.toString())) {
+          // selectedtimeList.add(timeSlotList[0][i.toString()]);
+          int j = i - 2;
+          selectedtimeList.add(j.toString());
+        }
+      }
+      print("----$selectedtimeList");
     } catch (e) {
       log(e.toString());
     }
@@ -103,15 +146,24 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
-// 
-timeslotBooking({required String dept, required String docId,}
+//
 
-){}
+  // timeslotBooking({
+  //   required String dept,
+  //   required String docId,
+  // }) async {
+  //   String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+  //   try {
+  //     var res = await http.post(Uri.parse(uri), body: {
+  //       "departmentcontroller": dept,
+  //       "doctornamecontroller": docId,
+  //     });
+  //     print(res.body);
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  //   notifyListeners();
+  // }
 
-// 
-
-
-
-
-
+//
 }
