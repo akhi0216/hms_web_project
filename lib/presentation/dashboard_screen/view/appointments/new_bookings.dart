@@ -552,20 +552,20 @@ class _NewBookingsState extends State<NewBookings> {
                         print(_selectedDoctorId);
                         print(_selectedDoctor);
                         if (_formKey.currentState?.validate() ?? false) {
-                          // await functionprovider.patientBooking(
-                          //   patientId: patientidcontroller.text.trim(),
-                          //   fName: firstnamecontroller.text.trim(),
-                          //   lName: lastnamecontroller.text.trim(),
-                          //   eMail: _emailController.text.trim(),
-                          //   phNum: phoneNumber,
-                          //   dept: _selectedDepartment!,
-                          //   docId: _selectedDoctorId!,
-                          //   reason: _reasonController.text.trim(),
-                          //   date: _dateController.text.trim(),
-                          //   // timeeee
-                          //   time: varprovider.timeList[selectedindex!],
-                          // );
-                          true == true
+                          await functionprovider.patientBooking(
+                            patientId: patientidcontroller.text.trim(),
+                            fName: firstnamecontroller.text.trim(),
+                            lName: lastnamecontroller.text.trim(),
+                            eMail: _emailController.text.trim(),
+                            phNum: phoneNumber,
+                            dept: _selectedDepartment!,
+                            docId: _selectedDoctorId!,
+                            reason: _reasonController.text.trim(),
+                            date: _dateController.text.trim(),
+                            // timeeee
+                            time: varprovider.timeList[selectedindex!],
+                          );
+                          varprovider.isSuccessful == true
                               ? showDialog(
                                   context: context,
                                   builder: (context) {
