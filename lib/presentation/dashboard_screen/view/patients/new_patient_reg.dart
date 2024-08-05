@@ -403,7 +403,7 @@ class _NewPatientRegistrationscreenState
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     labelText: 'Marital status',
                     prefixIcon: Icon(
-                      Icons.ring_volume,
+                      Icons.group,
                       color: ColorConstants.mainBlue,
                     ),
                     filled: true,
@@ -765,12 +765,6 @@ class _NewPatientRegistrationscreenState
                             } else {
                               print("Form is invalid");
                             }
-
-
-                          
-
-
-
                           }
                         : null,
                     child: const Text(

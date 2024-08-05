@@ -8,6 +8,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -192,7 +193,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   void initState() {
     super.initState();
     // screen that comes first while opening dashboard
-    screen = NewPatientRegistrationscreen();
+    // screen = NewPatientRegistrationscreen();
+    screen = HomeDashboard();
   }
 
   @override
