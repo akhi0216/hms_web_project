@@ -85,6 +85,7 @@ class _NewPatientRegistrationscreenState
 
   File? _profileImage;
   final ImagePicker _picker = ImagePicker();
+
   File? files;
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
