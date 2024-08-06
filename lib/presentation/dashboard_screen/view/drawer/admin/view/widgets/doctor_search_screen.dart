@@ -5,14 +5,14 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_search.dart';
 import 'package:http/http.dart' as http;
 
-class AdminScreen extends StatefulWidget {
-  const AdminScreen({super.key});
+class DoctorSearchScreen extends StatefulWidget {
+  const DoctorSearchScreen({super.key});
 
   @override
-  State<AdminScreen> createState() => _AdminScreenState();
+  State<DoctorSearchScreen> createState() => _DoctorSearchScreenState();
 }
 
-class _AdminScreenState extends State<AdminScreen> {
+class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
   DoctorSearchModel doctorSearchModel = DoctorSearchModel();
 
   TextEditingController searchController = TextEditingController();
@@ -40,9 +40,6 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12),
