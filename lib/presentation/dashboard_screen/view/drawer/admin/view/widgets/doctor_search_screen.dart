@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_search.dart';
-import 'package:http/http.dart' as http;
+import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
+import 'package:provider/provider.dart';
 
 class DoctorSearchScreen extends StatefulWidget {
   const DoctorSearchScreen({super.key});
@@ -12,32 +10,13 @@ class DoctorSearchScreen extends StatefulWidget {
 }
 
 class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
-  DoctorSearchModel doctorSearchModel = DoctorSearchModel();
-
   TextEditingController searchController = TextEditingController();
-  Map<String, dynamic> ret = {};
-
-  searchDoctor() async {
-    ret.clear();
-    String url = "https://cybot.avanzosolutions.in/hms/doctorsearch.php";
-    try {
-      var res = await http.post(Uri.parse(url), body: {
-        "patientnamecontroller": searchController.text.trim(),
-      });
-      print(res.body);
-      setState(() {
-        ret = jsonDecode(res.body);
-      });
-      print(ret);
-      doctorSearchModel = DoctorSearchModel.fromJson(ret);
-    } on Exception catch (e) {
-      print(e);
-    }
-    return ret;
-  }
 
   @override
   Widget build(BuildContext context) {
+    var varProvider = Provider.of<TextSearchController>(context);
+    var functionProvider =
+        Provider.of<TextSearchController>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -59,7 +38,7 @@ class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
             controller: searchController,
             onFieldSubmitted: (value) async {
               setState(() {});
-              await searchDoctor();
+              await functionProvider.searchDoctor(searchController.text.trim());
             },
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -74,7 +53,8 @@ class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
               suffixIcon: IconButton(
                 onPressed: () async {
                   setState(() {});
-                  await searchDoctor();
+                  await functionProvider
+                      .searchDoctor(searchController.text.trim());
                 },
                 icon: Icon(Icons.search),
                 color: ColorConstants.mainBlue,
@@ -90,36 +70,43 @@ class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
           height: 44,
         ),
         detailsContainer(
-            label: "Doctor name : ", title: doctorSearchModel.fname ?? ""),
+            label: "Doctor name : ",
+            title: varProvider.doctorSearchModel.fname ?? ""),
         detailsContainer(
-            label: "Employee id : ", title: doctorSearchModel.eid ?? ""),
+            label: "Employee id : ",
+            title: varProvider.doctorSearchModel.eid ?? ""),
         detailsContainer(
             label: "Medical licence number : ",
-            title: doctorSearchModel.medlic ?? ""),
+            title: varProvider.doctorSearchModel.medlic ?? ""),
         detailsContainer(
-            label: "Address : ", title: doctorSearchModel.addr ?? ""),
+            label: "Address : ",
+            title: varProvider.doctorSearchModel.addr ?? ""),
         detailsContainer(
-            label: "Mobile : ", title: doctorSearchModel.mob ?? ""),
+            label: "Mobile : ", title: varProvider.doctorSearchModel.mob ?? ""),
         detailsContainer(
             label: "Year of graduation : ",
-            title: doctorSearchModel.yrofgrad ?? ""),
+            title: varProvider.doctorSearchModel.yrofgrad ?? ""),
         detailsContainer(
             label: "Current position : ",
-            title: doctorSearchModel.curpos ?? ""),
+            title: varProvider.doctorSearchModel.curpos ?? ""),
         detailsContainer(
             label: "Available starting time : ",
-            title: doctorSearchModel.availabilitystart ?? ""),
+            title: varProvider.doctorSearchModel.availabilitystart ?? ""),
         detailsContainer(
             label: "Available ending time : ",
-            title: doctorSearchModel.availabilityend ?? ""),
+            title: varProvider.doctorSearchModel.availabilityend ?? ""),
         detailsContainer(
-            label: "Date of birth : ", title: doctorSearchModel.dob.toString()),
+            label: "Date of birth : ",
+            title: varProvider.doctorSearchModel.dob.toString()),
         detailsContainer(
-            label: "School : ", title: doctorSearchModel.school ?? ""),
+            label: "School : ",
+            title: varProvider.doctorSearchModel.school ?? ""),
         detailsContainer(
-            label: "Department : ", title: doctorSearchModel.department ?? ""),
+            label: "Department : ",
+            title: varProvider.doctorSearchModel.department ?? ""),
         detailsContainer(
-            label: "Email : ", title: doctorSearchModel.email ?? ""),
+            label: "Email : ",
+            title: varProvider.doctorSearchModel.email ?? ""),
       ],
     );
   }
