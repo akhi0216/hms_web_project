@@ -38,7 +38,9 @@ class MyApp extends StatelessWidget {
         home: SplashScreen(),
         // home: Scaffold(
         //   // body: IpBilling(),
-        //   body: NewPatientReg(),
+        //   body: AdminScreen(
+        //     adminName: "Avanzo",
+        //   ),
         // ),
       ),
     );

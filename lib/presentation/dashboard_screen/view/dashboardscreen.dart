@@ -239,7 +239,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminScreen(),
+                          builder: (context) => AdminScreen(
+                            adminName: widget.userName,
+                          ),
                         ));
                   },
                   child: ListTile(

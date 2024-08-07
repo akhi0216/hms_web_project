@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 class DoctorSearchScreen extends StatefulWidget {
   const DoctorSearchScreen({super.key});
-
   @override
   State<DoctorSearchScreen> createState() => _DoctorSearchScreenState();
 }
@@ -39,97 +38,89 @@ class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: TextFormField(
-                  controller: searchController,
-                  onFieldSubmitted: (value) async {
-                    setState(() {});
-                    await searchDoctor();
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: ColorConstants.mainBlue),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide:
-                          BorderSide(color: ColorConstants.mainBlue, width: 2),
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () async {
-                        setState(() {});
-                        await searchDoctor();
-                      },
-                      icon: Icon(Icons.search),
-                      color: ColorConstants.mainBlue,
-                    ),
-                    hintText: "Search patient by name/id/username",
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  ),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.sizeOf(context).width * .7,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
               ),
-              SizedBox(
-                height: 44,
-              ),
-              detailsContainer(
-                  label: "Doctor name : ",
-                  title: doctorSearchModel.fname ?? ""),
-              detailsContainer(
-                  label: "Employee id : ", title: doctorSearchModel.eid ?? ""),
-              detailsContainer(
-                  label: "Medical licence number : ",
-                  title: doctorSearchModel.medlic ?? ""),
-              detailsContainer(
-                  label: "Address : ", title: doctorSearchModel.addr ?? ""),
-              detailsContainer(
-                  label: "Mobile : ", title: doctorSearchModel.mob ?? ""),
-              detailsContainer(
-                  label: "Year of graduation : ",
-                  title: doctorSearchModel.yrofgrad ?? ""),
-              detailsContainer(
-                  label: "Current position : ",
-                  title: doctorSearchModel.curpos ?? ""),
-              detailsContainer(
-                  label: "Available starting time : ",
-                  title: doctorSearchModel.availabilitystart ?? ""),
-              detailsContainer(
-                  label: "Available ending time : ",
-                  title: doctorSearchModel.availabilityend ?? ""),
-              detailsContainer(
-                  label: "Date of birth : ",
-                  title: doctorSearchModel.dob.toString()),
-              detailsContainer(
-                  label: "School : ", title: doctorSearchModel.school ?? ""),
-              detailsContainer(
-                  label: "Department : ",
-                  title: doctorSearchModel.department ?? ""),
-              detailsContainer(
-                  label: "Email : ", title: doctorSearchModel.email ?? ""),
             ],
           ),
+          child: TextFormField(
+            controller: searchController,
+            onFieldSubmitted: (value) async {
+              setState(() {});
+              await searchDoctor();
+            },
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(color: ColorConstants.mainBlue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderSide:
+                    BorderSide(color: ColorConstants.mainBlue, width: 2),
+              ),
+              suffixIcon: IconButton(
+                onPressed: () async {
+                  setState(() {});
+                  await searchDoctor();
+                },
+                icon: Icon(Icons.search),
+                color: ColorConstants.mainBlue,
+              ),
+              hintText: "Search patient by name/id/username",
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            ),
+          ),
         ),
-      ),
+        SizedBox(
+          height: 44,
+        ),
+        detailsContainer(
+            label: "Doctor name : ", title: doctorSearchModel.fname ?? ""),
+        detailsContainer(
+            label: "Employee id : ", title: doctorSearchModel.eid ?? ""),
+        detailsContainer(
+            label: "Medical licence number : ",
+            title: doctorSearchModel.medlic ?? ""),
+        detailsContainer(
+            label: "Address : ", title: doctorSearchModel.addr ?? ""),
+        detailsContainer(
+            label: "Mobile : ", title: doctorSearchModel.mob ?? ""),
+        detailsContainer(
+            label: "Year of graduation : ",
+            title: doctorSearchModel.yrofgrad ?? ""),
+        detailsContainer(
+            label: "Current position : ",
+            title: doctorSearchModel.curpos ?? ""),
+        detailsContainer(
+            label: "Available starting time : ",
+            title: doctorSearchModel.availabilitystart ?? ""),
+        detailsContainer(
+            label: "Available ending time : ",
+            title: doctorSearchModel.availabilityend ?? ""),
+        detailsContainer(
+            label: "Date of birth : ", title: doctorSearchModel.dob.toString()),
+        detailsContainer(
+            label: "School : ", title: doctorSearchModel.school ?? ""),
+        detailsContainer(
+            label: "Department : ", title: doctorSearchModel.department ?? ""),
+        detailsContainer(
+            label: "Email : ", title: doctorSearchModel.email ?? ""),
+      ],
     );
   }
 }

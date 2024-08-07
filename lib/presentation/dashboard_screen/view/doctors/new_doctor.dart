@@ -3,7 +3,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doc
 import 'package:provider/provider.dart';
 
 class NewDoctor extends StatefulWidget {
-  const NewDoctor({super.key});
+  NewDoctor({super.key});
 
   @override
   State<NewDoctor> createState() => _NewDoctorState();
