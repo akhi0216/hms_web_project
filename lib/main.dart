@@ -5,6 +5,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/search_
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing_new.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -32,12 +33,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        // home: Scaffold(
-        //   // body: IpBilling(),
-        //   // body: IpBillingNew(),
-        //   body: NewBookings(),
-        // ),
+        // home: SplashScreen(),
+        home: Scaffold(
+          // body: IpBilling(),
+          // body: IpBillingNew(),
+          body: DepartmentWiseAvailabilityScreen(),
+        ),
       ),
     );
   }
