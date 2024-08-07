@@ -1,10 +1,12 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
-// import 'package:hms_project/controller/booking_patient_controller.dart';
-// import 'package:hms_project/presentation/home_page/view/home_page.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'dart:io';
 import 'dart:developer';
 import 'package:provider/provider.dart';
@@ -84,17 +86,23 @@ class _NewPatientRegistrationscreenState
   }
 
   File? _profileImage;
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker imagePicker = ImagePicker();
+  Uint8List pickedFileBytes = Uint8List.fromList([]);
 
   File? files;
   Future<void> _pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         _profileImage = File(image.path);
       });
     }
     imageName = _profileImage?.path.split('/').last;
+    pickedFileBytes = await image!.readAsBytes();
+
+    print(_profileImage);
+    // print(pickedFileBytes);
     print(_profileImage?.path.split('/').last);
   }
 
@@ -252,8 +260,10 @@ class _NewPatientRegistrationscreenState
                       radius: 50,
                       backgroundColor: Colors.grey.shade300,
                       backgroundImage: _profileImage != null
-                          ? FileImage(_profileImage!)
-                          : null,
+                          // ? FileImage(_profileImage!)
+                          ? MemoryImage(pickedFileBytes)
+                          : AssetImage(
+                              "assets/images/highlandlogo-removebg-preview.png"),
                       child: _profileImage == null
                           ? const Icon(
                               Icons.add_a_photo,
