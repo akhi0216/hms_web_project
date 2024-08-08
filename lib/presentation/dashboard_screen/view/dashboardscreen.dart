@@ -8,7 +8,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -240,7 +240,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminScreen(),
+                          builder: (context) => AdminScreen(
+                            adminName: widget.userName,
+                          ),
                         ));
                   },
                   child: ListTile(
