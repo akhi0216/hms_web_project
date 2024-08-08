@@ -22,7 +22,8 @@ class _IpBillingState extends State<IpBilling> {
   final List<List<TextEditingController>> table3Controllers =
       List.generate(4, (_) => List.generate(3, (_) => TextEditingController()));
   final List<List<TextEditingController>> table4Controllers =
-      List.generate(3, (_) => List.generate(6, (_) => TextEditingController()));
+      //
+      List.generate(5, (_) => List.generate(6, (_) => TextEditingController()));
   final List<List<TextEditingController>> table5Controllers =
       List.generate(4, (_) => List.generate(1, (_) => TextEditingController()));
   final List<List<TextEditingController>> table6Controllers =
