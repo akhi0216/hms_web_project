@@ -9,6 +9,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_bi
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -36,11 +37,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        // home: Scaffold(
-        //   // body: OpBilling(),
-        //   body: LabRadiologyScreen(),
-        // ),
+        // home: SplashScreen(),
+        home: Scaffold(
+          body: BillingPharmacy(),
+        ),
       ),
     );
   }

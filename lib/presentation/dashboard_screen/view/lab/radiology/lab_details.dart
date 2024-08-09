@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/model/lab/rad_model.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/model/rad_model.dart';
 
 class LabRadiologyScreen extends StatefulWidget {
   const LabRadiologyScreen({super.key});
