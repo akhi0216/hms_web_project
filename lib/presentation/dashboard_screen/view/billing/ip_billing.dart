@@ -15,16 +15,17 @@ class _IpBillingState extends State<IpBilling> {
   final _admissionDateController = TextEditingController();
   final _dischargeDateController = TextEditingController();
 
-  List<List<String>> table1Controllers =
-      List.generate(4, (_) => List.generate(4, (_) => "hahi"));
+  List<List<TextEditingController>> table1Controllers =
+      List.generate(4, (_) => List.generate(4, (_) => TextEditingController()));
   final List<List<TextEditingController>> table2Controllers =
       List.generate(4, (_) => List.generate(3, (_) => TextEditingController()));
   final List<List<TextEditingController>> table3Controllers =
       List.generate(4, (_) => List.generate(3, (_) => TextEditingController()));
   final List<List<TextEditingController>> table4Controllers =
-      List.generate(3, (_) => List.generate(6, (_) => TextEditingController()));
+      //
+      List.generate(5, (_) => List.generate(6, (_) => TextEditingController()));
   final List<List<TextEditingController>> table5Controllers =
-      List.generate(4, (_) => List.generate(0, (_) => TextEditingController()));
+      List.generate(4, (_) => List.generate(1, (_) => TextEditingController()));
   final List<List<TextEditingController>> table6Controllers =
       List.generate(4, (_) => List.generate(8, (_) => TextEditingController()));
   final List<List<TextEditingController>> table7Controllers =
@@ -64,9 +65,6 @@ class _IpBillingState extends State<IpBilling> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> hello = ["jdakjd", "fakdjfhjak"];
-    table1Controllers[0] = hello;
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Form(
@@ -110,7 +108,7 @@ class _IpBillingState extends State<IpBilling> {
               ),
               buildTable(
                 titles: ['Date & Time', 'From', 'To', 'Name'],
-                name: table1Controllers,
+                controllers: table1Controllers,
               ),
               SizedBox(height: 20),
               Text(
@@ -451,7 +449,6 @@ class _IpBillingState extends State<IpBilling> {
 
   Widget buildTable({
     required List<String> titles,
-    List<List<String>>? name,
     List<List<TextEditingController>>? controllers,
   }) {
     int numColumns = titles.length;
@@ -472,20 +469,20 @@ class _IpBillingState extends State<IpBilling> {
             );
           }).toList(),
         ),
-        
-        ...name?.map((rowControllers) {
+        ...controllers?.map((rowControllers) {
               // Pad the row with empty controllers if needed
               int difference = numColumns - rowControllers.length;
-              List<Widget> row = rowControllers.map((names) {
+              List<Widget> row = rowControllers.map((textController) {
                 return Padding(
-                    padding: const EdgeInsets.all(8.0), child: Text(names)
-                    // TextFormField(
-                    //   controller: controller,
-                    //   decoration: InputDecoration(
-                    //     border: OutlineInputBorder(),
-                    //   ),
-                    // ),
-                    );
+                  padding: const EdgeInsets.all(0.0),
+                  child: TextFormField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                );
               }).toList();
               if (difference > 0) {
                 for (int i = 0; i < difference; i++) {
@@ -529,20 +526,21 @@ class _IpBillingState extends State<IpBilling> {
         ...controllers.map((rowControllers) {
           // Pad the row with empty controllers if needed
           int difference = numColumns - rowControllers.length;
-          List<Widget> row = rowControllers.map((controller) {
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(controller.text.trim()),
-            );
+          List<Widget> row = rowControllers.map((textController) {
             // return Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: TextFormField(
-            //     controller: controller,
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(),
-            //     ),
-            //   ),
+            //   padding: const EdgeInsets.all(8),
+            //   child: Text(controller.text.trim()),
             // );
+            return Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: TextFormField(
+                controller: textController,
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  contentPadding: EdgeInsets.all(8.0),
+                ),
+              ),
+            );
           }).toList();
           // Insert the second column text in the correct position
           row.insert(

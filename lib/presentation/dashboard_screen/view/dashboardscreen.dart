@@ -6,12 +6,19 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
+
+import 'lab/radiology/lab_details.dart';
 
 class Dashboardsecondscreen extends StatefulWidget {
   const Dashboardsecondscreen(
@@ -40,24 +47,6 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   }
 
   List<String> tabLabels = [
-    // 'Billing',
-    // 'Patients',
-    // 'Doctors',
-    // 'Appointments',
-    // 'EMR',
-    // 'E-consult',
-    // 'Lab',
-    // 'Radiology',
-    // 'Store',
-    // 'Pharmacy',
-    // 'Reminders',
-    // 'Analysis',
-    // 'SMS Center',
-    // 'Settings',
-    // 'Accounts'
-
-    // --------
-
     'Appointments',
     'Doctors',
     'Patients',
@@ -75,69 +64,6 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   int itemIndex = 0;
 
   List<Map<String, Widget>> tabItems = [
-    // {
-    //   // "Ip billing": IpBilling(),
-    //   "Op billing": DummyPage(),
-    //   "Unhealthy billing": DummyPage(),
-    // },
-    // {
-    //   "New patient": NewPatientReg(),
-    //   "Existing patient": ExistingPatientsPage(),
-    //   "discharged": DummyPage(),
-    // },
-    // {
-    //   "Dept. wise availability": DummyPage(),
-    //   "Doctors list": DummyPage(),
-    //   "Doctors on call": DummyPage(),
-    //   "New Doctor": NewDoctor()
-    // },
-    // {
-    //   "New bookings": NewBookings(),
-    //   "Existing bookings": CurrentBookingPage(),
-    //   "Previous bookings": DummyPage(),
-    // },
-    // {
-    //   "Ip records": DummyPage(),
-    //   "Op records": DummyPage(),
-    //   "Medical history": DummyPage(),
-    //   "Discribe advice": DummyPage(),
-    //   "Data analysis": DummyPage(),
-    //   "Graphs": DummyPage(),
-    // },
-    // {}, //--------- E-consult
-    // {
-    //   "Booking": DummyPage(),
-    //   "Records": DummyPage(),
-    //   "Availability": DummyPage(),
-    // },
-    // {}, //--------------- Radiology
-    // {
-    //   "New stock": DummyPage(),
-    //   "Open stock": DummyPage(),
-    //   "Main stock": DummyPage(),
-    //   "Expired stock": DummyPage(),
-    // },
-    // {}, //-------------------- Pharmacy
-    // {
-    //   "Pending booking": DummyPage(),
-    //   "Upcoming events": DummyPage(),
-    //   "Dept. notifications": DummyPage(),
-    // },
-    // {}, //------------------ Analysis
-    // {
-    //   "Greetings": DummyPage(),
-    //   "History": DummyPage(),
-    // },
-    // {}, //----------------Settings
-    // {
-    //   "Staff list": DummyPage(),
-    //   "Duty assignment": DummyPage(),
-    //   "Hr & payroll": DummyPage(),
-    //   "Miscellaneous": DummyPage(),
-    // },
-
-// -------------------------------------------------------------------------
-
     {
       "Booking": NewBookings(),
       "current bookings": CurrentBookingPage(),
@@ -151,27 +77,30 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "New Doctor": NewDoctor()
     },
     {
-      "New patient": NewPatientReg(),
+      "New patient": NewPatientRegistrationscreen(),
       "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
 //  emr
-    {},
+    {"Patient records": EmrPage()},
     //lAB
-    {},
+    {"Test details": LabRadiologyScreen()},
 // DIALYSIS
     {},
 // OPERATION THEATRE
     {},
     {
       "Ip billing": IpBilling(),
-      "Op billing": DummyPage(),
+      "Op billing": OpBilling(),
       "Unhealthy billing": DummyPage(),
     },
     // INSURANCE
     {},
     // PHARMACY
-    {},
+    {
+      "Availale stock": MedicineSearch(),
+      // "billing": BillingPharmacy()
+    },
     // GENERAL
     {
       "Accounts": DummyPage(),
@@ -192,7 +121,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   void initState() {
     super.initState();
     // screen that comes first while opening dashboard
-    screen = NewPatientReg();
+    // screen = NewPatientRegistrationscreen();
+    screen = HomeDashboard();
   }
 
   @override
@@ -316,28 +246,36 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 'Highland Hospital',
                 style: MyTextStyle.appbartext,
               ),
-              expandedHeight: 150,
-              flexibleSpace: LayoutBuilder(
-                builder: (context, constraints) => FlexibleSpaceBar(
-                  expandedTitleScale: 1,
-                  stretchModes: [StretchMode.zoomBackground],
-                  centerTitle: false,
-                  titlePadding: EdgeInsets.only(
-                      left: constraints.maxWidth * .6,
-                      right: constraints.maxWidth * .05,
-                      top: constraints.maxHeight * .25,
-                      bottom: constraints.maxHeight * .5),
-                  title: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      hintText: "Search",
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ),
+              //     Container(
+              //   height: 95,
+              //   width: 95,
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.all(Radius.circular(100)),
+              //       image: DecorationImage(
+              //           image: AssetImage("assets/images/highlandlogo.jpg"))),
+              // ),
+              // expandedHeight: 150,
+              // flexibleSpace: LayoutBuilder(
+              //   builder: (context, constraints) => FlexibleSpaceBar(
+              //     expandedTitleScale: 1,
+              //     stretchModes: [StretchMode.zoomBackground],
+              //     centerTitle: false,
+              //     titlePadding: EdgeInsets.only(
+              //         left: constraints.maxWidth * .6,
+              //         right: constraints.maxWidth * .05,
+              //         top: constraints.maxHeight * .25,
+              //         bottom: constraints.maxHeight * .5),
+              //     title: TextFormField(
+              //       decoration: InputDecoration(
+              //         prefixIcon: Icon(Icons.search),
+              //         hintText: "Search",
+              //         filled: true,
+              //         fillColor: Colors.white,
+              //         border: OutlineInputBorder(),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               bottom: TabBar(
                   isScrollable: false,
                   labelPadding:
