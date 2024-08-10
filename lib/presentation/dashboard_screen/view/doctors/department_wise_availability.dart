@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:provider/provider.dart';
 
 class DepartmentWiseAvailabilityScreen extends StatefulWidget {
@@ -18,15 +19,19 @@ class _DepartmentWiseAvailabilityScreenState
     Provider.of<BookingPatientController>(context, listen: false).department();
   }
 
+  List doctorDetails = [];
+
   @override
   Widget build(BuildContext context) {
-    var varProvider = Provider.of<BookingPatientController>(context);
-    var functionProvider =
+    var deptVarProvider = Provider.of<BookingPatientController>(context);
+    var docVarProvider = Provider.of<BookingPatientController>(context);
+    var deptProvider =
         Provider.of<BookingPatientController>(context, listen: false);
+    var docProvider = Provider.of<TextSearchController>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: GridView.builder(
-        itemCount: varProvider.deptList.length,
+        itemCount: deptVarProvider.deptList.length,
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
@@ -35,7 +40,11 @@ class _DepartmentWiseAvailabilityScreenState
             mainAxisExtent: 250),
         itemBuilder: (context, index) => InkWell(
           onTap: () async {
-            await functionProvider.doctors(varProvider.deptList[index]);
+            await deptProvider.doctors(deptVarProvider.deptList[index]);
+            for (var i = 0; i < deptVarProvider.doctorIdList.length; i++) {
+              await docProvider.searchDoctor(deptVarProvider.doctorIdList[i]);
+              doctorDetails.add(docProvider.doctorSearchModel);
+            }
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -48,7 +57,7 @@ class _DepartmentWiseAvailabilityScreenState
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            child: Text(varProvider.deptList[index]),
+            child: Text(deptVarProvider.deptList[index]),
           ),
         ),
       ),
@@ -77,7 +86,14 @@ class _DepartmentWiseAvailabilityScreenState
                 borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              child: Text(varProvider.doctorList[index]),
+              child: Column(
+                children: [
+                  Text(doctorDetails[index].fname),
+                  Text(doctorDetails[index].eid),
+                  Text(doctorDetails[index].department),
+                  Text(doctorDetails[index].medlic),
+                ],
+              ),
             ),
           ),
         ),

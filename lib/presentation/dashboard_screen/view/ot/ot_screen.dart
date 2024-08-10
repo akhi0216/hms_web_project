@@ -17,56 +17,56 @@ class _OtScreenState extends State<OtScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      body: Row(
-        children: [
-          Container(
-            width: size.width * .2,
-            color: ColorConstants.mainBlue,
-            child: Column(
-              children: [
-                Container(
-                  color: ColorConstants.mainwhite,
-                  child: Image.asset(
-                    "assets/images/highlandlogo-removebg-preview.png",
-                  ),
-                ),
-                SizedBox(height: size.height * .01),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: size.height * .05),
-                    buttonCall(label: "New Booking", newScreen: NewOtBooking()),
-                    buttonCall(
-                        label: "Previous Booking",
-                        newScreen: PreviousOtBooking()),
-                    buttonCall(label: "OT Status", newScreen: OtStatus()),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // VerticalDivider(),
-          Container(
-            width: size.width * .8,
-            height: size.height,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("Operation Theatre"),
-                    SizedBox(height: size.height * .05),
-                    screen,
-                  ],
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: size.width * .2,
+          height: size.height,
+          color: ColorConstants.mainBlue,
+          child: Column(
+            children: [
+              Container( 
+                color: ColorConstants.mainwhite,
+                child: Image.asset(
+                  "assets/images/highlandlogo-removebg-preview.png",
                 ),
               ),
+              SizedBox(height: size.height * .01),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: size.height * .05),
+                  buttonCall(label: "New Booking", newScreen: NewOtBooking()),
+                  buttonCall(
+                      label: "Previous Booking",
+                      newScreen: PreviousOtBooking()),
+                  buttonCall(label: "OT Status", newScreen: OtStatus()),
+                ],
+              ),
+            ],
+          ),
+        ),
+        // VerticalDivider(),
+        Container(
+          width: size.width * .8,
+          height: size.height,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Operation Theatre"),
+                  SizedBox(height: size.height * .05),
+                  screen,
+                ],
+              ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
