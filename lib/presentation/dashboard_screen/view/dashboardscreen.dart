@@ -8,9 +8,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
@@ -88,7 +86,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 // DIALYSIS
     {},
 // OPERATION THEATRE
-    {},
+    {
+      "Operation Theatre": OtScreen(),
+    },
     {
       "Ip billing": IpBilling(),
       "Op billing": OpBilling(),
