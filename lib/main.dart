@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => TextSearchController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => StaffListController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

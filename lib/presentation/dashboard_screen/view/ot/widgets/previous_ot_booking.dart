@@ -63,6 +63,7 @@
 // -------------------------------------------------------------------------------------------------------------------------------
 
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 
 class PreviousOtBooking extends StatefulWidget {
   const PreviousOtBooking({super.key});
@@ -177,7 +178,7 @@ class _PreviousOtBookingState extends State<PreviousOtBooking> {
             child: DataTable(
               // columnSpacing: 20.0,
               headingRowColor: WidgetStateColor.resolveWith(
-                (states) => Colors.blueGrey,
+                (states) => ColorConstants.mainBlue,
               ),
               headingTextStyle: TextStyle(
                 color: Colors.white,

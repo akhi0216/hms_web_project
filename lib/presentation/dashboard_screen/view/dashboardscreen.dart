@@ -16,6 +16,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
 
@@ -108,7 +109,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     {
       "Accounts": DummyPage(),
       "HR": DummyPage(),
-      "Stores": DummyPage(),
+      "Stores": StoreScreen(),
       "House Keeping": DummyPage(),
       "Analysis": DummyPage(),
       "Nurse": DummyPage(),

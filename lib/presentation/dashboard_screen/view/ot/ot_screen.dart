@@ -26,7 +26,7 @@ class _OtScreenState extends State<OtScreen> {
           color: ColorConstants.mainBlue,
           child: Column(
             children: [
-              Container( 
+              Container(
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
                   "assets/images/highlandlogo-removebg-preview.png",
