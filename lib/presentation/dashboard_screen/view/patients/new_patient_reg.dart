@@ -2,8 +2,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
-// import 'package:hms_project/controller/booking_patient_controller.dart';
-// import 'package:hms_project/presentation/home_page/view/home_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:developer';
