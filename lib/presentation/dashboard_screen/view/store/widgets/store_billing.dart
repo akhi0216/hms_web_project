@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:hms_web_project/constants/color_constants.dart';
 
 class StoreBilling extends StatefulWidget {
   const StoreBilling({super.key});
@@ -32,40 +30,16 @@ class _StoreBillingState extends State<StoreBilling> {
           SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: GridView.builder(
-              shrinkWrap: true,
-              itemCount: 4,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  mainAxisExtent: 250),
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                      border: Border.all(color: ColorConstants.mainBlack)),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            // image: DecorationImage(image: AssetImage(""))
-                            ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
+          buildTextField(),
         ],
+      ),
+    );
+  }
+
+  Widget buildTextField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
       ),
     );
   }
