@@ -57,6 +57,7 @@ class _StoreScreenState extends State<StoreScreen> {
           ),
         ),
         SizedBox(width: size.width * .02),
+        // SingleChildScrollView(child: screen),
         screen,
       ],
     );
