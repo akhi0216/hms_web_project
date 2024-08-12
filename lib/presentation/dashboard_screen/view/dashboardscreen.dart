@@ -241,102 +241,94 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         ),
 
         // ---------------------------------------------------------------------------------------
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              floating: true,
-              snap: false,
-              pinned: true,
-              backgroundColor: ColorConstants.mainBlue,
-              automaticallyImplyLeading: false,
-              title: Text(
-                'Highland Hospital',
-                style: MyTextStyle.appbartext,
+        // body: CustomScrollView(
+        //   slivers: <Widget>[
+        //     SliverAppBar(
+        //       floating: true,
+        //       snap: false,
+        //       pinned: true,
+        // backgroundColor: ColorConstants.mainBlue,
+        // automaticallyImplyLeading: false,
+        //   title: Text(
+        //     'Highland Hospital',
+        //     style: MyTextStyle.appbartext,
+        //   ),
+        //   bottom: TabBar(
+        //       isScrollable: false,
+        //       labelPadding:
+        //           EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+        //       indicatorColor: Colors.transparent,
+        //       labelColor: ColorConstants.mainOrange,
+        //       unselectedLabelColor: ColorConstants.mainwhite,
+        //       tabs: List.generate(tabLabels.length, (index) {
+        //         return MouseRegion(
+        //             // onEnter: (event) => _handleHover(true),
+        //             onExit: (event) => _handleHover(false),
+        //             onHover: (event) => _handleHover(true),
+        //             child: _buildPopupMenu(
+        //                 tabLabels[index], tabItems[index], index)
+        //             );
+        //       })),
+        //   actions: [
+        //     Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu,
+        //           color: ColorConstants.mainwhite,
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openEndDrawer();
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        //     SliverToBoxAdapter(child: screen),
+        //   ],
+        // ),
+
+        appBar: AppBar(
+          backgroundColor: ColorConstants.mainBlue,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Highland Hospital',
+            style: MyTextStyle.appbartext,
+          ),
+          bottom: TabBar(
+            isScrollable: false,
+            labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+            indicatorColor: Colors.transparent,
+            labelColor: ColorConstants.mainOrange,
+            unselectedLabelColor: ColorConstants.mainwhite,
+            tabs: List.generate(tabLabels.length, (index) {
+              return Tab(
+                child: MouseRegion(
+                  // onEnter: (event) => _handleHover(true),
+                  onExit: (event) => _handleHover(false),
+                  onHover: (event) => _handleHover(true),
+                  child:
+                      _buildPopupMenu(tabLabels[index], tabItems[index], index),
+                ),
+              );
+            }),
+          ),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: ColorConstants.mainwhite,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
               ),
-              //     Container(
-              //   height: 95,
-              //   width: 95,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.all(Radius.circular(100)),
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/images/highlandlogo.jpg"))),
-              // ),
-              // expandedHeight: 150,
-              // flexibleSpace: LayoutBuilder(
-              //   builder: (context, constraints) => FlexibleSpaceBar(
-              //     expandedTitleScale: 1,
-              //     stretchModes: [StretchMode.zoomBackground],
-              //     centerTitle: false,
-              //     titlePadding: EdgeInsets.only(
-              //         left: constraints.maxWidth * .6,
-              //         right: constraints.maxWidth * .05,
-              //         top: constraints.maxHeight * .25,
-              //         bottom: constraints.maxHeight * .5),
-              //     title: TextFormField(
-              //       decoration: InputDecoration(
-              //         prefixIcon: Icon(Icons.search),
-              //         hintText: "Search",
-              //         filled: true,
-              //         fillColor: Colors.white,
-              //         border: OutlineInputBorder(),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              bottom: TabBar(
-                  isScrollable: false,
-                  labelPadding:
-                      EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-                  indicatorColor: Colors.transparent,
-                  tabs: List.generate(tabLabels.length, (index) {
-                    return MouseRegion(
-                        // onEnter: (event) => _handleHover(true),
-                        onExit: (event) => _handleHover(false),
-                        onHover: (event) => _handleHover(true),
-                        child: _buildPopupMenu(
-                            tabLabels[index], tabItems[index], index)
-                        // : Tab(
-                        // child: Text(
-                        //   tabLabels[index],
-                        //   style: MyTextStyle.appbartext,
-                        // ),
-                        //   ),
-                        );
-                  })),
-              actions: [
-                Builder(
-                  builder: (context) => IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: ColorConstants.mainwhite,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  ),
-                ),
-              ],
             ),
-            SliverToBoxAdapter(child: screen
-                // child: Center(
-                //   child: Container(
-                //     height: 670,
-                //     width: 670,
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.all(Radius.circular(8)),
-                //         image: DecorationImage(
-                //             image: AssetImage("assets/images/highlandlogo.jpg"))),
-                //   ),
-                // ),
-                //         TabBarView(
-                //             children: List.generate(
-                //   tabLabels.length,
-                //   (index) => DummyPage(title: tabLabels[index]),
-                // ))
-                ),
           ],
         ),
+        body: screen,
       ),
+      // ),
     );
   }
 

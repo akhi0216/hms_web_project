@@ -58,38 +58,39 @@ class _CurrentStockState extends State<CurrentStock> {
     return Container(
       width: size.width * .75,
       alignment: Alignment.topLeft,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: size.height * .05),
-            Text("Current Stock"),
-            SizedBox(height: size.height * .05),
-            TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Search",
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  searchedItems = stationaryItems.where(
-                    (element) {
-                      return element.toLowerCase().contains(value);
-                    },
-                  ).toList();
-                });
-              },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: size.height * .03),
+          Text("Current Stock"),
+          SizedBox(height: size.height * .03),
+          TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: "Search",
+              hintStyle: TextStyle(color: Colors.grey),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                searchedItems = stationaryItems.where(
+                  (element) {
+                    return element.toLowerCase().contains(value);
+                  },
+                ).toList();
+              });
+            },
+          ),
+          SizedBox(
+            height: size.height * .03,
+          ),
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
                 shrinkWrap: true,
+                // physics: NeverScrollableScrollPhysics(),
                 itemCount: searchedItems.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 5,
@@ -110,12 +111,12 @@ class _CurrentStockState extends State<CurrentStock> {
                         Container(
                           height: 150,
                           decoration: BoxDecoration(
-                            color: ColorConstants.mainBlue,
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/store.jpg"),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                              color: ColorConstants.mainBlue,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/store.jpg"),
+                                fit: BoxFit.fill,
+                              ),
+                              borderRadius: BorderRadius.circular(5)),
                         ),
                         Text(searchedItems[index])
                       ],
@@ -123,9 +124,9 @@ class _CurrentStockState extends State<CurrentStock> {
                   );
                 },
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
