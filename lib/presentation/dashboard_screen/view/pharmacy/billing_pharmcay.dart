@@ -506,7 +506,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            border: Border.all(color: ColorConstants.mainBlack, width: 2),
+            border: Border.all(color: ColorConstants.mainBlue, width: 2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(

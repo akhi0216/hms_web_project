@@ -70,41 +70,43 @@ class _MedicineSearchState extends State<MedicineSearch> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          // Search field
-          TextField(
-            controller: searchController,
-            decoration: InputDecoration(
-              labelText: 'Search Medicine',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onChanged: _filterMedicines,
-          ),
-
-          SizedBox(height: 10),
-          // List of medicines
-          // Expanded(
-          // child:
-          ListView.builder(
-            itemCount: filteredMedicines.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final medicine = filteredMedicines[index];
-              return Card(
-                // elevation: 3,
-                child: ListTile(
-                  title: Text(medicine.name),
-                  subtitle: Text('Available Stock: ${medicine.stock}'),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Search field
+            TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                labelText: 'Search Medicine',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              );
-            },
-          ),
-          // ),
-        ],
+              ),
+              onChanged: _filterMedicines,
+            ),
+
+            SizedBox(height: 10),
+            // List of medicines
+            // Expanded(
+            // child:
+            ListView.builder(
+              itemCount: filteredMedicines.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final medicine = filteredMedicines[index];
+                return Card(
+                  // elevation: 3,
+                  child: ListTile(
+                    title: Text(medicine.name),
+                    subtitle: Text('Available Stock: ${medicine.stock}'),
+                  ),
+                );
+              },
+            ),
+            // ),
+          ],
+        ),
       ),
     );
   }
