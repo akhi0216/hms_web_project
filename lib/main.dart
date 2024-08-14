@@ -3,6 +3,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/new_boo
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
