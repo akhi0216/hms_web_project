@@ -180,22 +180,50 @@ class _ComplaintState extends State<Complaint> {
                         ),
                         SizedBox(height: 24),
                         Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              empcodecontroller.clear();
-                              datecontroller.clear();
-                              complaintcontroller.clear();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorConstants
-                                  .mainBlue, // Set the button color
-                            ),
-                            child: Text(
-                              'Submit',
-                              style: MyTextStyle.appbartext,
-                            ),
+                            child: ElevatedButton(
+                          onPressed: () async {
+                            empcodecontroller.clear();
+                            datecontroller.clear();
+                            complaintcontroller.clear();
+                            towhomcontroller.clear();
+
+                            // Show a dialog box
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Success'),
+                                  content: Text(
+                                      'Your complaint has been successfully registered.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            // --------------------------------------------------
+                            // await functionprovider.complaintRegistering(
+                            //     empid: empcodecontroller.text,
+                            //     date: datecontroller.text,
+                            //     towhom: towhomcontroller.text,
+                            //     complaint: complaintcontroller.text);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                ColorConstants.mainBlue, // Set the button color
                           ),
-                        ),
+                          child: Text(
+                            'Submit',
+                            style: MyTextStyle.appbartext,
+                          ),
+                        )),
                       ],
                     ),
                   ),

@@ -14,6 +14,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart'
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
@@ -89,7 +90,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     //lAB
     {
       // "Test details": LabRadiologyScreen()
-      "Lab records": LabDetailsPage(
+      "Lab Records": LabDetailsPage(
         patientName: 'Akhila',
         testsDone: [
           TestDetail(
@@ -110,7 +111,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           ),
         ],
         doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
-      )
+      ),
+      "Lab Tests": LabTests()
     },
 // DIALYSIS
     {},
