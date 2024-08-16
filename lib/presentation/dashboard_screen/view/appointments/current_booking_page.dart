@@ -409,6 +409,7 @@
 //   }
 // }
 // ---------------------------------------------------------------------------
+
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
@@ -424,16 +425,12 @@ class CurrentBookingPage extends StatefulWidget {
 
 class _CurrentBookingPageState extends State<CurrentBookingPage> {
   // List of doctor names
-  final List<String> doctorslist = [];
 
   String? _selectedDepartment;
 
   // Map of doctor name and his/her times
-  List doctorsList = [];
 
   // Map to track selected times for each row
-  List<Map<String, bool>> selectedTimesList =
-      List.generate(7, (_) => {}); // Tracking selected times
 
   callFuction() async {
     await Provider.of<BookingPatientController>(context, listen: false)
@@ -503,34 +500,13 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
                       setState(() {
                         _selectedDepartment = newValue;
                       });
-                      //
+                      varprovider.listOfTimeList.clear();
+                      varprovider.listOfSelectedTimeList.clear();
                       await functionprovider.doctors(_selectedDepartment);
-                      print(doctorslist);
-                      doctorsList.clear();
-                      if (varprovider.doctorsmodelclass.list!.isNotEmpty) {
-                        for (var i = 0;
-                            i < varprovider.doctorsmodelclass.list!.length;
-                            i++) {
-                          doctorslist.add(
-                              varprovider.doctorsmodelclass.list?[i].name ??
-                                  "");
-                        }
-                      }
-                      print(doctorslist);
-                      // -------------------------------------------------------------
-
-                      //  ---------------------------------------------------------------------
-                      for (int i = 0; i < doctorslist.length; i++) {
-                        await functionprovider.doctorTime(
-                            varprovider.doctorsmodelclass.list?[i].empcode);
-                        Map entries = <String, dynamic>{
-                          "doctor_name":
-                              varprovider.doctorsmodelclass.list?[i].name!,
-                          "doctor_time": varprovider.timeList
-                        };
-                        doctorsList.add(entries);
-                      }
-                      print(doctorsList);
+                      await functionprovider.listOfTimes(
+                          varprovider.doctorsmodelclass, _selectedDepartment);
+                      setState(() {});
+                      print(varprovider.listOfTimeList);
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -546,7 +522,7 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
               height: 20,
             ),
             ListView.builder(
-              itemCount: doctorsList.length,
+              itemCount: varprovider.doctorList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -558,7 +534,7 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          doctorsList[index]['doctor_name'] ?? "",
+                          varprovider.doctorList[index],
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -570,32 +546,32 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
                           spacing: 8.0, // gap between adjacent chips
                           runSpacing: 4.0, // gap between lines
                           children: List.generate(
-                            doctorsList[index]['doctor_time'].length,
+                            varprovider.listOfTimeList[index].length,
                             (index2) {
-                              bool isSelected = selectedTimesList[index][
-                                      doctorsList[index]['doctor_time']
-                                          [index2]] ??
-                                  false; // Check if time is selected
+                              // bool isSelected = selectedTimesList[index]
+                              //         [varprovider.timeList[index2]] ??
+                              //     false; // Check if time is selected
                               return InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    selectedTimesList[index][doctorsList[index]
-                                            ['doctor_time'][index2]] =
-                                        !isSelected; // Toggle selection
-                                  });
+                                  // setState(() {
+                                  //   selectedTimesList[index]
+                                  //           [varprovider.timeList[index2]] =
+                                  //       !isSelected; // Toggle selection
+                                  // });
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(7),
                                   decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? Colors.red[700] // Selected color
-                                        : Colors.green, // Default color
+                                    color:
+                                        // isSelected
+                                        //     ? Colors.red[700] // Selected color
+                                        Colors.green, // Default color
                                     border: Border.all(color: Colors.black),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(7)),
                                   ),
                                   child: Text(
-                                    doctorsList[index]['doctor_time'][index2],
+                                    varprovider.listOfTimeList[index][index2],
                                   ),
                                 ),
                               );
@@ -607,7 +583,7 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
       ),

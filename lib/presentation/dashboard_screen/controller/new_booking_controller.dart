@@ -15,6 +15,9 @@ class BookingPatientController with ChangeNotifier {
   List<String> doctorIdList = [];
 
   List<String> timeList = [];
+  List<List<String>> listOfTimeList = [];
+  List<List<String>> listOfSelectedTimeList = [];
+
   List<String> selectedtimeList = [];
   bool? isSuccessful;
 
@@ -60,11 +63,19 @@ class BookingPatientController with ChangeNotifier {
       var res = await http
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
       timeList = List<String>.from(await jsonDecode(res.body));
+      listOfTimeList.add(List<String>.from(await jsonDecode(res.body)));
       print(timeList);
     } catch (e) {
       log(e.toString());
     }
     notifyListeners();
+  }
+
+  listOfTimes(Doctorsmodelclass doctorsmodel, String? dept) {
+    for (int i = 0; i < doctorsmodel.list!.length; i++) {
+      doctorTime(doctorsmodel.list?[i].empcode);
+      doctorTimeSlots(empid: doctorsmodel.list?[i].empcode, dept: dept);
+    }
   }
 
   doctorTimeSlots({
@@ -87,9 +98,11 @@ class BookingPatientController with ChangeNotifier {
           // selectedtimeList.add(timeSlotList[0][i.toString()]);
           int j = i - 2;
           selectedtimeList.add(j.toString());
+          listOfSelectedTimeList.add(selectedtimeList);
         }
       }
       print("----$selectedtimeList");
+      print("----$listOfSelectedTimeList");
     } catch (e) {
       log(e.toString());
     }
@@ -166,6 +179,4 @@ class BookingPatientController with ChangeNotifier {
   // }
 
 //
-
-
 }
