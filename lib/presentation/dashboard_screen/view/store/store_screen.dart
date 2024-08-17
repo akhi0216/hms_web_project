@@ -14,8 +14,8 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  String value = "Current Stock";
-  Widget screen = CurrentStock();
+  String value = "Billing";
+  Widget screen = StoreBilling();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -58,7 +58,7 @@ class _StoreScreenState extends State<StoreScreen> {
         ),
         SizedBox(width: size.width * .02),
         // SingleChildScrollView(child: screen),
-        screen,
+        Expanded(child: screen),
       ],
     );
   }

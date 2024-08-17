@@ -15,6 +15,8 @@ class BookingPatientController with ChangeNotifier {
   List<String> doctorIdList = [];
 
   List<String> timeList = [];
+  List<Map<String, dynamic>> listOfDoctors = [];
+
   List<String> selectedtimeList = [];
   bool? isSuccessful;
 
@@ -38,7 +40,7 @@ class BookingPatientController with ChangeNotifier {
     try {
       var res =
           await http.post(Uri.parse(uri), body: {"patientidcontroller": dept});
-      print(res.body);
+      // print(res.body);
       var json = await jsonDecode(res.body) as Map<String, dynamic>;
       doctorsmodelclass = Doctorsmodelclass.fromJson(json);
       if (doctorsmodelclass.list!.isNotEmpty) {
@@ -60,9 +62,30 @@ class BookingPatientController with ChangeNotifier {
       var res = await http
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
       timeList = List<String>.from(await jsonDecode(res.body));
-      print(timeList);
+      // listOfTimeList.add(List<String>.from(await jsonDecode(res.body)));
+      // print(timeList);
     } catch (e) {
       log(e.toString());
+    }
+    notifyListeners();
+  }
+
+  listOfTimes({required String? dept}) async {
+    listOfDoctors.clear();
+    await doctors(dept);
+    for (var i = 0; i < doctorsmodelclass.list!.length; i++) {
+      await doctorTime(doctorsmodelclass.list?[i].empcode);
+      await doctorTimeSlots(
+          empid: doctorsmodelclass.list?[i].empcode, dept: dept);
+      listOfDoctors.add({
+        'name': doctorList[i],
+        'timeslots': List<String>.from(timeList),
+        'selectedtimes': List<String>.from(selectedtimeList),
+      });
+      // print("------------------${listOfDoctors[i]['name']}");
+      // print("------------------${listOfDoctors[i]['timeslots']}");
+      // print("------------------${listOfDoctors[i]['selectedtimes']}");
+      print("__________________________$listOfDoctors");
     }
     notifyListeners();
   }
@@ -87,9 +110,11 @@ class BookingPatientController with ChangeNotifier {
           // selectedtimeList.add(timeSlotList[0][i.toString()]);
           int j = i - 2;
           selectedtimeList.add(j.toString());
+          // listOfSelectedTimeList.add(selectedtimeList);
         }
       }
       print("----$selectedtimeList");
+      // print("----$listOfSelectedTimeList");
     } catch (e) {
       log(e.toString());
     }
@@ -166,6 +191,4 @@ class BookingPatientController with ChangeNotifier {
   // }
 
 //
-
-
 }

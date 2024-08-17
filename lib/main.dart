@@ -13,6 +13,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart'
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/model/store_model.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
