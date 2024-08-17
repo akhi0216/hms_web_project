@@ -44,13 +44,18 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
   bool _isHovered = false;
 
-  void _handleHover(bool isHovered) {
+  void _handleHover(bool isHovered, int index) {
     setState(() {
       _isHovered = isHovered;
     });
+    if (_isHovered) {
+      _buildPopupMenu(tabLabels[index], tabItems[index], index);
+    }
+    print(tabItems[index]);
   }
 
   List<String> tabLabels = [
+    'Home',
     'Appointments',
     'Doctors',
     'Patients',
@@ -66,8 +71,11 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
   String selectedData = "";
   int itemIndex = 0;
-
+  Map<String, Widget> tabs = {'Home': HomeDashboard()};
   List<Map<String, Widget>> tabItems = [
+    {
+      "Home": HomeDashboard(),
+    },
     {
       "Booking": NewBookings(),
       "current bookings": CurrentBookingPage(),
@@ -136,7 +144,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 11,
+      length: 12,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
@@ -302,14 +310,21 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             unselectedLabelColor: ColorConstants.mainwhite,
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
-                child: MouseRegion(
-                  // onEnter: (event) => _handleHover(true),
-                  onExit: (event) => _handleHover(false),
-                  onHover: (event) => _handleHover(true),
-                  child:
-                      _buildPopupMenu(tabLabels[index], tabItems[index], index),
-                ),
+                // text: tabLabels[index],
+                child:
+                    _buildPopupMenu(tabLabels[index], tabItems[index], index),
               );
+              // return MouseRegion(
+              //   onEnter: (event) =>
+              //       _buildPopupMenu(tabLabels[index], tabItems[index], index),
+              //   onExit: (event) => _handleHover(false, index),
+              //   onHover: (event) => _handleHover(true, index),
+              //   child: Tab(
+              //     text: tabLabels[index],
+              //     // child: _buildPopupMenu(
+              //     //     tabLabels[index], tabItems[index], index),
+              //   ),
+              // );
             }),
           ),
           actions: [
@@ -332,18 +347,11 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     );
   }
 
-  PopupMenuButton<String> _buildPopupMenu(
-      String title, Map<String, Widget> items, int index) {
+  _buildPopupMenu(String title, Map<String, Widget> items, int index) {
     return PopupMenuButton<String>(
       offset:
           Offset(0, 40), // Adjust this value to position the menu below the tab
       onSelected: (value) {
-        // TabBarView(
-        //     children: List.generate(
-        //   items.length,
-        //   (index) => DummyPage(title: title),
-        // ));
-
         if (value.isNotEmpty && value != null) {
           setState(() {
             selectedData = value;

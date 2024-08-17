@@ -45,49 +45,51 @@ class _LabRadiologyScreenState extends State<LabRadiologyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              labelText: 'Search Tests',
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Search Tests',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
+              onChanged: _filterTests,
             ),
-            onChanged: _filterTests,
-          ),
-          const SizedBox(height: 16),
-          ListView.builder(
-            itemCount: _filteredTests.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final test = _filteredTests[index];
-              return Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(
-                    test.type == 'Lab' ? Icons.science : Icons.camera_alt,
-                    color: Colors.teal,
+            const SizedBox(height: 16),
+            ListView.builder(
+              itemCount: _filteredTests.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final test = _filteredTests[index];
+                return Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  title: Text(test.name),
-                  subtitle: Text(test.details),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    _showTestDetails(context, test);
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+                  child: ListTile(
+                    leading: Icon(
+                      test.type == 'Lab' ? Icons.science : Icons.camera_alt,
+                      color: Colors.teal,
+                    ),
+                    title: Text(test.name),
+                    subtitle: Text(test.details),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onTap: () {
+                      _showTestDetails(context, test);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

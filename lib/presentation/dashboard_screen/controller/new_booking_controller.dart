@@ -22,6 +22,7 @@ class BookingPatientController with ChangeNotifier {
 
   department() async {
     deptList.clear();
+    listOfDoctors.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
     try {
       var res = await http.get(Uri.parse(uri));
