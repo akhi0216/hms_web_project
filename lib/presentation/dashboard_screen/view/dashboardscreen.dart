@@ -12,6 +12,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_d
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
@@ -118,7 +119,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Nurse": DummyPage(),
       "SMS Center": DummyPage(),
       "Reminders": DummyPage(),
-      "Feedback": DummyPage(),
+      "Feedback": FeedbackForm(),
     },
   ];
 

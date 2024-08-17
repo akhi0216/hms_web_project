@@ -10,6 +10,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_bi
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
+        // home: Scaffold(
+        //   body: FeedbackForm(),
+        // ),
       ),
     );
   }
