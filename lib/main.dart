@@ -4,11 +4,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/new_boo
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +42,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        // home: SplashScreen(),
+        home: Dashboardsecondscreen(
+            userName: "Avanzo", empId: "001", des: "Admin"),
       ),
     );
   }

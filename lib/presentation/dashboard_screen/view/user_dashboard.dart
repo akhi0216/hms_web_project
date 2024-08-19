@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
@@ -13,9 +14,12 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
@@ -75,12 +79,35 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     },
 // Patient
     {
-      "New patient": NewPatientRegistrationscreen(),
-      "Existing patient": ExistingPatientsPage(),
+      "Patients": PatientsMain(),
       "discharged": DummyPage(),
     },
     //lAB
-    {"Test details": LabRadiologyScreen()},
+    {
+      "Lab Records": LabDetailsPage(
+        patientName: 'Akhila',
+        testsDone: [
+          TestDetail(
+            name: 'Blood Test',
+            date: '2024-08-01',
+            report:
+                'No abnormalities detected. All levels within normal range.',
+          ),
+          TestDetail(
+            name: 'X-Ray',
+            date: '2024-08-05',
+            report: 'Chest X-Ray shows no significant findings.',
+          ),
+          TestDetail(
+            name: 'Urine Test',
+            date: '2024-08-10',
+            report: 'Normal results. No infections or abnormalities.',
+          ),
+        ],
+        doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
+      ),
+      "Lab Tests": LabTests()
+    },
 // DIALYSIS
     {},
 // OPERATION THEATRE

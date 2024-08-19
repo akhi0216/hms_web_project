@@ -78,6 +78,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Map<String, Widget> tabs = {'Home': HomeDashboard()};
   List<Map<String, Widget>> tabItems = [
     {
+      "Home": HomeDashboard(),
+    },
+    {
       // -------------------------------------------------------------------appointments
       // "Booking": NewBookings(),
       // "current bookings": CurrentBookingPage(),
