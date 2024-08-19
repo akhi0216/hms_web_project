@@ -548,13 +548,14 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                 children: [
                   Row(
                     children: [
-                      const Text("Discount:",
+                      const Text("GST:",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600)),
                       const SizedBox(width: 5),
                       Container(
                         width: 200,
                         child: TextFormField(
+                          initialValue: '15%', // Assuming GST percentage is 15%
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -564,8 +565,8 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 12, horizontal: 8),
-                            hintText: 'Enter discount',
                           ),
+                          readOnly: true,
                         ),
                       ),
                     ],
@@ -577,8 +578,10 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               fontSize: 16, fontWeight: FontWeight.w600)),
                       const SizedBox(width: 5),
                       Container(
+                        
                         width: 200,
                         child: TextFormField(
+                            readOnly: true,
                             controller: fullAmountController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -589,8 +592,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 8),
-                              // hintText: '${fullAmount.toStringAsFixed(2)}',
-                              // readOnly: true,
                             )),
                       ),
                     ],

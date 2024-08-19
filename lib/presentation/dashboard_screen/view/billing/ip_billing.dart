@@ -539,50 +539,65 @@ class _IpBillingState extends State<IpBilling> {
     List<List<TextEditingController>>? controllers,
   }) {
     int numColumns = titles.length;
-    return Table(
-      border: TableBorder.all(),
-      columnWidths: {
-        for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TableRow(
-          children: titles.map((title) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                titles.isEmpty ? "#" : title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            );
-          }).toList(),
-        ),
-        ...controllers?.map((rowControllers) {
-              // Pad the row with empty controllers if needed
-              int difference = numColumns - rowControllers.length;
-              List<Widget> row = rowControllers.map((textController) {
+        Table(
+          border: TableBorder.all(),
+          columnWidths: {
+            for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
+          },
+          children: [
+            TableRow(
+              children: titles.map((title) {
                 return Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: TextFormField(
-                    controller: textController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(8.0),
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    titles.isEmpty ? "#" : title,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 );
-              }).toList();
-              if (difference > 0) {
-                for (int i = 0; i < difference; i++) {
-                  row.add(Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(),
-                  ));
-                }
-              }
-              // return row;
-              return TableRow(children: row);
-            }).toList() ??
-            []
+              }).toList(),
+            ),
+            ...controllers?.map((rowControllers) {
+                  int difference = numColumns - rowControllers.length;
+                  List<Widget> row = rowControllers.map((textController) {
+                    return Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: TextFormField(
+                        controller: textController,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          contentPadding: EdgeInsets.all(8.0),
+                        ),
+                      ),
+                    );
+                  }).toList();
+                  if (difference > 0) {
+                    for (int i = 0; i < difference; i++) {
+                      row.add(Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(),
+                      ));
+                    }
+                  }
+                  return TableRow(children: row);
+                }).toList() ??
+                []
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Implement print functionality here
+              },
+              child: Text('Print'),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -593,59 +608,71 @@ class _IpBillingState extends State<IpBilling> {
     required String secondColumnText,
   }) {
     int numColumns = titles.length;
-    return Table(
-      border: TableBorder.all(),
-      columnWidths: {
-        for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TableRow(
-          children: titles.map((title) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                titles.isEmpty ? "#" : title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            );
-          }).toList(),
-        ),
-        ...controllers.map((rowControllers) {
-          // Pad the row with empty controllers if needed
-          int difference = numColumns - rowControllers.length;
-          List<Widget> row = rowControllers.map((textController) {
-            // return Padding(
-            //   padding: const EdgeInsets.all(8),
-            //   child: Text(controller.text.trim()),
-            // );
-            return Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: TextFormField(
-                controller: textController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(8.0),
+        Table(
+          border: TableBorder.all(),
+          columnWidths: {
+            for (int i = 0; i < numColumns; i++) i: FlexColumnWidth(),
+          },
+          children: [
+            TableRow(
+              children: titles.map((title) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    titles.isEmpty ? "#" : title,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                );
+              }).toList(),
+            ),
+            ...controllers.map((rowControllers) {
+              int difference = numColumns - rowControllers.length;
+              List<Widget> row = rowControllers.map((textController) {
+                return Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: TextFormField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                );
+              }).toList();
+              row.insert(
+                1,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text(secondColumnText)),
                 ),
-              ),
-            );
-          }).toList();
-          // Insert the second column text in the correct position
-          row.insert(
-              1,
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(child: Text(secondColumnText)),
-              ));
-          if (difference > 1) {
-            for (int i = 0; i < difference; i++) {
-              row.add(Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(),
-              ));
-            }
-          }
-          return TableRow(children: row);
-        }).toList(),
+              );
+              if (difference > 1) {
+                for (int i = 0; i < difference; i++) {
+                  row.add(Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(),
+                  ));
+                }
+              }
+              return TableRow(children: row);
+            }).toList(),
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Implement print functionality here
+              },
+              child: Text('Print'),
+            ),
+          ],
+        ),
       ],
     );
   }
