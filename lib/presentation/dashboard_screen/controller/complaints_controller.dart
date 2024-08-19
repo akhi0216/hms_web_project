@@ -18,4 +18,25 @@ class ComplaintsController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  complaintRegistration({
+    required String empcode,
+    required String date,
+    required String towhom,
+    required String complaints,
+  }) async {
+    String uri = "https://cybot.avanzosolutions.in/hms/complaintreg.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {
+        'empcodecontroller': empcode,
+        'complaintcontroller': complaints,
+        'datecontroller': date,
+        'towhomcontroller': towhom
+      });
+      print(res.body);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
 }

@@ -181,14 +181,20 @@ class _ComplaintState extends State<Complaint> {
                         SizedBox(height: 24),
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               empcodecontroller.clear();
                               datecontroller.clear();
                               complaintcontroller.clear();
+                              towhomcontroller.clear();
+                              // -------------------------------
+                              await functionprovider.complaintRegistration(
+                                  empcode: empcodecontroller.text,
+                                  date: datecontroller.text,
+                                  towhom: towhomcontroller.text,
+                                  complaints: complaintcontroller.text);
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorConstants
-                                  .mainBlue, // Set the button color
+                              backgroundColor: ColorConstants.mainBlue,
                             ),
                             child: Text(
                               'Submit',
