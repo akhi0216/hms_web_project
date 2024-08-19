@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/model/store_model.dart';
 
@@ -80,7 +81,7 @@ class _StoreBillingState extends State<StoreBilling> {
     } else {
       setState(() {
         quantity = 0;
-        totalAmount = 0.0; 
+        totalAmount = 0.0;
       });
     }
   }
@@ -112,6 +113,18 @@ class _StoreBillingState extends State<StoreBilling> {
   void initState() {
     super.initState();
     showableStoreItems = storeItems;
+    _quantityController.addListener(() {
+      final text = _quantityController.text;
+      if (text.isNotEmpty) {
+        final number = int.tryParse(text);
+        if (number != null && number > selectedItem!.stock) {
+          _quantityController.text = selectedItem!.stock.toString();
+          _quantityController.selection = TextSelection.fromPosition(
+            TextPosition(offset: _quantityController.text.length),
+          );
+        }
+      }
+    });
   }
 
   @override
@@ -393,29 +406,52 @@ class _StoreBillingState extends State<StoreBilling> {
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(width: 5),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    // width: 100,
-                    child: TextFormField(
-                      controller: _quantityController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                        hintText: 'Enter quantity',
+                IconButton(
+                    onPressed: () {
+                      setState(() {});
+                      int dec = int.parse(_quantityController.text.trim());
+                      if (dec > 1) {
+                        dec--;
+                      }
+                      _quantityController.text = dec.toString();
+                      _updateTotalAmount();
+                    },
+                    icon: Icon(Icons.remove)),
+                Container(
+                  width: 50,
+                  child: TextFormField(
+                    controller: _quantityController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    readOnly: selectedItem == null ? true : false,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Colors.black, width: 1.5),
                       ),
-                      onChanged: (value) {
-                        _updateTotalAmount();
-                      },
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                      // hintText: 'Enter quantity',
                     ),
+                    onChanged: (value) {
+                      _updateTotalAmount();
+                    },
                   ),
                 ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {});
+                      int inc = int.parse(_quantityController.text.trim());
+                      if (inc < selectedItem!.stock) {
+                        inc++;
+                      }
+                      _quantityController.text = inc.toString();
+                      _updateTotalAmount();
+                    },
+                    icon: Icon(Icons.add)),
                 SizedBox(
                   width: 10,
                 ),
@@ -499,6 +535,20 @@ class _StoreBillingState extends State<StoreBilling> {
                               color: Colors.white,
                             ),
                             child: Text("GST: ${selectedItem!.gst}%"),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ColorConstants.mainBlack, width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                                "Item count: ${_quantityController.text.trim()}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -607,6 +657,21 @@ class _StoreBillingState extends State<StoreBilling> {
                                     color: Colors.white,
                                   ),
                                   child: Text("GST: ${items.gst}%"),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ColorConstants.mainBlack,
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  child: Text(
+                                      "Item count: ${_quantityController.text.trim()}"),
                                 ),
                               ),
                               const SizedBox(width: 10),

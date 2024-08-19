@@ -56,9 +56,13 @@ class _StoreScreenState extends State<StoreScreen> {
             ],
           ),
         ),
-        SizedBox(width: size.width * .02),
+        // SizedBox(width: size.width * .02),
         // SingleChildScrollView(child: screen),
-        Expanded(child: screen),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: screen,
+        )),
       ],
     );
   }

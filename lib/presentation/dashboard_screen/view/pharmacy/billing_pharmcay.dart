@@ -434,26 +434,26 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   final List<Map<String, dynamic>> addedMedicines = [];
 
   final List<Medicine> medicines = [
-    Medicine(name: 'Paracetamol', stock: 150, price: 10.0),
-    Medicine(name: 'Ibuprofen', stock: 80, price: 15.0),
-    Medicine(name: 'Amoxicillin', stock: 120, price: 20.0),
-    Medicine(name: 'Aspirin', stock: 100, price: 12.0),
-    Medicine(name: 'Ciprofloxacin', stock: 90, price: 18.0),
-    Medicine(name: 'Cetirizine', stock: 200, price: 8.0),
-    Medicine(name: 'Omeprazole', stock: 75, price: 22.0),
-    Medicine(name: 'Loratadine', stock: 60, price: 11.0),
-    Medicine(name: 'Metformin', stock: 130, price: 25.0),
-    Medicine(name: 'Atorvastatin', stock: 95, price: 30.0),
-    Medicine(name: 'Simvastatin', stock: 85, price: 28.0),
-    Medicine(name: 'Amlodipine', stock: 110, price: 17.0),
-    Medicine(name: 'Hydrochlorothiazide', stock: 55, price: 19.0),
-    Medicine(name: 'Lisinopril', stock: 140, price: 21.0),
-    Medicine(name: 'Azithromycin', stock: 70, price: 23.0),
-    Medicine(name: 'Clindamycin', stock: 50, price: 26.0),
-    Medicine(name: 'Gabapentin', stock: 160, price: 13.0),
-    Medicine(name: 'Losartan', stock: 120, price: 14.0),
-    Medicine(name: 'Doxycycline', stock: 65, price: 16.0),
-    Medicine(name: 'Hydrocodone', stock: 45, price: 35.0),
+    Medicine(name: 'Paracetamol', stock: 150, price: 10.0, gst: 12),
+    Medicine(name: 'Ibuprofen', stock: 80, price: 15.0, gst: 18),
+    Medicine(name: 'Amoxicillin', stock: 120, price: 20.0, gst: 5),
+    Medicine(name: 'Aspirin', stock: 100, price: 12.0, gst: 18),
+    Medicine(name: 'Ciprofloxacin', stock: 90, price: 18.0, gst: 12),
+    Medicine(name: 'Cetirizine', stock: 200, price: 8.0, gst: 5),
+    Medicine(name: 'Omeprazole', stock: 75, price: 22.0, gst: 18),
+    Medicine(name: 'Loratadine', stock: 60, price: 11.0, gst: 12),
+    Medicine(name: 'Metformin', stock: 130, price: 25.0, gst: 5),
+    Medicine(name: 'Atorvastatin', stock: 95, price: 30.0, gst: 18),
+    Medicine(name: 'Simvastatin', stock: 85, price: 28.0, gst: 12),
+    Medicine(name: 'Amlodipine', stock: 110, price: 17.0, gst: 5),
+    Medicine(name: 'Hydrochlorothiazide', stock: 55, price: 19.0, gst: 12),
+    Medicine(name: 'Lisinopril', stock: 140, price: 21.0, gst: 18),
+    Medicine(name: 'Azithromycin', stock: 70, price: 23.0, gst: 5),
+    Medicine(name: 'Clindamycin', stock: 50, price: 26.0, gst: 18),
+    Medicine(name: 'Gabapentin', stock: 160, price: 13.0, gst: 12),
+    Medicine(name: 'Losartan', stock: 120, price: 14.0, gst: 5),
+    Medicine(name: 'Doxycycline', stock: 65, price: 16.0, gst: 12),
+    Medicine(name: 'Hydrocodone', stock: 45, price: 35.0, gst: 18),
   ];
 
   @override
@@ -467,7 +467,9 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
     if (selectedMedicine != null) {
       setState(() {
         quantity = int.tryParse(_quantityController.text) ?? 0;
-        totalAmount = selectedMedicine!.price * quantity;
+        totalAmount = (selectedMedicine!.price * quantity) +
+            ((selectedMedicine!.price * quantity) *
+                (selectedMedicine!.gst / 100));
       });
     } else {
       setState(() {
@@ -691,10 +693,23 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   const SizedBox(width: 5),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {});
+                        int dec = int.parse(_quantityController.text.trim());
+                        if (dec >= 2) {
+                          dec--;
+                        }
+                        _quantityController.text = dec.toString();
+                        _updateTotalAmount();
+                      },
+                      icon: Icon(Icons.remove)),
                   Container(
-                    width: 100,
+                    width: 50,
                     child: TextFormField(
                       controller: _quantityController,
+                      readOnly: selectedMedicine == null ? true : false,
+                      textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -704,13 +719,22 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         ),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                        hintText: 'Enter quantity',
+                        // hintText: 'Enter quantity',
                       ),
                       onChanged: (value) {
                         _updateTotalAmount();
                       },
                     ),
                   ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {});
+                        int inc = int.parse(_quantityController.text.trim());
+                        inc++;
+                        _quantityController.text = inc.toString();
+                        _updateTotalAmount();
+                      },
+                      icon: Icon(Icons.add)),
                   SizedBox(
                     width: 10,
                   ),
@@ -786,6 +810,20 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               ),
                               child: Text(
                                   "Price: ${selectedMedicine!.price.toStringAsFixed(2)}"),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: ColorConstants.mainBlack,
+                                    width: 1.5),
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: Text("GST: ${selectedMedicine!.gst}%"),
                             ),
                           ),
                           const SizedBox(width: 10),

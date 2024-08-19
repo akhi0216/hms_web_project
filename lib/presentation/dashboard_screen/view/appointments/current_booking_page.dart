@@ -47,152 +47,190 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
     var functionprovider =
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
+    Size size = MediaQuery.sizeOf(context);
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: size.width * .2,
+            height: size.height,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: ColorConstants.mainBlue,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+            child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      border: Border.all(color: Colors.black)),
-                  child: Text(
-                    "$formattedDate",
-                    style: TextStyle(color: ColorConstants.mainBlue),
+                  width: size.width * .199,
+                  color: ColorConstants.mainwhite,
+                  child: Image.asset(
+                    "assets/images/highlandlogo-removebg-preview.png",
                   ),
                 ),
-                Container(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedDepartment,
-                    hint: const Text(' Department'),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.local_hospital,
-                        color: ColorConstants.mainBlue,
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    items: varprovider.deptList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) async {
-                      setState(() {
-                        _selectedDepartment = newValue;
-                      });
-                      // varprovider.listOfTimeList.clear();
-                      // varprovider.listOfSelectedTimeList.clear();
-                      // await functionprovider.doctors(_selectedDepartment);
-                      // await functionprovider.listOfTimes(
-                      //     varprovider.doctorsmodelclass, _selectedDepartment);
-                      // setState(() {});
-                      // print(varprovider.listOfTimeList);
-                      await functionprovider.listOfTimes(
-                          dept: _selectedDepartment);
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a department';
-                      }
-                      return null;
-                    },
-                  ),
+                SizedBox(height: size.height * .01),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: size.height * .05),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-              itemCount: varprovider.listOfDoctors.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        flex: 1,
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(7)),
+                            border: Border.all(color: Colors.black)),
                         child: Text(
-                          varprovider.listOfDoctors[index]['name'],
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          "$formattedDate",
+                          style: TextStyle(color: ColorConstants.mainBlue),
                         ),
                       ),
-                      Icon(Icons.more_vert),
-                      SizedBox(width: 10),
-                      Expanded(
-                        flex: 5,
-                        child: Wrap(
-                          spacing: 8.0, // gap between adjacent chips
-                          runSpacing: 4.0, // gap between lines
-                          children: List.generate(
-                            varprovider
-                                .listOfDoctors[index]['timeslots'].length,
-                            (index2) {
-                              bool isSelected = varprovider.listOfDoctors[index]
-                                      ['selectedtimes']
-                                  .contains(index2.toString());
-                              // print(isSelected);
-                              return InkWell(
-                                onTap: () {
-                                  // setState(() {
-                                  //   selectedTimesList[index]
-                                  //           [varprovider.timeList[index2]] =
-                                  //       !isSelected; // Toggle selection
-                                  // });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    // Default color
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? Colors.green
-                                          : Colors.grey,
-                                      width: 2,
-                                    ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                  ),
-                                  child: Text(
-                                    varprovider.listOfDoctors[index]
-                                        ['timeslots'][index2],
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.green
-                                          : Colors.grey,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 400),
+                        child: DropdownButtonFormField<String>(
+                          value: _selectedDepartment,
+                          hint: const Text(' Department'),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.local_hospital,
+                              color: ColorConstants.mainBlue,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
+                          items: varprovider.deptList.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) async {
+                            setState(() {
+                              _selectedDepartment = newValue;
+                            });
+                            // varprovider.listOfTimeList.clear();
+                            // varprovider.listOfSelectedTimeList.clear();
+                            // await functionprovider.doctors(_selectedDepartment);
+                            // await functionprovider.listOfTimes(
+                            //     varprovider.doctorsmodelclass, _selectedDepartment);
+                            // setState(() {});
+                            // print(varprovider.listOfTimeList);
+                            await functionprovider.listOfTimes(
+                                dept: _selectedDepartment);
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a department';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                     ],
                   ),
-                );
-              },
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ListView.builder(
+                    itemCount: varprovider.listOfDoctors.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                varprovider.listOfDoctors[index]['name'],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Icon(Icons.more_vert),
+                            SizedBox(width: 10),
+                            Expanded(
+                              flex: 5,
+                              child: Wrap(
+                                spacing: 8.0, // gap between adjacent chips
+                                runSpacing: 4.0, // gap between lines
+                                children: List.generate(
+                                  varprovider
+                                      .listOfDoctors[index]['timeslots'].length,
+                                  (index2) {
+                                    bool isSelected = varprovider
+                                        .listOfDoctors[index]['selectedtimes']
+                                        .contains(index2.toString());
+                                    // print(isSelected);
+                                    return InkWell(
+                                      onTap: () {
+                                        // setState(() {
+                                        //   selectedTimesList[index]
+                                        //           [varprovider.timeList[index2]] =
+                                        //       !isSelected; // Toggle selection
+                                        // });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(7),
+                                        decoration: BoxDecoration(
+                                          // Default color
+                                          border: Border.all(
+                                            color: isSelected
+                                                ? Colors.green
+                                                : Colors.grey,
+                                            width: 2,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(7)),
+                                        ),
+                                        child: Text(
+                                          varprovider.listOfDoctors[index]
+                                              ['timeslots'][index2],
+                                          style: TextStyle(
+                                            color: isSelected
+                                                ? Colors.green
+                                                : Colors.grey,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

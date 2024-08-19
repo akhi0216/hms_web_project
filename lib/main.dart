@@ -3,19 +3,9 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/complai
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing_new.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/model/store_model.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -53,9 +43,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
-        // home: Scaffold(
-        //   body: StoreScreen(),
-        // ),
+        // home: Dashboardsecondscreen(
+        //     userName: "Avanzo", empId: "001", des: "Admin"),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/repositories/api/model/user_details_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -69,16 +70,29 @@ class _LoginPageState extends State<LoginPage> {
       Future.delayed(
         Duration(milliseconds: 1500),
         () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Dashboardsecondscreen(
-                userName: userDetailsModel.uname ?? "",
-                empId: userDetailsModel.eid ?? "",
-                des: userDetailsModel.des ?? "",
+          if (userDetailsModel.des == "Admin") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Dashboardsecondscreen(
+                  userName: userDetailsModel.uname ?? "",
+                  empId: userDetailsModel.eid ?? "",
+                  des: userDetailsModel.des ?? "",
+                ),
               ),
-            ),
-          );
+            );
+          } else if (userDetailsModel.des == "user") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserDashBoardScreen(
+                  userName: userDetailsModel.uname ?? "",
+                  empId: userDetailsModel.eid ?? "",
+                  des: userDetailsModel.des ?? "",
+                ),
+              ),
+            );
+          }
         },
       );
     } else {
