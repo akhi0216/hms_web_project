@@ -37,7 +37,7 @@ class _DepartmentWiseAvailabilityScreenState
             crossAxisCount: 5,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
-            mainAxisExtent: 250),
+            mainAxisExtent: 230),
         itemBuilder: (context, index) => InkWell(
           onTap: () async {
             await deptProvider.doctors(deptVarProvider.deptList[index]);
@@ -57,7 +57,18 @@ class _DepartmentWiseAvailabilityScreenState
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            child: Text(deptVarProvider.deptList[index]),
+            child: Column(
+              children: [
+                Image.network(
+                  "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                  fit: BoxFit.contain,
+                ),
+                Text(
+                  deptVarProvider.deptList[index],
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -77,21 +88,28 @@ class _DepartmentWiseAvailabilityScreenState
               crossAxisCount: 5,
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
-              mainAxisExtent: 250),
+              mainAxisExtent: 280),
           itemBuilder: (context, index) => InkWell(
             onTap: () {},
             child: Container(
+              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: Color(0xffdec09d),
                 borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(doctorDetails[index].fname),
-                  Text(doctorDetails[index].eid),
-                  Text(doctorDetails[index].department),
-                  Text(doctorDetails[index].medlic),
+                  Image.network(
+                    "https://images.pexels.com/photos/4492064/pexels-photo-4492064.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    fit: BoxFit.contain,
+                  ),
+                  Text("Name: ${doctorDetails[index].fname}"),
+                  Text("ID: ${doctorDetails[index].eid}"),
+                  Text("Dept: ${doctorDetails[index].department}"),
+                  Text("Medical License No: ${doctorDetails[index].medlic}"),
                 ],
               ),
             ),

@@ -3,19 +3,23 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
@@ -69,24 +73,30 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 
   List<Map<String, Widget>> tabItems = [
     {
-      "Booking": NewBookings(),
-      "current bookings": CurrentBookingPage(),
+      // -------------------------------------------------------------------appointments
+      // "Booking": NewBookings(),
+      // "current bookings": CurrentBookingPage(),
+      "Appointments": AppintmentsMain(),
       "Records": DummyPage(),
       "Availability": DummyPage(),
     },
     {
-      "Dept. wise availability": DepartmentWiseAvailabilityScreen(),
+      // --------------------------------------------------------------------------doctors
+      "Doctors": DoctorMain(),
+      // "Dept. wise availability": DepartmentWiseAvailabilityScreen(),
       "Doctors list": DummyPage(),
       "Doctors on call": DummyPage(),
-      "New Doctor": NewDoctor()
+      // "New Doctor": NewDoctor()
     },
     {
-      "New patient": NewPatientRegistrationscreen(),
-      "Existing patient": ExistingPatientsPage(),
+      // -----------------------------------------------------------------------patients
+      "Patients": PatientsMain(),
+      // "New patient": NewPatientRegistrationscreen(),
+      // "Existing patient": ExistingPatientsPage(),
       "discharged": DummyPage(),
     },
-//  emr
-    {"Patient records": EmrPage()},
+// ------------------------------------------------------------------- emr
+    {"Patient records": EmrMain(), "EMR Details": DummyPage()},
     //lAB
     {"Test details": LabRadiologyScreen()},
 // DIALYSIS
