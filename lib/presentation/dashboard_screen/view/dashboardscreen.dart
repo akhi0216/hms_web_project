@@ -16,6 +16,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart'
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
@@ -25,8 +27,6 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medi
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
-
-import 'lab/radiology/lab_details.dart';
 
 class Dashboardsecondscreen extends StatefulWidget {
   const Dashboardsecondscreen(
@@ -103,7 +103,32 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
 // ------------------------------------------------------------------- emr
     {"Patient records": EmrMain(), "EMR Details": DummyPage()},
     //lAB
-    {"Test details": LabRadiologyScreen()},
+    {
+      // "Test details": LabRadiologyScreen()
+      "Lab Records": LabDetailsPage(
+        patientName: 'Akhila',
+        testsDone: [
+          TestDetail(
+            name: 'Blood Test',
+            date: '2024-08-01',
+            report:
+                'No abnormalities detected. All levels within normal range.',
+          ),
+          TestDetail(
+            name: 'X-Ray',
+            date: '2024-08-05',
+            report: 'Chest X-Ray shows no significant findings.',
+          ),
+          TestDetail(
+            name: 'Urine Test',
+            date: '2024-08-10',
+            report: 'Normal results. No infections or abnormalities.',
+          ),
+        ],
+        doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
+      ),
+      "Lab Tests": LabTests()
+    },
 // DIALYSIS
     {},
 // OPERATION THEATRE
