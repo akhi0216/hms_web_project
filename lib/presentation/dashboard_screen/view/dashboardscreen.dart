@@ -16,6 +16,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart'
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
@@ -157,7 +158,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Complaints": Complaint(),
       "HR": DummyPage(),
       "Stores": StoreScreen(),
-      "House Keeping": DummyPage(),
+      "House Keeping": Housekeeping(),
       "Analysis": DummyPage(),
       "Nurse": DummyPage(),
       "SMS Center": DummyPage(),
