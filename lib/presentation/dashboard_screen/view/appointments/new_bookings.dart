@@ -518,12 +518,13 @@ class _NewBookingsState extends State<NewBookings> {
                               //     ? Colors.red[700] // Selected color
                               //     : Colors.green, // Default color
                               border: Border.all(
-                                  width: 2,
+                                  width: 3,
                                   color: varprovider.selectedtimeList
                                           .contains(index.toString())
                                       ? selectedindex == index
-                                          ? Colors.green
-                                          : Colors.black
+                                          ? Colors.red
+                                          : const Color.fromARGB(
+                                              255, 72, 184, 76)
                                       : Colors.grey),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(7)),
@@ -534,8 +535,9 @@ class _NewBookingsState extends State<NewBookings> {
                                   color: varprovider.selectedtimeList
                                           .contains(index.toString())
                                       ? selectedindex == index
-                                          ? Colors.green
-                                          : Colors.black
+                                          ? Colors.red
+                                          : const Color.fromARGB(
+                                              255, 72, 184, 76)
                                       : Colors.grey),
                               varprovider.timeList[index],
                             ),
