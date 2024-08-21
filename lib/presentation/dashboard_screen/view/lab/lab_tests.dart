@@ -83,42 +83,6 @@ class _LabModuleState extends State<LabTests> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: size.width * .2,
-          // height: size.height,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: ColorConstants.mainBlue,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: size.width * .199,
-                color: ColorConstants.mainwhite,
-                child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
-                ),
-              ),
-              SizedBox(height: size.height * .01),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: size.height * .05),
-                  // buttonCall(label: "New Bookings", newScreen: NewBookings()),
-                  // buttonCall(
-                  //     label: "Current Bookings",
-                  //     newScreen: CurrentBookingPage()),
-                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
-                  // buttonCall(label: "New Stock", newScreen: NewStock()),
-                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
-                ],
-              ),
-            ],
-          ),
-        ),
         Expanded(
           child: SingleChildScrollView(
             child: Padding(

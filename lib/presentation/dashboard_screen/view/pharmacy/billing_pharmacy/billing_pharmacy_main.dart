@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 
 class BillingPharmacyMain extends StatefulWidget {
   BillingPharmacyMain({super.key, this.notifications = false});
@@ -58,6 +59,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
                     newScreen: widget.notifications
                         ? PharmacyNotifications()
                         : BillingPharmacy()),
+               buttonCall(label: "Medicine search", newScreen: MedicineSearch()),
               ],
             ),
           ],

@@ -17,6 +17,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart'
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
@@ -75,7 +76,26 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     'Billing',
     'Insurance',
     'Pharmacy',
+    'Store',
     'General'
+  ];
+
+  List<Widget> screenNames = [
+    HomeDashboard(),
+    AppintmentsMain(),
+    DoctorMain(),
+    PatientsMain(),
+    EmrMain(),
+    LabMain(),
+    DummyPage(),
+    OtScreenMain(),
+    BillingMain(),
+    DummyPage(),
+    BillingPharmacyMain(
+      notifications: false,
+    ),
+    StoreScreen(),
+    GeneralMain(),
   ];
 
   String selectedData = "";
@@ -103,10 +123,8 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Patient records": EmrMain(),
     },
     //lAB
-    {  
-
-
-      "Lab Records":LabMain()
+    {
+      "Lab Records": LabMain()
       // --------------------
       // "Lab Records":
       //  LabDetailsPage(
@@ -140,11 +158,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "Operation Theatre": OtScreenMain(),
     },
     {
-
-      "billing":BillingMain()
+      "billing": BillingMain()
       // "Ip billing": IpBilling(),
       // "Op billing": OpBilling(),
-      
     },
     // INSURANCE
     {},
@@ -153,20 +169,26 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
       "billing": BillingPharmacyMain(
         notifications: false,
       ),
-      "Availale stock": MedicineSearch(),
+      // "Availale stock": MedicineSearch(),
+    },
+    {
+      // store
+      "Store": StoreScreen(),
     },
     // GENERAL
     {
-      "Accounts": DummyPage(),
-      "Complaints": Complaint(),
-      "HR": DummyPage(),
-      "Stores": StoreScreen(),
-      "House Keeping": Housekeeping(),
-      "Analysis": DummyPage(),
-      "Nurse": DummyPage(),
-      "SMS Center": DummyPage(),
-      "Reminders": DummyPage(),
-      "Feedback": FeedbackForm(),
+      "General": GeneralMain()
+      // // ----------------
+      // "Accounts": DummyPage(),
+      // "Complaints": Complaint(),
+      // "HR": DummyPage(),
+      // "Stores": StoreScreen(),
+      // "House Keeping": Housekeeping(),
+      // "Analysis": DummyPage(),
+      // "Nurse": DummyPage(),
+      // "SMS Center": DummyPage(),
+      // "Reminders": DummyPage(),
+      // "Feedback": FeedbackForm(),
     },
   ];
 
@@ -184,7 +206,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 12,
+      length: 13,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
@@ -375,7 +397,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             indicatorColor: Colors.transparent,
             labelColor: ColorConstants.mainOrange,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
             unselectedLabelColor: ColorConstants.mainwhite,
+            onTap: (value) => print(value),
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
                 text: tabLabels[index],
@@ -383,6 +408,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                 // _buildPopupMenu(tabLabels[index], tabItems[index], index),
                 // ------------------------------------------------------------
               );
+
               // return MouseRegion(
               //   onEnter: (event) =>
               //       _buildPopupMenu(tabLabels[index], tabItems[index], index),
@@ -421,11 +447,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             ),
           ],
         ),
-        body: TabBarView(
-            children: List.generate(
-          tabItems.length,
-          (index) => tabItems[index]['selectedData'] ?? HomeDashboard(),
-        )),
+        body: TabBarView(children: screenNames),
       ),
       // ),
     );

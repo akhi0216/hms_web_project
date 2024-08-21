@@ -397,7 +397,7 @@ class _StoreBillingState extends State<StoreBilling> {
                           ),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                          hintText: 'Enter item name',
+                          hintText: 'Enter item name/barcode',
                         ),
                       );
                     },

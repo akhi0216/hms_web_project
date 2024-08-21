@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 
 class OpBilling extends StatefulWidget {
@@ -69,7 +70,7 @@ class _OpBillingState extends State<OpBilling> {
               ),
             ),
             Divider(
-              color: Colors.blueAccent,
+              color: ColorConstants.mainBlue,
               thickness: 2,
             ),
             SizedBox(height: 10),
@@ -87,7 +88,7 @@ class _OpBillingState extends State<OpBilling> {
               ],
             ),
             Divider(
-              color: Colors.blueAccent,
+              color: ColorConstants.mainBlue,
               thickness: 2,
             ),
             SizedBox(height: 20),
@@ -100,7 +101,7 @@ class _OpBillingState extends State<OpBilling> {
             ElevatedButton(
               onPressed: _toggleDetails,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent, // Background color
+                backgroundColor: ColorConstants.mainBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

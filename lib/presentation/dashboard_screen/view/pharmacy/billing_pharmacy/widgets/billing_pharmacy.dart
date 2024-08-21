@@ -328,7 +328,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
             // Medicine Autocomplete
             Row(
               children: [
-                const Text("Add Medicine:",
+                const Text("Name/Barcode:",
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(width: 5),
@@ -378,7 +378,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                           ),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                          hintText: 'Enter Medicine name',
+                          // hintText: 'Enter Medicine name',
                         ),
                       );
                     },
