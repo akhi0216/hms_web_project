@@ -1,8 +1,8 @@
 class Medicine {
-  final String name;
-  final int stock;
-  final double price;
-  final int gst;
+  String name;
+  int stock;
+  double price;
+  int gst;
 
   Medicine(
       {required this.name,
