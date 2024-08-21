@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 
-class IpBilling extends StatefulWidget {
+class IpBillingEMR extends StatefulWidget {
   @override
-  _IpBillingState createState() => _IpBillingState();
+  _IpBillingEMRState createState() => _IpBillingEMRState();
 }
 
-class _IpBillingState extends State<IpBilling> {
+class _IpBillingEMRState extends State<IpBillingEMR> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
@@ -108,6 +108,10 @@ class _IpBillingState extends State<IpBilling> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(labelText: 'Patient ID'),
+                    ),
                     TextFormField(
                       controller: _nameController,
                       decoration: InputDecoration(labelText: 'Name'),

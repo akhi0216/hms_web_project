@@ -107,7 +107,7 @@ class _OpBillingState extends State<OpBilling> {
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               ),
               child: Text(
-                _showDetails ? "Hide Details" : "Print",
+                _showDetails ? "Hide Details" : "Show Details",
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),

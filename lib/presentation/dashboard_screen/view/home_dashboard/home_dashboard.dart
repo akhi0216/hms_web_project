@@ -88,7 +88,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             ),
             // -----------
 
-            SizedBox(height: 190),
+            SizedBox(height: 147),
 
             // Footer Section
             Container(
