@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/model/store_model.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/model/bill_pharmacy.dart';
 
-class StoreBilling extends StatefulWidget {
-  const StoreBilling({super.key});
+class BillingPharmacy extends StatefulWidget {
+  const BillingPharmacy({super.key});
 
   @override
-  State<StoreBilling> createState() => _StoreBillingState();
+  State<BillingPharmacy> createState() => _BillingPharmacyState();
 }
 
-class _StoreBillingState extends State<StoreBilling> {
-  Store? selectedItem;
-  late TextEditingController itemController = TextEditingController();
+class _BillingPharmacyState extends State<BillingPharmacy> {
+  Medicine? selectedMedicine;
+  final TextEditingController _medicineController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController fullAmountController = TextEditingController();
+  late TextEditingController medicineController = TextEditingController();
+
+  List<Medicine> showableMedicines = [];
 
   // State variables for quantity and total amount
   int quantity = 1;
@@ -22,61 +25,65 @@ class _StoreBillingState extends State<StoreBilling> {
 
   double fullAmount = 0.0;
 
-  String controllerValue = "";
-
   // List to keep track of added medicines
-  final List<Map<String, dynamic>> addedItems = [];
+  List<Map<String, dynamic>> addedMedicines = [];
 
-  final List<Store> storeItems = [
-    Store(name: "Pens", stock: 100, price: 7.0, gst: 18),
-    Store(name: "Pencils", stock: 150, price: 3.0, gst: 18),
-    Store(name: "Notebooks", stock: 200, price: 25.0, gst: 18),
-    Store(name: "Sticky Notes", stock: 80, price: 12.0, gst: 18),
-    Store(name: "Paper", stock: 500, price: 1.5, gst: 18),
-    Store(name: "Folders", stock: 120, price: 18.0, gst: 18),
-    Store(name: "Envelopes", stock: 150, price: 4.0, gst: 18),
-    Store(name: "Binders", stock: 100, price: 30.0, gst: 18),
-    Store(name: "Staplers and Staples", stock: 60, price: 40.0, gst: 18),
-    Store(name: "Paper Clips", stock: 300, price: 0.7, gst: 18),
-    Store(name: "Tape", stock: 200, price: 3.5, gst: 18),
-    Store(name: "Glue", stock: 180, price: 10.0, gst: 18),
-    Store(name: "Scissors", stock: 90, price: 15.0, gst: 18),
-    Store(name: "Markers", stock: 140, price: 7.0, gst: 18),
-    Store(name: "Erasers", stock: 160, price: 2.0, gst: 18),
-    Store(name: "Rulers", stock: 130, price: 5.0, gst: 18),
-    Store(name: "Punching Machines", stock: 50, price: 40.0, gst: 18),
-    Store(name: "Labeling Machines", stock: 30, price: 50.0, gst: 18),
-    Store(name: "Calculators", stock: 70, price: 60.0, gst: 18),
-    Store(name: "Whiteboards and Markers", stock: 25, price: 170.0, gst: 18),
-
-    // Specialized Stationery for Hospitals
-    Store(name: "Patient File Folders", stock: 100, price: 15.0, gst: 18),
-    Store(name: "Prescription Pads", stock: 200, price: 18.0, gst: 18),
-    Store(name: "Chart Paper", stock: 50, price: 25.0, gst: 18),
-    Store(name: "ID Cards and Badges", stock: 75, price: 12.0, gst: 18),
-    Store(name: "Appointment Books", stock: 40, price: 20.0, gst: 18),
-    Store(name: "Medical Forms", stock: 120, price: 10.0, gst: 18),
-    Store(name: "NCR Paper", stock: 90, price: 7.0, gst: 18),
-    Store(name: "Clipboards", stock: 110, price: 15.0, gst: 18),
-    Store(name: "Labels and Tags", stock: 200, price: 5.0, gst: 18),
-    Store(name: "Report Covers", stock: 70, price: 18.0, gst: 18),
+  final List<Medicine> medicines = [
+    Medicine(name: 'Paracetamol', stock: 150, price: 10.0, gst: 12),
+    Medicine(name: 'Ibuprofen', stock: 80, price: 15.0, gst: 18),
+    Medicine(name: 'Amoxicillin', stock: 120, price: 20.0, gst: 5),
+    Medicine(name: 'Aspirin', stock: 100, price: 12.0, gst: 18),
+    Medicine(name: 'Ciprofloxacin', stock: 90, price: 18.0, gst: 12),
+    Medicine(name: 'Cetirizine', stock: 200, price: 8.0, gst: 5),
+    Medicine(name: 'Omeprazole', stock: 75, price: 22.0, gst: 18),
+    Medicine(name: 'Loratadine', stock: 60, price: 11.0, gst: 12),
+    Medicine(name: 'Metformin', stock: 130, price: 25.0, gst: 5),
+    Medicine(name: 'Atorvastatin', stock: 95, price: 30.0, gst: 18),
+    Medicine(name: 'Simvastatin', stock: 85, price: 28.0, gst: 12),
+    Medicine(name: 'Amlodipine', stock: 110, price: 17.0, gst: 5),
+    Medicine(name: 'Hydrochlorothiazide', stock: 55, price: 19.0, gst: 12),
+    Medicine(name: 'Lisinopril', stock: 140, price: 21.0, gst: 18),
+    Medicine(name: 'Azithromycin', stock: 70, price: 23.0, gst: 5),
+    Medicine(name: 'Clindamycin', stock: 50, price: 26.0, gst: 18),
+    Medicine(name: 'Gabapentin', stock: 160, price: 13.0, gst: 12),
+    Medicine(name: 'Losartan', stock: 120, price: 14.0, gst: 5),
+    Medicine(name: 'Doxycycline', stock: 65, price: 16.0, gst: 12),
+    Medicine(name: 'Hydrocodone', stock: 45, price: 35.0, gst: 18),
   ];
-
-  List<Store> showableStoreItems = [];
+  String controllerValue = "";
 
   @override
   void dispose() {
-    itemController.dispose();
+    _medicineController.dispose();
     _quantityController.dispose();
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    showableMedicines = medicines;
+    _quantityController.addListener(() {
+      final text = _quantityController.text;
+      if (text.isNotEmpty) {
+        final number = int.tryParse(text);
+        if (number != null && number > selectedMedicine!.stock) {
+          _quantityController.text = selectedMedicine!.stock.toString();
+          _quantityController.selection = TextSelection.fromPosition(
+            TextPosition(offset: _quantityController.text.length),
+          );
+        }
+      }
+    });
+  }
+
   void _updateTotalAmount() {
-    if (selectedItem != null) {
+    if (selectedMedicine != null) {
       setState(() {
         quantity = int.tryParse(_quantityController.text) ?? 0;
-        totalAmount = (selectedItem!.price * quantity) +
-            ((selectedItem!.price * quantity) * (selectedItem!.gst / 100));
+        totalAmount = (selectedMedicine!.price * quantity) +
+            ((selectedMedicine!.price * quantity) *
+                (selectedMedicine!.gst / 100));
       });
     } else {
       setState(() {
@@ -86,47 +93,33 @@ class _StoreBillingState extends State<StoreBilling> {
     }
   }
 
-  void _addStoreItems() {
-    if (selectedItem != null && quantity > 0) {
+  void _addMedicine() {
+    if (selectedMedicine != null && quantity > 0) {
       setState(() {
-        addedItems.add({
-          'item': selectedItem!,
+        // Add the selected medicine details to the list
+        addedMedicines.add({
+          'medicine': selectedMedicine!,
           'quantity': quantity,
           'totalAmount': totalAmount,
         });
-        _updateTotalAmount();
-        showableStoreItems.remove(selectedItem);
-        // calculate full amount
+
+        // Update the fullAmount
         fullAmount += totalAmount;
-        fullAmountController.text = fullAmount.toString();
-        // Clear the TextFormField values outside the blue container
-        itemController.clear();
+
+        // Update the controller text
+        fullAmountController.text = fullAmount.toStringAsFixed(2);
+
+        // Clear the TextFormField values and reset state
+        _medicineController.clear();
         _quantityController.clear();
-        selectedItem = null;
+        selectedMedicine = null;
         quantity = 0;
         totalAmount = 0.0;
-        controllerValue = "";
+
+        // Recalculate total amount in case quantity or selectedMedicine was changed
         _updateTotalAmount();
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    showableStoreItems = storeItems;
-    _quantityController.addListener(() {
-      final text = _quantityController.text;
-      if (text.isNotEmpty) {
-        final number = int.tryParse(text);
-        if (number != null && number > selectedItem!.stock) {
-          _quantityController.text = selectedItem!.stock.toString();
-          _quantityController.selection = TextSelection.fromPosition(
-            TextPosition(offset: _quantityController.text.length),
-          );
-        }
-      }
-    });
   }
 
   @override
@@ -289,40 +282,6 @@ class _StoreBillingState extends State<StoreBilling> {
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 10,
-                //     ),
-                //     child: Container(
-                //       padding: const EdgeInsets.all(12),
-                //       height: 150,
-                //       // width: size.width * .4,
-                //       decoration: BoxDecoration(
-                //         border: Border.all(color: Colors.black, width: 2),
-                //         borderRadius:
-                //             const BorderRadius.all(Radius.circular(12)),
-                //         color: Colors.white,
-                //       ),
-                //       child: Column(
-                //         children: [
-                //           Text(
-                //             "Doctor prescription",
-                //             style: TextStyle(
-                //                 color: ColorConstants.mainBlue,
-                //                 fontSize: 18,
-                //                 fontWeight: FontWeight.w600),
-                //           ),
-                //           TextFormField(
-                //             decoration: InputDecoration(
-                //                 border: OutlineInputBorder(
-                //                     borderSide: BorderSide.none)),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 // Image
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -344,39 +303,61 @@ class _StoreBillingState extends State<StoreBilling> {
             ),
             // SizedBox(width: size.width * .02),
             SizedBox(height: size.height * .02),
+            Container(
+              padding: const EdgeInsets.all(12),
+              height: 150,
+              width: 900,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 2),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                color: Colors.white,
+              ),
+              child: const Column(
+                children: [
+                  Text(
+                    "Doctor prescription",
+                    style: TextStyle(
+                        color: ColorConstants.mainBlue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: size.height * .02),
             // Medicine Autocomplete
             Row(
               children: [
-                const Text("Add Item:",
+                const Text("Add Medicine:",
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(width: 5),
                 Expanded(
                   flex: 7,
-                  child: Autocomplete<Store>(
+                  child: Autocomplete<Medicine>(
                     optionsBuilder: (TextEditingValue textEditingValue) {
                       // if (textEditingValue.text.isEmpty) {
                       //   return const Iterable<Medicine>.empty();
                       // } else {
-                      return showableStoreItems.where((Store store) {
-                        return store.name
+                      return showableMedicines.where((Medicine medicine) {
+                        return medicine.name
                             .toLowerCase()
                             .contains(textEditingValue.text.toLowerCase());
                       }).toList();
                       // }
                     },
-                    displayStringForOption: (Store store) {
-                      controllerValue = store.name;
+                    displayStringForOption: (Medicine medicine) {
+                      controllerValue = medicine.name;
                       print(controllerValue);
                       return controllerValue;
                     },
-                    onSelected: (Store store) {
+                    onSelected: (Medicine medicine) {
                       setState(() {
-                        selectedItem = store;
+                        selectedMedicine = medicine;
                         _quantityController.text = '1';
                         // quantity = 1;
                         _updateTotalAmount();
-                        itemController
+                        medicineController
                             .clear(); // Clear the TextFormField after selection
                         _updateTotalAmount(); // Update total amount
                       });
@@ -397,7 +378,7 @@ class _StoreBillingState extends State<StoreBilling> {
                           ),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                          hintText: 'Enter item name',
+                          hintText: 'Enter Medicine name',
                         ),
                       );
                     },
@@ -426,7 +407,7 @@ class _StoreBillingState extends State<StoreBilling> {
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
-                    readOnly: selectedItem == null ? true : false,
+                    readOnly: selectedMedicine == null ? true : false,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -447,7 +428,7 @@ class _StoreBillingState extends State<StoreBilling> {
                     onPressed: () {
                       setState(() {});
                       int inc = int.parse(_quantityController.text.trim());
-                      if (inc < selectedItem!.stock) {
+                      if (inc < selectedMedicine!.stock) {
                         inc++;
                       }
                       _quantityController.text = inc.toString();
@@ -458,14 +439,14 @@ class _StoreBillingState extends State<StoreBilling> {
                   width: 10,
                 ),
                 IconButton(
-                  onPressed: _addStoreItems,
+                  onPressed: _addMedicine,
                   icon: Icon(Icons.add_circle, color: ColorConstants.mainBlue),
                 )
               ],
             ),
             const SizedBox(height: 30),
             // Medicine Details Container
-            if (selectedItem != null)
+            if (selectedMedicine != null)
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -477,7 +458,7 @@ class _StoreBillingState extends State<StoreBilling> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Item Details",
+                      "Medicine Details",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -496,7 +477,7 @@ class _StoreBillingState extends State<StoreBilling> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Text("Name: ${selectedItem!.name}"),
+                            child: Text("Name: ${selectedMedicine!.name}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -509,34 +490,7 @@ class _StoreBillingState extends State<StoreBilling> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Text("Stock: ${selectedItem!.stock}"),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ColorConstants.mainBlack, width: 1.5),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                                "Price: ${selectedItem!.price.toStringAsFixed(2)}"),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ColorConstants.mainBlack, width: 1.5),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                            ),
-                            child: Text("GST: ${selectedItem!.gst}%"),
+                            child: Text("Stock: ${selectedMedicine!.stock}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -550,7 +504,34 @@ class _StoreBillingState extends State<StoreBilling> {
                               color: Colors.white,
                             ),
                             child: Text(
-                                "Item count: ${_quantityController.text.trim()}"),
+                                "Price: ${selectedMedicine!.price.toStringAsFixed(2)}"),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ColorConstants.mainBlack, width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Text("GST: ${selectedMedicine!.gst}%"),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ColorConstants.mainBlack, width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                                "Medicine count: ${_quantityController.text.trim()}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -574,7 +555,7 @@ class _StoreBillingState extends State<StoreBilling> {
               ),
             const SizedBox(height: 10),
             // Added Medicines Details
-            if (addedItems.isNotEmpty)
+            if (addedMedicines.isNotEmpty)
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(bottom: 10),
@@ -587,7 +568,7 @@ class _StoreBillingState extends State<StoreBilling> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                         Text(
-                          "Item Details",
+                          "Medicine Details",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -596,10 +577,10 @@ class _StoreBillingState extends State<StoreBilling> {
                         ),
                         const SizedBox(height: 10),
                       ] +
-                      addedItems.map((item) {
-                        final items = item['item'] as Store;
-                        final quantity = item['quantity'] as int;
-                        final totalAmount = item['totalAmount'] as double;
+                      addedMedicines.map((medicine) {
+                        final medicines = medicine['medicine'] as Medicine;
+                        final quantity = medicine['quantity'] as int;
+                        final totalAmount = medicine['totalAmount'] as double;
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10),
@@ -615,7 +596,7 @@ class _StoreBillingState extends State<StoreBilling> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text("Name: ${items.name}"),
+                                  child: Text("Name: ${medicines.name}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -629,36 +610,7 @@ class _StoreBillingState extends State<StoreBilling> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text("Stock: ${items.stock}"),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: ColorConstants.mainBlack,
-                                        width: 1.5),
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                  ),
-                                  child: Text(
-                                      "Price: ${items.price.toStringAsFixed(2)}"),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: ColorConstants.mainBlack,
-                                        width: 1.5),
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                  ),
-                                  child: Text("GST: ${items.gst}%"),
+                                  child: Text("Stock: ${medicines.stock}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -673,7 +625,36 @@ class _StoreBillingState extends State<StoreBilling> {
                                     color: Colors.white,
                                   ),
                                   child: Text(
-                                      "Item count: ${_quantityController.text.trim()}"),
+                                      "Price: ${medicines.price.toStringAsFixed(2)}"),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ColorConstants.mainBlack,
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  child: Text("GST: ${medicines.gst}%"),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ColorConstants.mainBlack,
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  child: Text(
+                                      "Medicine count: ${_quantityController.text.trim()}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -730,7 +711,18 @@ class _StoreBillingState extends State<StoreBilling> {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 onPressed: () {
-                  // Add your submit logic here
+                  setState(() {
+                    int stock = selectedMedicine!.stock -
+                        int.parse(_quantityController.text.trim());
+                    print(selectedMedicine!.stock);
+                    Medicine medicine = medicines.firstWhere((med) {
+                      return med.name == selectedMedicine?.name;
+                    });
+                    medicine.stock = selectedMedicine!.stock;
+                    selectedMedicine = null;
+                    showableMedicines = medicines;
+                    _medicineController.clear();
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorConstants.mainBlue,

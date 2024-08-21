@@ -26,7 +26,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -149,7 +150,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     {},
     // PHARMACY
     {
-      "billing": BillingPharmacy(),
+      "billing": BillingPharmacyMain(
+        notifications: false,
+      ),
       "Availale stock": MedicineSearch(),
     },
     // GENERAL
@@ -394,6 +397,17 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             }),
           ),
           actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  screen = BillingPharmacyMain(
+                    notifications: true,
+                  );
+                });
+              },
+              icon: Icon(Icons.notifications),
+              color: ColorConstants.mainwhite,
+            ),
             Builder(
               builder: (context) => IconButton(
                 icon: Icon(
