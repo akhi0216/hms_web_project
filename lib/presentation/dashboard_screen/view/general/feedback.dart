@@ -38,124 +38,170 @@ class _FeedbackFormState extends State<FeedbackForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+    Size size = MediaQuery.sizeOf(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: size.width * .2,
+          height: size.height,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: ColorConstants.mainBlue,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: size.width * .199,
+                color: ColorConstants.mainwhite,
+                child: Image.asset(
+                  "assets/images/highlandlogo-removebg-preview.png",
+                ),
+              ),
+              SizedBox(height: size.height * .01),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/highlandlogo-removebg-preview.png',
-                    height: 350,
-                    width: 550,
-                    fit: BoxFit.fill,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'We value your feedback!',
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.mainOrange,
-                    ),
-                  ),
+                  SizedBox(height: size.height * .05),
+                  // buttonCall(label: "Billing", newScreen: StoreBilling()),
+                  // buttonCall(label: "New Store", newScreen: NewStore()),
+                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
+                  // buttonCall(label: "New Stock", newScreen: NewStock()),
+                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
                 ],
               ),
-            ),
-            SizedBox(width: 50),
-            Expanded(
-              flex: 2,
-              child: Column(
+            ],
+          ),
+        ),
+
+        // ------------------------
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 20),
-                  Form(
-                    key: _formKey,
+                  Expanded(
+                    flex: 1,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: size.height * 0.1),
+                        Text(
+                          'We value your feedback!',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstants.mainOrange,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: 80,
+                          height: 5,
+                          color: ColorConstants.mainBlue,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 50),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(
-                          width: 500,
-                          child: TextFormField(
-                            controller: _nameController,
-                            decoration: InputDecoration(
-                              labelText: 'Name',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: ColorConstants.mainBlue,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your name';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        SizedBox(
-                          width: 500,
-                          child: TextFormField(
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(
-                                Icons.email,
-                                color: ColorConstants.mainBlue,
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              } else if (!RegExp(r'\S+@\S+\.\S+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email address';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          controller: _feedbackController,
-                          decoration: InputDecoration(
-                            labelText: 'Feedback',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(
-                              Icons.feedback,
-                              color: ColorConstants.mainBlue,
-                            ),
-                          ),
-                          maxLines: 9,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please provide your feedback';
-                            }
-                            return null;
-                          },
-                        ),
                         SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: _submitFeedback,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorConstants.mainBlue,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
-                            textStyle: TextStyle(fontSize: 16),
-                          ),
-                          child: Text(
-                            'Submit Feedback',
-                            style: TextStyle(color: ColorConstants.mainwhite),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Name',
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(
+                                      Icons.person,
+                                      color: ColorConstants.mainBlue,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(
+                                      Icons.email,
+                                      color: ColorConstants.mainBlue,
+                                    ),
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    } else if (!RegExp(r'\S+@\S+\.\S+')
+                                        .hasMatch(value)) {
+                                      return 'Please enter a valid email address';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              TextFormField(
+                                controller: _feedbackController,
+                                decoration: InputDecoration(
+                                  labelText: 'Feedback',
+                                  border: OutlineInputBorder(),
+                                  prefixIcon: Icon(
+                                    Icons.feedback,
+                                    color: ColorConstants.mainBlue,
+                                  ),
+                                ),
+                                maxLines: 9,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please provide your feedback';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: _submitFeedback,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorConstants.mainBlue,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 12),
+                                  textStyle: TextStyle(fontSize: 16),
+                                ),
+                                child: Text(
+                                  'Submit Feedback',
+                                  style: TextStyle(
+                                      color: ColorConstants.mainwhite),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -164,9 +210,9 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

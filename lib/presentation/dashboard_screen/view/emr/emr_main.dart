@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
@@ -15,8 +16,8 @@ class EmrMain extends StatefulWidget {
 }
 
 class _EmrMainState extends State<EmrMain> {
-  String value = "Patient Records";
-  Widget screen = EmrPage();
+  String value = "IN Patient Records";
+  Widget screen = IpBilling();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -47,6 +48,8 @@ class _EmrMainState extends State<EmrMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
+                  buttonCall(
+                      label: "IN Patient Records", newScreen: IpBilling()),
                   buttonCall(label: "Patient Records", newScreen: EmrPage()),
                   // buttonCall(label: "New Store", newScreen: NewStore()),
                   // buttonCall(label: "Open Stock", newScreen: OpenStock()),

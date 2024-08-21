@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/lab_tests.dart';
 
 // class LabTest {
@@ -73,87 +74,133 @@ class _LabModuleState extends State<LabTests> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     List<LabTest> filteredTests = availableTests
         .where((test) =>
             test.testName.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Search Tests',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: size.width * .2,
+          // height: size.height,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: ColorConstants.mainBlue,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: size.width * .199,
+                color: ColorConstants.mainwhite,
+                child: Image.asset(
+                  "assets/images/highlandlogo-removebg-preview.png",
                 ),
-                filled: true,
-                fillColor: Colors.teal[50],
               ),
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            Text("Available Lab Tests",
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal)),
-            SizedBox(height: 10),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: filteredTests.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5,
-                  shadowColor: Colors.teal.withOpacity(0.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.teal,
-                      child: Icon(Icons.science, color: Colors.white),
-                    ),
-                    title: Text(filteredTests[index].testName,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Text(filteredTests[index].description),
-                        SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                "₹${filteredTests[index].price.toStringAsFixed(2)}",
-                                style: TextStyle(color: Colors.teal)),
-                            Text(
-                                "Report Time: ${filteredTests[index].reportTime}",
-                                style: TextStyle(color: Colors.teal)),
-                          ],
-                        ),
-                      ],
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios, color: Colors.teal),
-                    onTap: () => _bookTest(filteredTests[index]),
-                  ),
-                );
-              },
-            ),
-          ],
+              SizedBox(height: size.height * .01),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: size.height * .05),
+                  // buttonCall(label: "New Bookings", newScreen: NewBookings()),
+                  // buttonCall(
+                  //     label: "Current Bookings",
+                  //     newScreen: CurrentBookingPage()),
+                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
+                  // buttonCall(label: "New Stock", newScreen: NewStock()),
+                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Search Tests',
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      filled: true,
+                      fillColor: Colors.teal[50],
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  Text("Available Lab Tests",
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal)),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: filteredTests.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 5,
+                        shadowColor: Colors.teal.withOpacity(0.5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.all(16),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.teal,
+                            child: Icon(Icons.science, color: Colors.white),
+                          ),
+                          title: Text(filteredTests[index].testName,
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 8),
+                              Text(filteredTests[index].description),
+                              SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      "₹${filteredTests[index].price.toStringAsFixed(2)}",
+                                      style: TextStyle(color: Colors.teal)),
+                                  Text(
+                                      "Report Time: ${filteredTests[index].reportTime}",
+                                      style: TextStyle(color: Colors.teal)),
+                                ],
+                              ),
+                            ],
+                          ),
+                          trailing:
+                              Icon(Icons.arrow_forward_ios, color: Colors.teal),
+                          onTap: () => _bookTest(filteredTests[index]),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

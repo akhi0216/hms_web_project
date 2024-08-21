@@ -54,128 +54,173 @@ class _HousekeepingState extends State<Housekeeping> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'assets/images/shutterstock_1279052104-1024x683.webp',
-                  height: 300,
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        controller: patientIdController,
-                        // decoration: InputDecoration(
-                        //   labelText: 'Patient ID',
-                        //   border: OutlineInputBorder(),
-                        // ),
-                        decoration: InputDecoration(
-                            labelText: 'Patient ID',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            filled: true,
-                            fillColor: ColorConstants.mainwhite,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
-                      ),
-                      SizedBox(height: 16),
-                      TextFormField(
-                        controller: roomNoController,
-                        // decoration: InputDecoration(
-                        //   labelText: 'Patient Room Number',
-                        //   border: OutlineInputBorder(),
-                        // ),
-                        decoration: InputDecoration(
-                            labelText: 'Patient Room Number',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            filled: true,
-                            fillColor: ColorConstants.mainwhite,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
-                      ),
-                      SizedBox(height: 16),
-                      TextFormField(
-                        controller: floorNoController,
-
-                        // decoration: InputDecoration(
-                        //   labelText: 'Floor Number',
-                        //   border: OutlineInputBorder(),
-                        // ),
-                        decoration: InputDecoration(
-                            labelText: 'Floor Number',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            filled: true,
-                            fillColor: ColorConstants.mainwhite,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
-                      ),
-                      SizedBox(height: 16),
-                      DropdownButtonFormField<String>(
-                        value: selectedRequirement,
-                        hint: Text('Select Requirement'),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            filled: true,
-                            fillColor: ColorConstants.mainwhite,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
-                        items: requirements.map((requirement) {
-                          return DropdownMenuItem<String>(
-                            value: requirement,
-                            child: Text(requirement),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedRequirement = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24),
-            Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  _submitForm();
-                  patientIdController.clear();
-                  roomNoController.clear();
-                  floorNoController.clear();
-                  setState(() {
-                    selectedRequirement = null;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorConstants.mainBlue,
-                ),
-                child: Text(
-                  'Submit',
-                  style: MyTextStyle.appbartext,
+    Size size = MediaQuery.sizeOf(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: size.width * .2,
+          height: size.height,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: ColorConstants.mainBlue,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: size.width * .199,
+                color: ColorConstants.mainwhite,
+                child: Image.asset(
+                  "assets/images/highlandlogo-removebg-preview.png",
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: size.height * .01),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: size.height * .05),
+                  // buttonCall(label: "Billing", newScreen: StoreBilling()),
+                  // buttonCall(label: "New Store", newScreen: NewStore()),
+                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
+                  // buttonCall(label: "New Stock", newScreen: NewStock()),
+                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+
+        // -----------------
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Image.asset(
+                      //   'assets/images/shutterstock_1279052104-1024x683.webp',
+                      //   height: 300,
+                      // ),
+                      // SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFormField(
+                              controller: patientIdController,
+                              // decoration: InputDecoration(
+                              //   labelText: 'Patient ID',
+                              //   border: OutlineInputBorder(),
+                              // ),
+                              decoration: InputDecoration(
+                                  labelText: 'Patient ID',
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  filled: true,
+                                  fillColor: ColorConstants.mainwhite,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  )),
+                            ),
+                            SizedBox(height: 16),
+                            TextFormField(
+                              controller: roomNoController,
+                              // decoration: InputDecoration(
+                              //   labelText: 'Patient Room Number',
+                              //   border: OutlineInputBorder(),
+                              // ),
+                              decoration: InputDecoration(
+                                  labelText: 'Patient Room Number',
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  filled: true,
+                                  fillColor: ColorConstants.mainwhite,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  )),
+                            ),
+                            SizedBox(height: 16),
+                            TextFormField(
+                              controller: floorNoController,
+
+                              // decoration: InputDecoration(
+                              //   labelText: 'Floor Number',
+                              //   border: OutlineInputBorder(),
+                              // ),
+                              decoration: InputDecoration(
+                                  labelText: 'Floor Number',
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  filled: true,
+                                  fillColor: ColorConstants.mainwhite,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  )),
+                            ),
+                            SizedBox(height: 16),
+                            DropdownButtonFormField<String>(
+                              value: selectedRequirement,
+                              hint: Text('Select Requirement'),
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  filled: true,
+                                  fillColor: ColorConstants.mainwhite,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  )),
+                              items: requirements.map((requirement) {
+                                return DropdownMenuItem<String>(
+                                  value: requirement,
+                                  child: Text(requirement),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedRequirement = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      // ----
+                    ],
+                  ),
+                  SizedBox(height: 24),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        _submitForm();
+                        patientIdController.clear();
+                        roomNoController.clear();
+                        floorNoController.clear();
+                        setState(() {
+                          selectedRequirement = null;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorConstants.mainBlue,
+                      ),
+                      child: Text(
+                        'Submit',
+                        style: MyTextStyle.appbartext,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
