@@ -110,6 +110,10 @@ class _IpBillingState extends State<IpBilling> {
                   children: [
                     TextFormField(
                       controller: _nameController,
+                      decoration: InputDecoration(labelText: 'Patient ID'),
+                    ),
+                    TextFormField(
+                      controller: _nameController,
                       decoration: InputDecoration(labelText: 'Name'),
                     ),
                     TextFormField(

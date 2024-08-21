@@ -112,7 +112,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     {},
 // OPERATION THEATRE
     {
-      "Operation Theatre": OtScreen(),
+      "Operation Theatre": OtScreenMain(),
     },
 // Billing
     {
@@ -189,6 +189,8 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
                         MaterialPageRoute(
                           builder: (context) => AdminScreen(
                             adminName: widget.userName,
+                            adminId: widget.empId,
+                            admin: widget.des,
                           ),
                         ));
                   },
@@ -301,10 +303,10 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
         appBar: AppBar(
           backgroundColor: ColorConstants.mainBlue,
           automaticallyImplyLeading: false,
-          title: Text(
-            'Highland Hospital',
-            style: MyTextStyle.appbartext,
-          ),
+          // title: Text(
+          //   'Highland Hospital',
+          //   style: MyTextStyle.appbartext,
+          // ),
           bottom: TabBar(
             isScrollable: false,
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),

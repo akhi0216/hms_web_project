@@ -11,54 +11,65 @@ class HomeDashboard extends StatefulWidget {
 class _HomeDashboardState extends State<HomeDashboard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 400,
-                    width: 800,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/highlandlogo-removebg-preview.png"))),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 400,
+                  width: 800,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    // boxShadow: [
+                    // BoxShadow(
+                    //   color: Colors.orange.withOpacity(0.5),
+                    //   spreadRadius: 5,
+                    //   blurRadius: 7,
+                    //   offset: Offset(0, 3),
+                    // ),
+                    // ],
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/highlandlogo-removebg-preview.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                Expanded(
-                  child:
-                      //  Container(
-                      //   width: 100,
-                      //   child: Text(
-                      //     'At HighLand Hospital, we are committed to providing the highest quality of care with a patient-centric approach. Our state-of-the-art facilities and experienced medical professionals ensure that you receive the best possible treatment in a comfortable and caring environment.We take pride in our team of experienced and compassionate medical professionals, who are not only experts in their respective fields but are also dedicated to providing personalized and attentive care. Our doctors, nurses, and support staff work collaboratively to ensure that every patient receives the best possible treatment, from the moment they walk through our doors until they are fully recovered.',
-                      //     style: TextStyle(
-                      //       fontSize: 16,
-                      //     ),
-                      //     textAlign: TextAlign.justify,
-                      //   ),
-                      // ),
-                      // service
-                      Container(
+              ),
+              SizedBox(width: 20),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(11.0),
+                  child: Container(
                     decoration: BoxDecoration(
-                        // color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                            color: ColorConstants.mainOrange, width: 2)),
-                    // color: Colors.orange,
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
                     padding: EdgeInsets.all(20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Our Services',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                        Center(
+                          child: Text(
+                            'Our Services',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: ColorConstants.mainBlue,
+                            ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -84,27 +95,45 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            // -----------
-
-            SizedBox(height: 147),
-
-            // Footer Section
-            Container(
-              padding: EdgeInsets.all(10),
-              color: ColorConstants.mainBlue,
-              child: Center(
-                child: Text(
+              ),
+            ],
+          ),
+          SizedBox(height: 128),
+          Container(
+            padding: EdgeInsets.all(20),
+            color: ColorConstants.mainBlue,
+            child: Column(
+              children: [
+                Text(
                   '© 2024 Highland Hospital. All Rights Reserved.',
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 14,
                   ),
                 ),
-              ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.phone, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      '+1 234 567 890',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(width: 20),
+                    Icon(Icons.email, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'info@highlandhospital.com',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -120,15 +149,39 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 50, color: ColorConstants.mainBlue),
+        Container(
+          decoration: BoxDecoration(
+            color: ColorConstants.mainBlue.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.grey.withOpacity(0.3),
+            //     spreadRadius: 3,
+            //     blurRadius: 5,
+            //     offset: Offset(0, 3),
+            //   ),
+            // ],
+          ),
+          padding: EdgeInsets.all(15),
+          child: Icon(icon, size: 50, color: ColorConstants.mainBlue),
+        ),
         SizedBox(height: 10),
         Text(
           title,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            color: ColorConstants.mainBlack,
           ),
         ),
+        // SizedBox(height: 5),
+        // Text(
+        //   'Click to learn more',
+        //   style: TextStyle(
+        //     fontSize: 12,
+        //     color: Colors.grey,
+        //   ),
+        // ),
       ],
     );
   }

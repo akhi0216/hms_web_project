@@ -6,6 +6,7 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
@@ -18,6 +19,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/compl
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
@@ -84,66 +86,64 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     },
     {
       // -------------------------------------------------------------------appointments
-      // "Booking": NewBookings(),
-      // "current bookings": CurrentBookingPage(),
+
       "Appointments": AppintmentsMain(),
-      "Records": DummyPage(),
-      "Availability": DummyPage(),
     },
     {
       // --------------------------------------------------------------------------doctors
       "Doctors": DoctorMain(),
-      // "Dept. wise availability": DepartmentWiseAvailabilityScreen(),
-      "Doctors list": DummyPage(),
-      "Doctors on call": DummyPage(),
-      // "New Doctor": NewDoctor()
     },
     {
       // -----------------------------------------------------------------------patients
       "Patients": PatientsMain(),
-      // "New patient": NewPatientRegistrationscreen(),
-      // "Existing patient": ExistingPatientsPage(),
-      "discharged": DummyPage(),
     },
 // ------------------------------------------------------------------- emr
-    {"Patient records": EmrMain(), "EMR Details": DummyPage()},
-    //lAB
     {
-      // "Test details": LabRadiologyScreen()
-      "Lab Records": LabDetailsPage(
-        patientName: 'Akhila',
-        testsDone: [
-          TestDetail(
-            name: 'Blood Test',
-            date: '2024-08-01',
-            report:
-                'No abnormalities detected. All levels within normal range.',
-          ),
-          TestDetail(
-            name: 'X-Ray',
-            date: '2024-08-05',
-            report: 'Chest X-Ray shows no significant findings.',
-          ),
-          TestDetail(
-            name: 'Urine Test',
-            date: '2024-08-10',
-            report: 'Normal results. No infections or abnormalities.',
-          ),
-        ],
-        doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
-      ),
-      "Lab Tests": LabTests()
+      "Patient records": EmrMain(),
+    },
+    //lAB
+    {  
+
+
+      "Lab Records":LabMain()
+      // --------------------
+      // "Lab Records":
+      //  LabDetailsPage(
+      //   patientName: 'Akhila',
+      //   testsDone: [
+      //     TestDetail(
+      //       name: 'Blood Test',
+      //       date: '2024-08-01',
+      //       report:
+      //           'No abnormalities detected. All levels within normal range.',
+      //     ),
+      //     TestDetail(
+      //       name: 'X-Ray',
+      //       date: '2024-08-05',
+      //       report: 'Chest X-Ray shows no significant findings.',
+      //     ),
+      //     TestDetail(
+      //       name: 'Urine Test',
+      //       date: '2024-08-10',
+      //       report: 'Normal results. No infections or abnormalities.',
+      //     ),
+      //   ],
+      //   doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
+      // ),
+      // "Lab Tests": LabTests()
     },
 // DIALYSIS
     {},
 // OPERATION THEATRE
     {
-      "Operation Theatre": OtScreen(),
+      "Operation Theatre": OtScreenMain(),
     },
     {
-      "Ip billing": IpBilling(),
-      "Op billing": OpBilling(),
-      "Unhealthy billing": DummyPage(),
+
+      "billing":BillingMain()
+      // "Ip billing": IpBilling(),
+      // "Op billing": OpBilling(),
+      
     },
     // INSURANCE
     {},
@@ -204,13 +204,22 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     Text(
                       'Menu',
                       style: TextStyle(
-                        color: ColorConstants.mainBlack,
+                        color: ColorConstants.mainwhite,
                         fontSize: 24,
                       ),
                     ),
-                    Text(widget.userName),
-                    Text(widget.empId),
-                    Text(widget.des),
+                    Text(
+                      widget.userName,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
+                    Text(
+                      widget.empId,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
+                    Text(
+                      widget.des,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
                   ],
                 ),
               ),
@@ -223,11 +232,16 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                         MaterialPageRoute(
                           builder: (context) => AdminScreen(
                             adminName: widget.userName,
+                            adminId: widget.empId,
+                            admin: widget.des,
                           ),
                         ));
                   },
                   child: ListTile(
-                    leading: Icon(Icons.account_circle),
+                    leading: Icon(
+                      Icons.account_circle,
+                      color: ColorConstants.mainBlue,
+                    ),
                     title: Text('Admin'),
                   ),
                 ),
@@ -242,7 +256,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: Icon(
+                    Icons.settings,
+                    color: ColorConstants.mainBlue,
+                  ),
                   title: Text('Settings'),
                 ),
               ),
@@ -277,7 +294,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.logout),
+                  leading: Icon(
+                    Icons.logout,
+                    color: ColorConstants.mainBlue,
+                  ),
                   title: Text('Logout'),
                 ),
               ),
@@ -335,10 +355,18 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         appBar: AppBar(
           backgroundColor: ColorConstants.mainBlue,
           automaticallyImplyLeading: false,
-          title: Text(
-            'Highland Hospital',
-            style: MyTextStyle.appbartext,
-          ),
+          // title: Text(
+          //   'Highland Hospital',
+          //   style: MyTextStyle.appbartext,
+          // ),
+          // ------
+          // title: CircleAvatar(
+          //     radius: 20,
+          //     backgroundColor: ColorConstants.mainwhite,
+          //     child: Image.asset(
+          //       "assets/images/highlandlogo-removebg-preview.png",
+          //       fit: BoxFit.contain,
+          //     )),
           bottom: TabBar(
             isScrollable: false,
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
@@ -347,9 +375,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             unselectedLabelColor: ColorConstants.mainwhite,
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
-                // text: tabLabels[index],
-                child:
-                    _buildPopupMenu(tabLabels[index], tabItems[index], index),
+                text: tabLabels[index],
+                // child:
+                // _buildPopupMenu(tabLabels[index], tabItems[index], index),
+                // ------------------------------------------------------------
               );
               // return MouseRegion(
               //   onEnter: (event) =>
@@ -378,7 +407,11 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             ),
           ],
         ),
-        body: screen,
+        body: TabBarView(
+            children: List.generate(
+          tabItems.length,
+          (index) => tabItems[index]['selectedData'] ?? HomeDashboard(),
+        )),
       ),
       // ),
     );

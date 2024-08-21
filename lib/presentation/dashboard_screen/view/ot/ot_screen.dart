@@ -4,14 +4,14 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/ne
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/ot_status.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/previous_ot_booking.dart';
 
-class OtScreen extends StatefulWidget {
-  const OtScreen({super.key});
+class OtScreenMain extends StatefulWidget {
+  const OtScreenMain({super.key});
 
   @override
-  State<OtScreen> createState() => _OtScreenState();
+  State<OtScreenMain> createState() => _OtScreenMainState();
 }
 
-class _OtScreenState extends State<OtScreen> {
+class _OtScreenMainState extends State<OtScreenMain> {
   Widget screen = NewOtBooking();
   String value = "New Booking";
   @override

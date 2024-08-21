@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/doctor_search_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/staff_list_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 
 class AdminScreen extends StatefulWidget {
-  const AdminScreen({super.key, required this.adminName});
+  const AdminScreen(
+      {super.key,
+      required this.adminName,
+      required this.adminId,
+      required this.admin});
   final String adminName;
+  final String adminId;
+  final String admin;
 
   @override
   State<AdminScreen> createState() => _AdminScreenState();
@@ -14,7 +22,7 @@ class AdminScreen extends StatefulWidget {
 
 class _AdminScreenState extends State<AdminScreen> {
   Widget screen = DoctorSearchScreen();
-  String selectedLabel = "doctor search";
+  String selectedLabel = "Doctor search";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -30,7 +38,9 @@ class _AdminScreenState extends State<AdminScreen> {
                 Column(
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.grey,
+                      // backgroundColor: Color(0xff81f1f2),
+                      backgroundImage:
+                          AssetImage("assets/images/doc_cartoon.jpg"),
                       radius: 50,
                     ),
                     SizedBox(height: size.height * .01),
@@ -42,12 +52,33 @@ class _AdminScreenState extends State<AdminScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     buttonCall(
-                        label: "doctor search",
+                        label: "Doctor search",
                         newScreen: DoctorSearchScreen()),
                     buttonCall(
-                        label: "staff registration", newScreen: NewDoctor()),
+                        label: "Doctor registration", newScreen: NewDoctor()),
                     buttonCall(
-                        label: "staff List", newScreen: StaffListScreen()),
+                        label: "Staff List", newScreen: StaffListScreen()),
+                    // buttonCall(label: "Home", newScreen: HomeDashboard()),
+
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Dashboardsecondscreen(
+                                  userName: widget.adminName,
+                                  empId: widget.adminId,
+                                  des: widget.admin,
+                                ),
+                              ));
+                          // Navigator.pop(context);
+                        },
+                        child: Text(
+                          "HOME",
+                          style: TextStyle(
+                              color: ColorConstants.mainwhite,
+                              fontWeight: FontWeight.bold),
+                        ))
                   ],
                 ),
               ],
