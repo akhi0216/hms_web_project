@@ -6,14 +6,19 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
@@ -68,6 +73,17 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     'Billing',
     'Insurance',
     'General'
+  ];
+
+  List<Widget> screenNames = [
+    HomeDashboard(),
+    PatientsMain(),
+    LabMain(),
+    DummyPage(),
+    OtScreenMain(),
+    BillingMain(),
+    DummyPage(),
+    GeneralMain(),
   ];
 
   String selectedData = "";
@@ -352,7 +368,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             ),
           ],
         ),
-        body: screen,
+        body: TabBarView(children: screenNames),
       ),
       // ),
     );
