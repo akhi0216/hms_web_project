@@ -91,7 +91,7 @@ class _OtStatusState extends State<OtStatus> {
                       DataColumn(label: Text('Patient Name')),
                       DataColumn(label: Text('Doctor Name')),
                       DataColumn(label: Text('Time')),
-                      DataColumn(label: Text('Risktype')),
+                      DataColumn(label: Text('Category')),
                     ],
                     rows: List.generate(statusList[index]['status'].length,
                         (index2) {

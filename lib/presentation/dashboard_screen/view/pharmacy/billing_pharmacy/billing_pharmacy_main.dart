@@ -69,8 +69,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
       Expanded(
           child: Padding(
         padding: const EdgeInsets.all(10),
-        child:
-            widget.notifications ? PharmacyNotifications() : BillingPharmacy(),
+        child: screen,
       ))
     ]);
   }

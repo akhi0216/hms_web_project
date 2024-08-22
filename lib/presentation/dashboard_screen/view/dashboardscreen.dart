@@ -447,7 +447,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             ),
           ],
         ),
-        body: TabBarView(children: screenNames),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: screenNames,
+        ),
       ),
       // ),
     );

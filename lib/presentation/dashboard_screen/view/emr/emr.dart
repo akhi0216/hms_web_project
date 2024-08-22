@@ -37,7 +37,7 @@ class _EmrPageState extends State<EmrPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Name: John Doe', style: TextStyle(fontSize: 16)),
+                      Text('Name: Hari', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 4),
                       Text('Age: 35', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 4),
@@ -113,7 +113,8 @@ class _EmrPageState extends State<EmrPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Doctor: Dr. Smith', style: TextStyle(fontSize: 16)),
+                      Text('Doctor: Dr. Nithin',
+                          style: TextStyle(fontSize: 16)),
                       SizedBox(height: 4),
                       Text('Medication: Metoprolol 50mg',
                           style: TextStyle(fontSize: 16)),

@@ -126,6 +126,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
+      // scrollDirection: Axis.vertical,
       child: Container(
         width: size.width * .7,
         padding: const EdgeInsets.all(10),
@@ -382,6 +383,10 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         ),
                       );
                     },
+
+                    // --------------------------------------
+
+                    // -------------------------------------------
                   ),
                 ),
                 const SizedBox(width: 40),
