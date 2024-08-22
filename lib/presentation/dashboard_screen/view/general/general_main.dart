@@ -48,7 +48,7 @@ class GeneralMainState extends State<GeneralMain> {
                   // buttonCall(label: "Store", newScreen: StoreScreen()),
                   buttonCall(label: "HouseKeeping", newScreen: Housekeeping()),
                   buttonCall(label: "Accounts", newScreen: DummyPage()),
-                  buttonCall(label: "Complaints", newScreen: Complaint()),
+                  buttonCall(label: "Concerns", newScreen: Complaint()),
 
                   buttonCall(label: "feedback", newScreen: FeedbackForm()),
                   // buttonCall(label: "HR", newScreen: DummyPage()),
