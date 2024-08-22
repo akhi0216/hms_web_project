@@ -59,7 +59,8 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
                     newScreen: widget.notifications
                         ? PharmacyNotifications()
                         : BillingPharmacy()),
-               buttonCall(label: "Medicine search", newScreen: MedicineSearch()),
+                buttonCall(
+                    label: "Medicine search", newScreen: MedicineSearch()),
               ],
             ),
           ],
@@ -89,7 +90,10 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
             width: constraints.maxWidth * .6,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             decoration: BoxDecoration(
-              color: ColorConstants.mainOrange,
+              // color: ColorConstants.mainOrange,
+              color: value == label
+                  ? ColorConstants.mainOrange
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
