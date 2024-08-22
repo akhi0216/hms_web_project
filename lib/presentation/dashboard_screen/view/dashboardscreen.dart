@@ -29,6 +29,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -53,6 +54,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   bool searchVisibility = false;
 
   bool _isHovered = false;
+  bool isNotified = false;
 
   void _handleHover(bool isHovered, int index) {
     setState(() {
@@ -91,9 +93,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
-    BillingPharmacyMain(
-      notifications: false,
-    ),
+    BillingPharmacyMain(),
     StoreScreen(),
     GeneralMain(),
   ];
@@ -166,9 +166,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     {},
     // PHARMACY
     {
-      "billing": BillingPharmacyMain(
-        notifications: false,
-      ),
+      "billing": BillingPharmacyMain(),
       // "Availale stock": MedicineSearch(),
     },
     {
@@ -394,13 +392,21 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           //     )),
           bottom: TabBar(
             isScrollable: false,
+            physics: NeverScrollableScrollPhysics(),
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             indicatorColor: Colors.transparent,
-            labelColor: ColorConstants.mainOrange,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            labelColor: isNotified
+                ? ColorConstants.mainwhite
+                : ColorConstants.mainOrange,
+            labelStyle: TextStyle(
+                fontWeight: isNotified ? FontWeight.normal : FontWeight.bold),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
             unselectedLabelColor: ColorConstants.mainwhite,
-            onTap: (value) => print(value),
+            onTap: (value) {
+              setState(() {
+                isNotified = false;
+              });
+            },
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
                 text: tabLabels[index],
@@ -426,9 +432,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  screen = BillingPharmacyMain(
-                    notifications: true,
-                  );
+                  isNotified = true;
                 });
               },
               icon: Icon(Icons.notifications),
@@ -447,7 +451,12 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             ),
           ],
         ),
-        body: TabBarView(children: screenNames),
+        body: isNotified
+            ? PharmacyNotifications()
+            : TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: screenNames,
+              ),
       ),
       // ),
     );
