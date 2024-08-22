@@ -337,9 +337,9 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             unselectedLabelColor: ColorConstants.mainwhite,
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
-                // text: tabLabels[index],
-                child:
-                    _buildPopupMenu(tabLabels[index], tabItems[index], index),
+                text: tabLabels[index],
+                // child:
+                //     _buildPopupMenu(tabLabels[index], tabItems[index], index),
               );
               // return MouseRegion(
               //   onEnter: (event) =>
@@ -368,7 +368,10 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             ),
           ],
         ),
-        body: TabBarView(children: screenNames),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: screenNames,
+        ),
       ),
       // ),
     );
