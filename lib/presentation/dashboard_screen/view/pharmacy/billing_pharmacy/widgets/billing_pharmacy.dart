@@ -24,6 +24,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   double totalAmount = 0.0;
 
   double fullAmount = 0.0;
+  int itemCount = 0;
 
   // List to keep track of added medicines
   List<Map<String, dynamic>> addedMedicines = [];
@@ -96,6 +97,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   void _addMedicine() {
     if (selectedMedicine != null && quantity > 0) {
       setState(() {
+        itemCount = int.parse(_quantityController.text.trim());
         // Add the selected medicine details to the list
         addedMedicines.add({
           'medicine': selectedMedicine!,
@@ -356,6 +358,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                       setState(() {
                         selectedMedicine = medicine;
                         _quantityController.text = '1';
+                        itemCount = 1;
                         // quantity = 1;
                         _updateTotalAmount();
                         medicineController
@@ -495,9 +498,27 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Text("Stock: ${selectedMedicine!.stock}"),
+                            child:
+                                Text("Main Stock: ${selectedMedicine!.stock}"),
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ColorConstants.mainBlack, width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                                "Current Stock: ${selectedMedicine!.stock - quantity}"),
+                          ),
+                        ),
+                        // ----------------------------------------       ----------------
+
+                        // --------------------------------------------------------------
                         const SizedBox(width: 10),
                         Expanded(
                           child: Container(
@@ -615,10 +636,28 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text("Stock: ${medicines.stock}"),
+                                  child: Text("Main stock: ${medicines.stock}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ColorConstants.mainBlack,
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  child: Text(
+                                      "Current Stock: ${medicines.stock - itemCount}"),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              // ------------------------------------------------------------
+
+                              //--------------------------------------------------------------
                               Expanded(
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
@@ -686,27 +725,47 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
             const SizedBox(height: 30),
             // Discount and Total
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Total:",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                const SizedBox(width: 5),
-                Container(
-                  width: 200,
-                  child: TextFormField(
-                      controller: fullAmountController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                        // hintText: '${fullAmount.toStringAsFixed(2)}',
-                        // readOnly: true,
-                      )),
+                TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      // backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                      backgroundColor: WidgetStatePropertyAll<Color>(
+                          ColorConstants.mainBlue)),
+                  child: Text(
+                    "Intend",
+                    style: TextStyle(
+                      color: Colors.white, // Text color
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text("Total:",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600)),
+                    const SizedBox(width: 5),
+                    Container(
+                      width: 200,
+                      child: TextFormField(
+                          controller: fullAmountController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.5),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            // hintText: '${fullAmount.toStringAsFixed(2)}',
+                            // readOnly: true,
+                          )),
+                    ),
+                  ],
                 ),
               ],
             ),
