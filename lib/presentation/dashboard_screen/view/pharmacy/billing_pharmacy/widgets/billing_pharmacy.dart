@@ -24,7 +24,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   double totalAmount = 0.0;
 
   double fullAmount = 0.0;
-  int itemCount = 0;
 
   // List to keep track of added medicines
   List<Map<String, dynamic>> addedMedicines = [];
@@ -97,7 +96,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   void _addMedicine() {
     if (selectedMedicine != null && quantity > 0) {
       setState(() {
-        itemCount = int.parse(_quantityController.text.trim());
         // Add the selected medicine details to the list
         addedMedicines.add({
           'medicine': selectedMedicine!,
@@ -358,7 +356,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                       setState(() {
                         selectedMedicine = medicine;
                         _quantityController.text = '1';
-                        itemCount = 1;
                         // quantity = 1;
                         _updateTotalAmount();
                         medicineController
@@ -651,7 +648,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     color: Colors.white,
                                   ),
                                   child: Text(
-                                      "Current Stock: ${medicines.stock - itemCount}"),
+                                      "Current Stock: ${medicines.stock - quantity}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -697,8 +694,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text(
-                                      "Medicine count: ${_quantityController.text.trim()}"),
+                                  child: Text("Medicine count: ${quantity}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
