@@ -17,17 +17,43 @@ class _NewStoreState extends State<NewStore> {
     8,
     (index) => TextEditingController(),
   );
+  List<TextEditingController> itemAmountController = List.generate(
+    8,
+    (index) => TextEditingController(),
+  );
+  List<TextEditingController> itemDiscController = List.generate(
+    8,
+    (index) => TextEditingController(),
+  );
   List<String> itemQuantityTitle = [
     'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
-    'Quantity',
+    'Less Qty.',
+    'Free',
+    'Act. Qty.',
+    'Shortage',
+    'Pur. Total',
+    'Pur. Disc.',
+    'Pur. DisAmt.',
+  ];
+  List<String> itemAmountTitle = [
+    'Amount',
+    'Act P Rate',
+    'Net. Pur',
+    'Pur. Rate',
+    'MRP',
+    'Pro.Amt',
+    'Pu. Prof',
+    'Pur. GST%',
+  ];
+  List<String> itemDiscTitle = [
+    'Disc%',
+    'Disc. Amt.',
+    'Prof%',
+    'Ret Price',
+    '%Less',
+    'Crd. Price',
+    '%Less',
+    'Wh Sale',
   ];
   TextEditingController itemController = TextEditingController();
   TextEditingController batchController = TextEditingController();
@@ -110,6 +136,7 @@ class _NewStoreState extends State<NewStore> {
             Row(
               children: [
                 Expanded(
+                  flex: 4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -153,26 +180,81 @@ class _NewStoreState extends State<NewStore> {
                 ),
                 SizedBox(width: 20),
                 Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                    itemQuantityController.length,
-                    (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: buildTextField(
-                            textLabel: itemQuantityTitle[index],
-                            controller: itemQuantityController[index]),
-                      );
-                    },
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      itemQuantityController.length,
+                      (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: buildTextField(
+                              textLabel: itemQuantityTitle[index],
+                              controller: itemQuantityController[index]),
+                        );
+                      },
+                    ),
                   ),
-                ))
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      itemAmountTitle.length,
+                      (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: buildTextField(
+                              textLabel: itemAmountTitle[index],
+                              controller: itemAmountController[index]),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      itemDiscTitle.length,
+                      (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: buildTextField(
+                              textLabel: itemDiscTitle[index],
+                              controller: itemDiscController[index]),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(),
+                Row(
+                  children: [
+                    buttonCall(label: "Insert"),
+                    buttonCall(label: "Clear"),
+                    buttonCall(label: "Delete"),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget buttonCall({required String label}) {
+    return ElevatedButton(onPressed: () {}, child: Text(label));
   }
 
   Widget firstRowColumns(

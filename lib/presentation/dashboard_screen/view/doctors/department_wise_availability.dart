@@ -24,7 +24,7 @@ class _DepartmentWiseAvailabilityScreenState
   @override
   Widget build(BuildContext context) {
     var deptVarProvider = Provider.of<BookingPatientController>(context);
-    var docVarProvider = Provider.of<BookingPatientController>(context);
+    var docVarProvider = Provider.of<TextSearchController>(context);
     var deptProvider =
         Provider.of<BookingPatientController>(context, listen: false);
     var docProvider = Provider.of<TextSearchController>(context, listen: false);
@@ -40,16 +40,19 @@ class _DepartmentWiseAvailabilityScreenState
             mainAxisExtent: 230),
         itemBuilder: (context, index) => InkWell(
           onTap: () async {
+            doctorDetails.clear();
             await deptProvider.doctors(deptVarProvider.deptList[index]);
             for (var i = 0; i < deptVarProvider.doctorIdList.length; i++) {
               await docProvider.searchDoctor(deptVarProvider.doctorIdList[i]);
-              doctorDetails.add(docProvider.doctorSearchModel);
+              doctorDetails.add(docVarProvider.doctorSearchModel);
             }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => doctorGrid(),
-                ));
+            if (doctorDetails.isNotEmpty) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => doctorGrid(),
+                  ));
+            }
           },
           child: Container(
             decoration: BoxDecoration(
