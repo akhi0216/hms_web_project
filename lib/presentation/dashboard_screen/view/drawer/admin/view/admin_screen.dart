@@ -66,7 +66,7 @@ class _AdminScreenState extends State<AdminScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Dashboardsecondscreen(
-                                  userName: widget.adminName,
+                                  userName: widget.adminName, 
                                   empId: widget.adminId,
                                   des: widget.admin,
                                 ),

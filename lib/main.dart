@@ -44,13 +44,13 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
+        home: SplashScreen(),
         // home: Scaffold(
         // body: HomeDashboard(),
         // ),
 
-        home: Dashboardsecondscreen(
-            userName: "Avanzo", empId: "001", des: "Admin"),
+        // home: Dashboardsecondscreen(
+        //     userName: "Avanzo", empId: "001", des: "Admin"),
       ),
     );
   }
