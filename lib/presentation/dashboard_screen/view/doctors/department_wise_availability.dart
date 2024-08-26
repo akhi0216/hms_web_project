@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:provider/provider.dart';
@@ -82,6 +83,15 @@ class _DepartmentWiseAvailabilityScreenState
     var varProvider = Provider.of<BookingPatientController>(context);
     print(varProvider.doctorList);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorConstants.mainBlue,
+        // title: IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       Icons.arrow_back,
+        //       color: ColorConstants.mainwhite,
+        //     )),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: GridView.builder(

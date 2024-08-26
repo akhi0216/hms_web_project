@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:provider/provider.dart';
 
@@ -603,7 +604,11 @@ class _NewBookingsState extends State<NewBookings> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeDashboard(),
+                                                    // HomeDashboard(),=====================================================
+                                                    Dashboardsecondscreen(
+                                                        userName: "Avanzo",
+                                                        empId: "001",
+                                                        des: "Admin"),
                                               ));
                                         },
                                       )

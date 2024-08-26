@@ -9,6 +9,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/dialysis_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
@@ -89,7 +90,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     PatientsMain(),
     EmrMain(),
     LabMain(),
-    DummyPage(),
+    DialysisMain(),
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
