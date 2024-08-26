@@ -603,6 +603,9 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                       addedMedicines.map((medicine) {
                         final medicines = medicine['medicine'] as Medicine;
                         final quantity = medicine['quantity'] as int;
+
+
+                         
                         final totalAmount = medicine['totalAmount'] as double;
 
                         return Padding(
