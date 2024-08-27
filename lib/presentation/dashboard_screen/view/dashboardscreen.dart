@@ -29,7 +29,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -452,7 +452,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           ],
         ),
         body: isNotified
-            ? PharmacyNotifications()
+            ? NotificationsScreen()
             : TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: screenNames,

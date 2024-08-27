@@ -4,14 +4,14 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/bill
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:intl/intl.dart';
 
-class PharmacyNotifications extends StatefulWidget {
-  const PharmacyNotifications({super.key});
+class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({super.key});
 
   @override
-  State<PharmacyNotifications> createState() => _PharmacyNotificationsState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _PharmacyNotificationsState extends State<PharmacyNotifications> {
+class _NotificationsScreenState extends State<NotificationsScreen> {
   List<Medicine> medicineList = [
     Medicine(name: 'Paracetamol', stock: 10, price: 10.0, gst: 12),
     Medicine(name: 'Ibuprofen', stock: 8, price: 15.0, gst: 18),
@@ -20,7 +20,7 @@ class _PharmacyNotificationsState extends State<PharmacyNotifications> {
     Medicine(name: 'Ciprofloxacin', stock: 9, price: 18.0, gst: 12),
     Medicine(name: 'Cetirizine', stock: 2, price: 8.0, gst: 5),
   ];
-  String value = "Billing";
+  String value = "Notifications";
   Widget? screen;
   @override
   void initState() {
@@ -57,7 +57,8 @@ class _PharmacyNotificationsState extends State<PharmacyNotifications> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "Billing", newScreen: BillingPharmacy()),
+                  buttonCall(
+                      label: "Notifications", newScreen: NotificationsScreen()),
                 ],
               ),
             ],
