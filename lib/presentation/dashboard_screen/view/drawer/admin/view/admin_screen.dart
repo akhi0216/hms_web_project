@@ -4,17 +4,18 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/doctor_search_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/staff_list_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen(
       {super.key,
-      required this.adminName,
-      required this.adminId,
-      required this.admin});
-  final String adminName;
-  final String adminId;
-  final String admin;
+      required this.userName,
+      required this.eid,
+      required this.des});
+  final String userName;
+  final String eid;
+  final String des;
 
   @override
   State<AdminScreen> createState() => _AdminScreenState();
@@ -44,7 +45,7 @@ class _AdminScreenState extends State<AdminScreen> {
                       radius: 50,
                     ),
                     SizedBox(height: size.height * .01),
-                    Text(widget.adminName),
+                    Text(widget.userName),
                   ],
                 ),
                 SizedBox(height: size.height * .05),
@@ -58,6 +59,12 @@ class _AdminScreenState extends State<AdminScreen> {
                         label: "Doctor registration", newScreen: NewDoctor()),
                     buttonCall(
                         label: "Staff List", newScreen: StaffListScreen()),
+                    buttonCall(
+                        label: "View Concerns",
+                        newScreen: ViewConcerns(
+                          designation: widget.des,
+                          empId: widget.eid,
+                        )),
                     // buttonCall(label: "Home", newScreen: HomeDashboard()),
 
                     TextButton(
@@ -66,9 +73,9 @@ class _AdminScreenState extends State<AdminScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Dashboardsecondscreen(
-                                  userName: widget.adminName, 
-                                  empId: widget.adminId,
-                                  des: widget.admin,
+                                  userName: widget.userName,
+                                  empId: widget.eid,
+                                  des: widget.des,
                                 ),
                               ));
                           // Navigator.pop(context);

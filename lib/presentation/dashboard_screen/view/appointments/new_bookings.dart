@@ -499,7 +499,7 @@ class _NewBookingsState extends State<NewBookings> {
                                   .contains(index.toString())
                               ? setState(() {
                                   selectedindex = index;
-                                })
+                                }) 
                               : setState(() {
                                   selectedindex = null;
                                 });

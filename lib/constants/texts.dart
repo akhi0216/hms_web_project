@@ -15,4 +15,7 @@ class MyTextStyle {
       TextStyle(color: Colors.black, fontSize: 15);
 
   static TextStyle normalText = TextStyle(color: Colors.black, fontSize: 15);
+
+  static TextStyle normalWhiteText =
+      TextStyle(color: ColorConstants.mainwhite, fontSize: 15);
 }
