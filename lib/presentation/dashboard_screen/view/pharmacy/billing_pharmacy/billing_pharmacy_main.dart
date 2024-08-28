@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
@@ -40,7 +41,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
               width: size.width * .199,
               color: ColorConstants.mainwhite,
               child: Image.asset(
-                "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
               ),
             ),
             SizedBox(height: size.height * .01),

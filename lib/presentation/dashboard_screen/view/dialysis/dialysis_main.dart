@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/widgets/booking_dialysis.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/widgets/previous_dialysis_booking.dart';
 
-class DoctorMain extends StatefulWidget {
-  const DoctorMain({super.key});
+class DialysisMain extends StatefulWidget {
+  const DialysisMain({super.key});
 
   @override
-  State<DoctorMain> createState() => _DoctorMainState();
+  State<DialysisMain> createState() => _DialysisMainState();
 }
 
-class _DoctorMainState extends State<DoctorMain> {
-  String value = "New Doctor";
-  Widget screen = NewDoctor();
+class _DialysisMainState extends State<DialysisMain> {
+  String value = "New Bookings";
+  Widget screen = DialysisBooking();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -41,7 +37,7 @@ class _DoctorMainState extends State<DoctorMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  ImageConstants.highlandlogonobackground,
+                 ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -49,21 +45,24 @@ class _DoctorMainState extends State<DoctorMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "New Doctor", newScreen: NewDoctor()),
                   buttonCall(
-                      label: "Dept availability",
-                      newScreen: DepartmentWiseAvailabilityScreen()),
-                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
-                  // buttonCall(label: "New Stock", newScreen: NewStock()),
-                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
+                      label: "New Bookings", newScreen: DialysisBooking()),
+                  buttonCall(
+                      label: "Previous Recods",
+                      newScreen: PreviousDialysisBooking()),
+                  buttonCall(label: "Room Status", newScreen: DummyPage()),
                 ],
               ),
             ],
           ),
         ),
-        SizedBox(width: size.width * .02),
+        // SizedBox(width: size.width * .02),
         // SingleChildScrollView(child: screen),
-        Expanded(child: screen),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: screen,
+        )),
       ],
     );
   }

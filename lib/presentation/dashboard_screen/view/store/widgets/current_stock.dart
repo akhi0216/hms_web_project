@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 
 class CurrentStock extends StatefulWidget {
   const CurrentStock({super.key});
@@ -113,7 +114,7 @@ class _CurrentStockState extends State<CurrentStock> {
                           decoration: BoxDecoration(
                               color: ColorConstants.mainBlue,
                               image: DecorationImage(
-                                image: AssetImage("assets/images/store.jpg"),
+                                image: AssetImage(ImageConstants.store),
                                 fit: BoxFit.fill,
                               ),
                               borderRadius: BorderRadius.circular(5)),

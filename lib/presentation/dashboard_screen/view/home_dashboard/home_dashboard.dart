@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 
 class HomeDashboard extends StatefulWidget {
   const HomeDashboard({super.key});
@@ -31,8 +32,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     // ),
                     // ],
                     image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/highlandlogo-removebg-preview.png"),
+                      image: AssetImage(ImageConstants.highlandlogo
+                          // "assets/images/highlandlogo-removebg-preview.png"
+
+                          ),
                       fit: BoxFit.cover,
                     ),
                   ),
