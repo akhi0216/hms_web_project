@@ -16,7 +16,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_d
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
@@ -30,7 +30,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -255,9 +255,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AdminScreen(
-                            adminName: widget.userName,
-                            adminId: widget.empId,
-                            admin: widget.des,
+                            userName: widget.userName,
+                            eid: widget.empId,
+                            des: widget.des,
                           ),
                         ));
                   },
@@ -453,7 +453,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           ],
         ),
         body: isNotified
-            ? PharmacyNotifications()
+            ? NotificationsScreen(
+                value: "Notifications",
+                givenScreen: NotificationsScreenSample(),
+              )
             : TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: screenNames,

@@ -407,7 +407,7 @@ class _NewBookingsState extends State<NewBookings> {
                                   .contains(index.toString())
                               ? setState(() {
                                   selectedindex = index;
-                                })
+                                }) 
                               : setState(() {
                                   selectedindex = null;
                                 });
@@ -487,7 +487,7 @@ class _NewBookingsState extends State<NewBookings> {
                                         Text("You are successfully appointed"),
                                     actions: [
                                       TextButton(
-                                        child: Text("return"),
+                                        child: Text("Back"),
                                         onPressed: () {
                                           patientidcontroller.clear();
                                           _emailController.clear();

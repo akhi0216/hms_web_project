@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
-import 'package:hms_web_project/repositories/api/model/user_details_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,11 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String isLoggined = "";
-  String empId = "";
-  String designation = "";
-  UserDetailsModel userDetailsModel = UserDetailsModel();
-  Map<String, dynamic> json = {};
 
   bool isObscured = true;
   void _obscureText() {
@@ -31,83 +22,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void login() async {
-    try {
-      var url = "https://cybot.avanzosolutions.in/hms/loginverify.php";
-      var res = await http.post(Uri.parse(url), body: {
-        "loginusernamecontroller": _usernameController.text.trim(),
-        "loginpasswordcontroller": _passwordController.text.trim(),
-      });
-      isLoggined = res.body;
-    } on Exception catch (e) {
-      print(e);
-    }
-
-    print(isLoggined);
-    if (isLoggined == "success") {
-      try {
-        var url = "https://cybot.avanzosolutions.in/hms/loginname.php";
-        var res = await http.post(Uri.parse(url), body: {
-          "loginusernamecontroller": _usernameController.text.trim(),
-          "loginpasswordcontroller": _passwordController.text.trim(),
-        });
-        print(res.body);
-        setState(() {
-          json = jsonDecode(res.body);
-        });
-        userDetailsModel = UserDetailsModel.fromJson(json);
-      } on Exception catch (e) {
-        print(e);
-      }
-      print(userDetailsModel.uname);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Login Successful"),
-          backgroundColor: ColorConstants.mainGreen,
-          duration: Duration(milliseconds: 1500),
-        ),
-      );
-      Future.delayed(
-        Duration(milliseconds: 1500),
-        () {
-          if (userDetailsModel.des == "Admin") {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Dashboardsecondscreen(
-                  userName: userDetailsModel.uname ?? "",
-                  empId: userDetailsModel.eid ?? "",
-                  des: userDetailsModel.des ?? "",
-                ),
-              ),
-            );
-          } else if (userDetailsModel.des == "user") {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UserDashBoardScreen(
-                  userName: userDetailsModel.uname ?? "",
-                  empId: userDetailsModel.eid ?? "",
-                  des: userDetailsModel.des ?? "",
-                ),
-              ),
-            );
-          }
-        },
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Enter valid username and password"),
-          backgroundColor: ColorConstants.mainRed,
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    var fuctionProvider = Provider.of<LoginController>(context, listen: false);
     return Scaffold(
       backgroundColor: ColorConstants.mainwhite,
       appBar: AppBar(
@@ -269,7 +187,11 @@ class _LoginPageState extends State<LoginPage> {
                             ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  login();
+                                  fuctionProvider.login(
+                                    username: _usernameController.text.trim(),
+                                    password: _passwordController.text.trim(),
+                                    context: context,
+                                  );
                                 }
                               },
                               style: ElevatedButton.styleFrom(

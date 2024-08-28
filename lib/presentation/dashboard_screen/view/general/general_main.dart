@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
 
@@ -49,7 +49,7 @@ class GeneralMainState extends State<GeneralMain> {
                   // buttonCall(label: "Store", newScreen: StoreScreen()),
                   buttonCall(label: "HouseKeeping", newScreen: Housekeeping()),
                   buttonCall(label: "Accounts", newScreen: DummyPage()),
-                  buttonCall(label: "Concerns", newScreen: Complaint()),
+                  buttonCall(label: "Concerns", newScreen: ConcernsScreen()),
 
                   buttonCall(label: "feedback", newScreen: FeedbackForm()),
                   // buttonCall(label: "HR", newScreen: DummyPage()),
