@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
@@ -37,7 +38,7 @@ class GeneralMainState extends State<GeneralMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),

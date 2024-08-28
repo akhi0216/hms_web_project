@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
@@ -40,7 +41,7 @@ class _DoctorMainState extends State<DoctorMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),

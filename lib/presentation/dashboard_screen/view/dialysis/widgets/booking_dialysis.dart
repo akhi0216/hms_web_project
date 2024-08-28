@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DialysisBooking extends StatefulWidget {
@@ -19,16 +22,17 @@ class _DialysisBookingState extends State<DialysisBooking> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController phnumbercontroller = TextEditingController();
   final TextEditingController _reasonController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
   final TextEditingController patientidcontroller = TextEditingController();
-  final TextEditingController dialysiscontroller = TextEditingController();
+  final TextEditingController departmentcontroller = TextEditingController();
   final TextEditingController doctorcontroller = TextEditingController();
   String? _selectedDoctor;
   String? _selectedOT;
   String? _selectedDoctorId;
   String? _selectedDepartment;
   String phoneNumber = "";
-//
+
+  String? dates;
   int? selectedindex;
 
   callFuction() async {
@@ -47,29 +51,49 @@ class _DialysisBookingState extends State<DialysisBooking> {
     patientidcontroller.dispose();
     _emailController.dispose();
     _reasonController.dispose();
-    _dateController.dispose();
+    dateController.dispose();
     firstnamecontroller.dispose();
     lastnamecontroller.dispose();
     phnumbercontroller.dispose();
     super.dispose();
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      setState(() {
-        _dateController.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null) {
+  //     setState(() {
+  //       dateController.text = "${picked.toLocal()}".split(' ')[0];
+  //     });
+  //   }
+  // }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null) {
+  //     setState(() {
+  //       functionproviderdialysis.departmentDialysis(DateFormat("dd-MM-yyyy").format(picked));
+  //       // dateController.text = "${picked.toLocal()}".split(' ')[0];
+  //     });
+  //     // Provider.of<BookingDialysisController>(context)
+  //     //     .departmentDialysis(dateController.text);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    var functionproviderdialysis =
+        Provider.of<BookingDialysisController>(context, listen: false);
+    var varproviderdialysis = Provider.of<BookingDialysisController>(context);
+
     var functionprovider =
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
@@ -83,7 +107,7 @@ class _DialysisBookingState extends State<DialysisBooking> {
           varprovider.patientBookingModel.list!.isEmpty) {
         _emailController.clear();
         _reasonController.clear();
-        _dateController.clear();
+        dateController.clear();
         firstnamecontroller.clear();
         lastnamecontroller.clear();
         phnumbercontroller.clear();
@@ -107,7 +131,7 @@ class _DialysisBookingState extends State<DialysisBooking> {
 
         phoneNumber = varprovider.patientBookingModel.list?[0].phn ?? "";
         phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
-                ?.replaceRange(0, 6, "******") ??
+                ?.replaceRange(0, 6, "") ??
             "";
         _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
         await functionprovider.doctors(_selectedDepartment);
@@ -120,7 +144,7 @@ class _DialysisBookingState extends State<DialysisBooking> {
       children: [
         Positioned.fill(
           child: Image.asset(
-            "assets/images/Untitled-removebg-preview (1).png",
+            ImageConstants.blood,
             fit: BoxFit.cover,
             opacity: AlwaysStoppedAnimation(0.3),
           ),
@@ -243,73 +267,137 @@ class _DialysisBookingState extends State<DialysisBooking> {
                         onTap: () {},
                       ),
                       const SizedBox(height: 20.0),
-                      buildTextFormField(
-                        label: 'Dialysis',
-                        controller: dialysiscontroller,
-                        icon: Icons.local_hospital,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your address';
-                          }
-                          return null;
-                        },
-                        onTap: () {},
-                      ),
-                      const SizedBox(height: 20.0),
-                      buildDropDownButton(
-                        label: 'Book Slots',
-                        value: _selectedOT,
-                        icon: Icons.local_hospital,
-                        suffixIcon: null,
-                        items: ['D 1', 'D 2', 'D 3', 'D 4'].map((String value) {
-                          return DropdownMenuItem(
-                              value: value, child: Text(value));
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedOT = newValue;
-                          });
-                        },
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a slot';
-                          }
-                          return null;
-                        },
-                      ),
-                      // ----------
-
-                      // const SizedBox(height: 20.0),
+                      // -------------------------------------------------------department
                       // buildTextFormField(
-
-                      //   label: 'Date',
-                      //   controller: _dateController,
+                      //   label: 'Dialysis',
+                      //   readOnly: true,
+                      //   controller: departmentcontroller,
                       //   icon: Icons.local_hospital,
-
                       //   validate: (value) {
                       //     if (value == null || value.isEmpty) {
-                      //       return 'Please enter date';
+                      //       return 'Please enter your address';
                       //     }
                       //     return null;
                       //   },
+                      //   onTap: () {
+                      //     // //////////////////////////////
+                      //     //
+                      //   },
+                      // ),
 
+                      const SizedBox(height: 20.0),
+                      // buildTextFormField(
+                      //   label: 'Date',
+                      //   controller: dateController,
+                      //   icon: Icons.calendar_today,
+                      //   validate: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Please select a date';
+                      //     }
+                      //     return null;
+                      //   },
                       //   onTap: () => _selectDate(context),
                       // ),
 
-                      // ------------------------------------------------
-                      const SizedBox(height: 20.0),
-                      buildTextFormField(
-                        label: 'Date',
-                        controller: _dateController,
-                        icon: Icons.calendar_today,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a date';
+                      // ----------------
+
+                      // TextButton(
+                      //     onPressed: () async {
+                      //       DateTime? picked = await showDatePicker(
+                      //         context: context,
+                      //         initialDate: DateTime.now(),
+                      //         firstDate: DateTime(2000),
+                      //         lastDate: DateTime(2101),
+                      //       );
+                      //       if (picked != null) {
+                      //         log("Selected date -> ${DateFormat("dd-MM-yyyy").format(picked)}");
+                      //         functionproviderdialysis.departmentDialysis(
+                      //             DateFormat("dd-MM-yyyy").format(picked));
+                      //         // dateController.text = "${picked.toLocal()}".split(' ')[0];
+
+                      //         // Provider.of<BookingDialysisController>(context)
+                      //         //     .departmentDialysis(dateController.text);
+                      //       }
+                      //     },
+                      //     child: Text("pick date")),
+
+                      // ------------------------------------------
+
+                      TextButton(
+                        onPressed: () async {
+                          DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (picked != null) {
+                            log("Selected date -> ${DateFormat("dd-MM-yyyy").format(picked)}");
+                            await functionproviderdialysis.departmentDialysis(
+                                DateFormat("dd-MM-yyyy").format(picked));
+                            // dateController.text = "${picked.toLocal()}".split(' ')[0];
                           }
-                          return null;
                         },
-                        onTap: () => _selectDate(context),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: ColorConstants.mainBlue,
+                          side: BorderSide(
+                              color: ColorConstants.mainwhite, width: 2),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Text("Pick a Date"),
                       ),
+
+                      // ------------------------------------------
+
+                      const SizedBox(height: 20.0),
+
+                      Wrap(
+                          children: List.generate(
+                        1,
+                        (index) {
+                          return Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(3),
+                                ),
+                                border: Border.all()),
+                            // height: 30,
+                            // width: 40,
+                            child: Text(varproviderdialysis.selectedtimeList
+                                .toString()),
+                          );
+                          // ------------------
+
+                          // --------------
+                        },
+                      )),
+                      // buildDropDownButton(
+                      //   label: 'Book Slots',
+                      //   value: _selectedOT,
+                      //   icon: Icons.local_hospital,
+                      //   suffixIcon: null,
+                      //   items: ['D 1', 'D 2', 'D 3', 'D 4'].map((String value) {
+                      //     return DropdownMenuItem(
+                      //         value: value, child: Text(value));
+                      //   }).toList(),
+                      //   onChanged: (newValue) {
+                      //     setState(() {
+                      //       _selectedOT = newValue;
+                      //     });
+                      //   },
+                      //   validate: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Please select a slot';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
+
+                      // ------------------------------------------------wrap
 
                       // ------------------------------------------------------------------------------------------
                       const SizedBox(height: 20.0),
@@ -333,7 +421,7 @@ class _DialysisBookingState extends State<DialysisBooking> {
                                                 patientidcontroller.clear();
                                                 _emailController.clear();
                                                 _reasonController.clear();
-                                                _dateController.clear();
+                                                dateController.clear();
                                                 firstnamecontroller.clear();
                                                 lastnamecontroller.clear();
                                                 phnumbercontroller.clear();
@@ -390,35 +478,6 @@ class _DialysisBookingState extends State<DialysisBooking> {
     );
   }
 
-  // Widget buildTextFormField({
-  //   required String label,
-  //   required TextEditingController controller,
-  //   required IconData icon,
-  //   required FormFieldValidator<String?> validate,
-  //   required void Function()? onTap,
-  // }) {
-  //   return TextFormField(
-  //     controller: controller,
-  //     readOnly: true,
-  //     decoration: InputDecoration(
-  //       contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-  //       labelText: label,
-  //       prefixIcon: Icon(
-  //         icon,
-  //         color: ColorConstants.mainBlue,
-  //       ),
-  //       filled: true,
-  //       // fillColor: Colors.white,
-  //       fillColor: Colors.transparent,
-  //       border: OutlineInputBorder(
-  //         borderSide:
-  //             BorderSide(color: const Color.fromARGB(255, 215, 210, 210)),
-  //         borderRadius: BorderRadius.circular(8.0),
-  //       ),
-  //     ),
-  //     validator: validate,
-  //   );
-  // }
 // ----------------
   Widget buildTextFormField({
     required String label,
@@ -426,10 +485,17 @@ class _DialysisBookingState extends State<DialysisBooking> {
     required IconData icon,
     required FormFieldValidator<String?> validate,
     required void Function()? onTap,
+    // bool readOnly = false,
   }) {
+    var dialysisprovider = Provider.of<BookingDialysisController>(context);
+
+    var dialysisfunction =
+        Provider.of<BookingDialysisController>(context, listen: false);
+
     return TextFormField(
       controller: controller,
-      readOnly: onTap != null, // Make the field read-only if onTap is provided
+      // readOnly: false, // Make the field read-only if onTap is provided
+
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         labelText: label,
@@ -446,11 +512,20 @@ class _DialysisBookingState extends State<DialysisBooking> {
         ),
       ),
       validator: validate,
-      onTap: onTap, // Handle onTap event
+      // onTap: onTap,
+
+      onChanged: (value) {
+        print(value);
+        // dialysisprovider.departmentDialysis(controller.text);
+        dialysisfunction.departmentDialysis(controller.text);
+      },
+      // ----------
     );
   }
 
 // --------------
+
+// ----------------------
   buildDropDownButton({
     required String label,
     required String? value,

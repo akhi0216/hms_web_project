@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/widgets/booking_dialysis.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/widgets/previous_dialysis_booking.dart';
@@ -36,7 +37,7 @@ class _DialysisMainState extends State<DialysisMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                 ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),

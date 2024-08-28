@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/in_patient.records.dart';
@@ -41,7 +42,8 @@ class _EmrMainState extends State<EmrMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                                    ImageConstants.highlandlogonobackground,
+
                 ),
               ),
               SizedBox(height: size.height * .01),

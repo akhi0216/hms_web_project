@@ -105,6 +105,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -180,7 +181,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: ColorConstants.mainwhite,
                     padding: EdgeInsets.all(20),
                     child: Image.asset(
-                      "assets/images/highlandlogo-removebg-preview.png",
+                      ImageConstants.highlandlogonobackground,
                       height: 200,
                       width: 300,
                       fit: BoxFit.cover,

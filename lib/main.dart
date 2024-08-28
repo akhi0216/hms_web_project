@@ -4,6 +4,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/new_boo
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => StoreModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => BookingDialysisController(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
