@@ -495,9 +495,27 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Text("Stock: ${selectedMedicine!.stock}"),
+                            child:
+                                Text("Main Stock: ${selectedMedicine!.stock}"),
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ColorConstants.mainBlack, width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                                "Current Stock: ${selectedMedicine!.stock - quantity}"),
+                          ),
+                        ),
+                        // ----------------------------------------       ----------------
+
+                        // --------------------------------------------------------------
                         const SizedBox(width: 10),
                         Expanded(
                           child: Container(
@@ -585,6 +603,9 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                       addedMedicines.map((medicine) {
                         final medicines = medicine['medicine'] as Medicine;
                         final quantity = medicine['quantity'] as int;
+
+
+                         
                         final totalAmount = medicine['totalAmount'] as double;
 
                         return Padding(
@@ -615,10 +636,28 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text("Stock: ${medicines.stock}"),
+                                  child: Text("Main stock: ${medicines.stock}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ColorConstants.mainBlack,
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  child: Text(
+                                      "Current Stock: ${medicines.stock - quantity}"),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              // ------------------------------------------------------------
+
+                              //--------------------------------------------------------------
                               Expanded(
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
@@ -658,8 +697,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text(
-                                      "Medicine count: ${_quantityController.text.trim()}"),
+                                  child: Text("Medicine count: ${quantity}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -686,27 +724,47 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
             const SizedBox(height: 30),
             // Discount and Total
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Total:",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                const SizedBox(width: 5),
-                Container(
-                  width: 200,
-                  child: TextFormField(
-                      controller: fullAmountController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                        // hintText: '${fullAmount.toStringAsFixed(2)}',
-                        // readOnly: true,
-                      )),
+                TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      // backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                      backgroundColor: WidgetStatePropertyAll<Color>(
+                          ColorConstants.mainBlue)),
+                  child: Text(
+                    "Intend",
+                    style: TextStyle(
+                      color: Colors.white, // Text color
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text("Total:",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600)),
+                    const SizedBox(width: 5),
+                    Container(
+                      width: 200,
+                      child: TextFormField(
+                          controller: fullAmountController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.5),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
+                            // hintText: '${fullAmount.toStringAsFixed(2)}',
+                            // readOnly: true,
+                          )),
+                    ),
+                  ],
                 ),
               ],
             ),
