@@ -71,6 +71,7 @@ class _ViewConcernsState extends State<ViewConcerns> {
     var departmentProvider = Provider.of<BookingPatientController>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
@@ -355,11 +356,44 @@ class _ViewConcernsState extends State<ViewConcerns> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Text(
+                                      "Rejected",
+                                      style: MyTextStyle.normalWhiteText,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: ColorConstants.mainBlue,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      "On hold",
+                                      style: MyTextStyle.normalWhiteText,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: ColorConstants.mainBlue,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
                                       "Resolved",
                                       style: MyTextStyle.normalWhiteText,
                                     ),
                                   ),
-                                )
+                                ),
+                                SizedBox(width: 10),
                               ],
                             )
                           ],

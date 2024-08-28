@@ -92,20 +92,21 @@ class _AdminScreenState extends State<AdminScreen> {
             ),
           ),
           // VerticalDivider(),
-          Container(
-            width: size.width * .8,
-            height: size.height,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("Admin"),
-                    SizedBox(height: size.height * .01),
-                    screen,
-                  ],
+          Expanded(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: size.height),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Admin"),
+                      SizedBox(height: size.height * .01),
+                      screen,
+                    ],
+                  ),
                 ),
               ),
             ),

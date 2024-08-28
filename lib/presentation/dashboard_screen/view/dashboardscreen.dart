@@ -452,7 +452,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           ],
         ),
         body: isNotified
-            ? NotificationsScreen()
+            ? NotificationsScreen(
+                value: "Notifications",
+                givenScreen: NotificationsScreenSample(),
+              )
             : TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: screenNames,
