@@ -6,7 +6,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/search_
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
           create: (context) => ConcernsController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => StoreModel(),
+          create: (context) => StoreController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ViewConcernsController(),
         ),
       ],
       child: MaterialApp(

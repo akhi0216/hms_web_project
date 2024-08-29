@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StoreModel with ChangeNotifier {
+class StoreController with ChangeNotifier {
   List<String> stationaryItems = [
     // Basic Stationery Items
     "Pens",
