@@ -32,6 +32,8 @@ class _DialysisBookingState extends State<DialysisBooking> {
   String? _selectedDepartment;
   String phoneNumber = "";
 
+  bool isDateSelected = false;
+
   String? dates;
   int? selectedindex;
 
@@ -144,7 +146,7 @@ class _DialysisBookingState extends State<DialysisBooking> {
       children: [
         Positioned.fill(
           child: Image.asset(
-            ImageConstants.blood,
+            "assets/images/dialysis.jpg",
             fit: BoxFit.cover,
             opacity: AlwaysStoppedAnimation(0.3),
           ),
@@ -333,6 +335,8 @@ class _DialysisBookingState extends State<DialysisBooking> {
                           );
                           if (picked != null) {
                             log("Selected date -> ${DateFormat("dd-MM-yyyy").format(picked)}");
+                            isDateSelected = true;
+                            varproviderdialysis.selectedtimeList.clear();
                             await functionproviderdialysis.departmentDialysis(
                                 DateFormat("dd-MM-yyyy").format(picked));
                             // dateController.text = "${picked.toLocal()}".split(' ')[0];
@@ -355,26 +359,60 @@ class _DialysisBookingState extends State<DialysisBooking> {
                       const SizedBox(height: 20.0),
 
                       Wrap(
-                          children: List.generate(
-                        1,
-                        (index) {
-                          return Container(
-                            padding: EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(3),
+                        spacing: 8.0,
+                        runSpacing: 4.0,
+                        children: List.generate(
+                          isDateSelected
+                              ? varproviderdialysis.timeList.length
+                              : 0,
+                          (index) {
+                            return GestureDetector(
+                              onTap: () {
+                                varproviderdialysis.selectedtimeList.contains(
+                                        varproviderdialysis.timeList[index])
+                                    ? setState(() {
+                                        selectedindex = index;
+                                      })
+                                    : setState(() {
+                                        selectedindex = null;
+                                      });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 3),
+                                child: Container(
+                                  padding: EdgeInsets.all(7),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 3,
+                                          color: varproviderdialysis
+                                                  .selectedtimeList
+                                                  .contains(varproviderdialysis
+                                                      .timeList[index])
+                                              ? selectedindex == index
+                                                  ? Colors.redAccent
+                                                  : Colors.green
+                                              : Colors.grey),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7))),
+                                  child: Text(
+                                      style: TextStyle(
+                                          color: varproviderdialysis
+                                                  .selectedtimeList
+                                                  .contains(varproviderdialysis
+                                                      .timeList[index])
+                                              ? selectedindex == index
+                                                  ? Colors.redAccent
+                                                  : Colors.green
+                                              : Colors.grey),
+                                      varproviderdialysis.timeList[index]),
                                 ),
-                                border: Border.all()),
-                            // height: 30,
-                            // width: 40,
-                            child: Text(varproviderdialysis.selectedtimeList
-                                .toString()),
-                          );
-                          // ------------------
+                              ),
+                            );
+                          },
+                        ),
+                      ),
 
-                          // --------------
-                        },
-                      )),
                       // buildDropDownButton(
                       //   label: 'Book Slots',
                       //   value: _selectedOT,
@@ -404,53 +442,71 @@ class _DialysisBookingState extends State<DialysisBooking> {
                       Center(
                         child: ElevatedButton(
                           onPressed: () async {
-                            print(_selectedDoctorId);
-                            print(_selectedDoctor);
+                            setState(() {
+                              isDateSelected = false;
+                              varproviderdialysis.selectedtimeList.clear();
+                              selectedindex = null;
+                            });
                             if (_formKey.currentState?.validate() ?? false) {
-                              varprovider.isSuccessful == true
-                                  ? showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                              "You are successfully appointed"),
-                                          actions: [
-                                            TextButton(
-                                              child: Text("return"),
-                                              onPressed: () {
-                                                patientidcontroller.clear();
-                                                _emailController.clear();
-                                                _reasonController.clear();
-                                                dateController.clear();
-                                                firstnamecontroller.clear();
-                                                lastnamecontroller.clear();
-                                                phnumbercontroller.clear();
-                                                // varprovider.deptList.clear();
-                                                varprovider.doctorIdList
-                                                    .clear();
-                                                varprovider.doctorList.clear();
-                                                varprovider.timeList.clear();
-                                                varprovider.selectedtimeList
-                                                    .clear();
-                                                _selectedDepartment = null;
-                                                _selectedDoctor = null;
-                                                _selectedDoctorId = null;
-                                                selectedindex = null;
+                              // varproviderdialysis.isSuccessful == false
+                              //     ?
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Dialysis slot booked"),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("return"),
+                                        onPressed: () {
+                                          firstnamecontroller.clear();
+                                          patientidcontroller.clear();
+                                          lastnamecontroller.clear();
+                                          _emailController.clear();
+                                          doctorcontroller.clear();
+                                          // patientidcontroller.clear();
+                                          // _emailController.clear();
+                                          // _reasonController.clear();
+                                          // dateController.clear();
+                                          // firstnamecontroller.clear();
+                                          // lastnamecontroller.clear();
+                                          // phnumbercontroller.clear();
 
-                                                setState(() {});
-                                                Navigator.pop(context);
-                                              },
-                                            )
-                                          ],
-                                        );
-                                      },
-                                    )
-                                  : ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Appointment not Booked'),
-                                        backgroundColor: ColorConstants.mainRed,
-                                      ),
-                                    );
+                                          // varprovider.doctorIdList
+                                          //     .clear();
+                                          // varprovider.doctorList.clear();
+                                          // varprovider.timeList.clear();
+                                          // varprovider.selectedtimeList
+                                          //     .clear();
+                                          // _selectedDepartment = null;
+                                          // _selectedDoctor = null;
+                                          // _selectedDoctorId = null;
+                                          selectedindex = null;
+
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                              // ----------------
+
+                              // ---------------------
+                              // : ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text('Dialysis not Booked'),
+                              //       backgroundColor: ColorConstants.mainRed,
+                              //     ),
+                              //   );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Dialysis not Booked'),
+                                  backgroundColor: ColorConstants.mainRed,
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -479,25 +535,65 @@ class _DialysisBookingState extends State<DialysisBooking> {
   }
 
 // ----------------
+  // Widget buildTextFormField({
+  //   required String label,
+  //   required TextEditingController controller,
+  //   required IconData icon,
+  //   required FormFieldValidator<String?> validate,
+  //   required void Function()? onTap,
+  //   // bool readOnly = false,
+  // }) {
+  //   var dialysisprovider = Provider.of<BookingDialysisController>(context);
+
+  //   var dialysisfunction =
+  //       Provider.of<BookingDialysisController>(context, listen: false);
+
+  //   return TextFormField(
+  //     controller: controller,
+  //     // readOnly: false, // Make the field read-only if onTap is provided
+
+  //     decoration: InputDecoration(
+  //       contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+  //       labelText: label,
+  //       prefixIcon: Icon(
+  //         icon,
+  //         color: ColorConstants.mainBlue,
+  //       ),
+  //       filled: true,
+  //       fillColor: Colors.transparent,
+  //       border: OutlineInputBorder(
+  //         borderSide:
+  //             BorderSide(color: const Color.fromARGB(255, 215, 210, 210)),
+  //         borderRadius: BorderRadius.circular(8.0),
+  //       ),
+  //     ),
+  //     validator: validate,
+  //     // onTap: onTap,
+
+  //     onChanged: (value) {
+  //       print(value);
+  //       // dialysisprovider.departmentDialysis(controller.text);
+  //       dialysisfunction.departmentDialysis(controller.text);
+  //     },
+  //     // ----------
+  //   );
+  // }
+
+// --------------
   Widget buildTextFormField({
     required String label,
     required TextEditingController controller,
     required IconData icon,
-    required FormFieldValidator<String?> validate,
-    required void Function()? onTap,
-    // bool readOnly = false,
+    required String? Function(String?) validate,
+    required VoidCallback onTap,
+    bool readOnly = false,
   }) {
-    var dialysisprovider = Provider.of<BookingDialysisController>(context);
-
-    var dialysisfunction =
-        Provider.of<BookingDialysisController>(context, listen: false);
-
     return TextFormField(
       controller: controller,
-      // readOnly: false, // Make the field read-only if onTap is provided
-
+      readOnly: readOnly,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         labelText: label,
         prefixIcon: Icon(
           icon,
@@ -506,24 +602,13 @@ class _DialysisBookingState extends State<DialysisBooking> {
         filled: true,
         fillColor: Colors.transparent,
         border: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: const Color.fromARGB(255, 215, 210, 210)),
           borderRadius: BorderRadius.circular(8.0),
         ),
       ),
       validator: validate,
-      // onTap: onTap,
-
-      onChanged: (value) {
-        print(value);
-        // dialysisprovider.departmentDialysis(controller.text);
-        dialysisfunction.departmentDialysis(controller.text);
-      },
-      // ----------
+      onTap: onTap,
     );
   }
-
-// --------------
 
 // ----------------------
   buildDropDownButton({
