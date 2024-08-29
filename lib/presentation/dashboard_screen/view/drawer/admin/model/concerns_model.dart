@@ -38,6 +38,7 @@ class ListElement {
   String? towhom;
   String? compl;
   String? complId;
+  String? remarks;
 
   ListElement({
     this.fname,
@@ -47,6 +48,7 @@ class ListElement {
     this.towhom,
     this.compl,
     this.complId,
+    this.remarks,
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
@@ -57,6 +59,7 @@ class ListElement {
         towhom: json["towhom"],
         compl: json["compl"],
         complId: json["compl_id"],
+        remarks: json["remarks"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +70,6 @@ class ListElement {
         "towhom": towhom,
         "compl": compl,
         "compl_id": complId,
+        "remarks": remarks,
       };
 }
