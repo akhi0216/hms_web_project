@@ -104,7 +104,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     children: [
                       Text("Admin"),
                       SizedBox(height: size.height * .01),
-                      screen,
+                      SingleChildScrollView(child: screen),
                     ],
                   ),
                 ),

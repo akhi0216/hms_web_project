@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ConcernsController(),
         ),
         ChangeNotifierProvider(
+          create: (context) => LoginController(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => StoreController(),
         ),
         ChangeNotifierProvider(
@@ -48,10 +51,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
+        home: SplashScreen(),
 
-        home: Dashboardsecondscreen(
-            userName: "Admin", empId: "009", des: "Admin"),
+        // home: Dashboardsecondscreen(
+        //     userName: "Admin", empId: "009", des: "Admin"),
       ),
     );
   }
