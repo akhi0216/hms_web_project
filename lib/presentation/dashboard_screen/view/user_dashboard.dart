@@ -6,6 +6,7 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/dialysis_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
@@ -68,7 +69,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     HomeDashboard(),
     PatientsMain(),
     LabMain(),
-    DummyPage(),
+    DialysisMain(),
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
@@ -159,7 +160,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 12,
+      length: 8,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
@@ -217,9 +218,10 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
                   setState(() {
                     concerns = true;
                   });
+                  Navigator.pop(context);
                 },
                 child: ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: Icon(Icons.check_circle),
                   title: Text('View Concerns'),
                 ),
               ),
@@ -334,8 +336,14 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             isScrollable: false,
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             indicatorColor: Colors.transparent,
-            labelColor: ColorConstants.mainOrange,
+            labelColor:
+                concerns ? ColorConstants.mainwhite : ColorConstants.mainOrange,
             unselectedLabelColor: ColorConstants.mainwhite,
+            onTap: (value) {
+              setState(() {
+                concerns = false;
+              });
+            },
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
                 text: tabLabels[index],

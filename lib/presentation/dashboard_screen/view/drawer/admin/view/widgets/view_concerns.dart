@@ -19,9 +19,22 @@ class ViewConcerns extends StatefulWidget {
 class _ViewConcernsState extends State<ViewConcerns> {
   bool dropDownView = false;
   bool dateSelected = false;
+  bool isRejected = false;
+  bool isResolved = false;
+  bool isLoading = false;
   String? selectedDept;
   String? selectedDate;
   DateTime? datetime;
+
+  final formKey = GlobalKey<FormState>();
+
+  TextEditingController reasonController = TextEditingController();
+
+  closeAllExpansions(List<ExpansionTileController> expansionList) {
+    for (var item in expansionList) {
+      item.collapse();
+    }
+  }
 
   Future<void> _selectDate(
       BuildContext context,
@@ -60,6 +73,8 @@ class _ViewConcernsState extends State<ViewConcerns> {
   void initState() {
     super.initState();
     fetchData();
+    isRejected = false;
+    isResolved = false;
   }
 
   @override
@@ -70,6 +85,14 @@ class _ViewConcernsState extends State<ViewConcerns> {
     var viewConcernsProvider = Provider.of<ViewConcernsController>(context);
     var viewConcernsFunctionProvider =
         Provider.of<ViewConcernsController>(context, listen: false);
+    List<ExpansionTileController> concernsExpansionController = List.generate(
+      selectedDept != null || selectedDate != null
+          ? viewConcernsProvider.departmentWiseConcernsList.length
+          : viewConcernsProvider.concernsModel.list?.length ?? 0,
+      (index) {
+        return ExpansionTileController();
+      },
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -204,28 +227,10 @@ class _ViewConcernsState extends State<ViewConcerns> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      // return Padding(
-                      //   padding: const EdgeInsets.only(bottom: 10),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       color: ColorConstants.mainBlue,
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     padding: EdgeInsets.all(10),
-                      // child: selectedDept != null
-                      //     ? Text(varProvider
-                      //             .departmentWiseConcernsList[index]
-                      //             ?.fname ??
-                      //         "")
-                      //     : Text(varProvider
-                      //             .concernsModel.list?[index].fname ??
-                      //         ""),
-                      //   ),
-                      // );
-
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: ExpansionTile(
+                          controller: concernsExpansionController[index],
                           title: selectedDept != null || selectedDate != null
                               ? Text(viewConcernsProvider
                                       .departmentWiseConcernsList[index]
@@ -374,14 +379,133 @@ class _ViewConcernsState extends State<ViewConcerns> {
                                 Spacer(),
                                 InkWell(
                                   onTap: () async {
-                                    await viewConcernsFunctionProvider
-                                        .resolveController(
-                                            complaintId: viewConcernsProvider
-                                                    .concernsModel
-                                                    .list?[index]
-                                                    .complId ??
-                                                "0",
-                                            modeController: '1');
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Add Reason"),
+                                          content: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              maxWidth:
+                                                  MediaQuery.sizeOf(context)
+                                                          .width *
+                                                      .5,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                TextFormField(
+                                                  readOnly: true,
+                                                  enabled: false,
+                                                  initialValue: selectedDept !=
+                                                              null ||
+                                                          selectedDate != null
+                                                      ? viewConcernsProvider
+                                                              .departmentWiseConcernsList[
+                                                                  index]
+                                                              ?.compl ??
+                                                          ""
+                                                      : viewConcernsProvider
+                                                              .concernsModel
+                                                              .list?[index]
+                                                              .compl ??
+                                                          "",
+                                                  minLines: 1,
+                                                  maxLines: 8,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 10),
+                                                TextFormField(
+                                                  controller: reasonController,
+                                                  minLines: 1,
+                                                  maxLines: 8,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: [
+                                            InkWell(
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                                reasonController.clear();
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      ColorConstants.mainBlue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: isLoading
+                                                    ? CircularProgressIndicator()
+                                                    : Text(
+                                                        "Cancel",
+                                                        style: MyTextStyle
+                                                            .normalWhiteText,
+                                                      ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                await viewConcernsFunctionProvider
+                                                    .resolveController(
+                                                  complaintId:
+                                                      viewConcernsProvider
+                                                              .concernsModel
+                                                              .list?[index]
+                                                              .complId ??
+                                                          "0",
+                                                  modeController: '1',
+                                                  reason: reasonController.text
+                                                      .trim(),
+                                                );
+                                                await viewConcernsFunctionProvider
+                                                    .concernsListFunction(
+                                                        des: widget.designation,
+                                                        empcode: widget.empId);
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                                if (isLoading == false) {
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      ColorConstants.mainBlue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: isLoading
+                                                    ? CircularProgressIndicator()
+                                                    : Text(
+                                                        "Reject",
+                                                        style: MyTextStyle
+                                                            .normalWhiteText,
+                                                      ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
@@ -391,7 +515,7 @@ class _ViewConcernsState extends State<ViewConcerns> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Text(
-                                      "Rejected",
+                                      "Reject",
                                       style: MyTextStyle.normalWhiteText,
                                     ),
                                   ),
@@ -434,14 +558,142 @@ class _ViewConcernsState extends State<ViewConcerns> {
                                 SizedBox(width: 10),
                                 InkWell(
                                   onTap: () async {
-                                    await viewConcernsFunctionProvider
-                                        .resolveController(
-                                            complaintId: viewConcernsProvider
-                                                    .concernsModel
-                                                    .list?[index]
-                                                    .complId ??
-                                                "0",
-                                            modeController: '3');
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Add Reason"),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              ConstrainedBox(
+                                                constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          .5,
+                                                ),
+                                                child: TextFormField(
+                                                  readOnly: true,
+                                                  enabled: false,
+                                                  initialValue: selectedDept !=
+                                                              null ||
+                                                          selectedDate != null
+                                                      ? viewConcernsProvider
+                                                              .departmentWiseConcernsList[
+                                                                  index]
+                                                              ?.compl ??
+                                                          ""
+                                                      : viewConcernsProvider
+                                                              .concernsModel
+                                                              .list?[index]
+                                                              .compl ??
+                                                          "",
+                                                  minLines: 1,
+                                                  maxLines: 8,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10),
+                                              ConstrainedBox(
+                                                constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          .5,
+                                                ),
+                                                child: TextFormField(
+                                                  controller: reasonController,
+                                                  minLines: 1,
+                                                  maxLines: 8,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          actions: [
+                                            InkWell(
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                                reasonController.clear();
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      ColorConstants.mainBlue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: isLoading
+                                                    ? CircularProgressIndicator()
+                                                    : Text(
+                                                        "Cancel",
+                                                        style: MyTextStyle
+                                                            .normalWhiteText,
+                                                      ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                await viewConcernsFunctionProvider
+                                                    .resolveController(
+                                                  complaintId:
+                                                      viewConcernsProvider
+                                                              .concernsModel
+                                                              .list?[index]
+                                                              .complId ??
+                                                          "0",
+                                                  modeController: '3',
+                                                  reason: reasonController.text
+                                                      .trim(),
+                                                );
+                                                await viewConcernsFunctionProvider
+                                                    .concernsListFunction(
+                                                        des: widget.designation,
+                                                        empcode: widget.empId);
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                                if (isLoading == false) {
+                                                  Navigator.pop(context);
+                                                  reasonController.clear();
+                                                }
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      ColorConstants.mainBlue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: isLoading
+                                                    ? CircularProgressIndicator()
+                                                    : Text(
+                                                        "Resolve",
+                                                        style: MyTextStyle
+                                                            .normalWhiteText,
+                                                      ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
@@ -451,7 +703,7 @@ class _ViewConcernsState extends State<ViewConcerns> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Text(
-                                      "Resolved",
+                                      "Resolve",
                                       style: MyTextStyle.normalWhiteText,
                                     ),
                                   ),

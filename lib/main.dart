@@ -8,6 +8,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/cont
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
 
         home: Dashboardsecondscreen(
             userName: "Admin", empId: "009", des: "Admin"),
+        // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),
       ),
     );
   }

@@ -9,11 +9,14 @@ class ViewConcernsController with ChangeNotifier {
   ConcernsModel concernsModel = ConcernsModel();
 
   Future<void> resolveController(
-      {required String complaintId, required String modeController}) async {
+      {required String complaintId,
+      required String modeController,
+      String? reason}) async {
     String url = "https://cybot.avanzosolutions.in/hms/complaintauth.php";
     var res = await http.post(Uri.parse(url), body: {
       'compidcontroller': complaintId,
       'modecontroller': modeController,
+      'reasoncontroller': reason,
     });
     print(res.body);
     notifyListeners();
