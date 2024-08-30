@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 
 class GeneralMain extends StatefulWidget {
   const GeneralMain({super.key});

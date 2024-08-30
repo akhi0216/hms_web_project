@@ -48,13 +48,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ViewConcernsController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => BookingDialysisController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        // home: SplashScreen(),
 
-        // home: Dashboardsecondscreen(
-        //     userName: "Admin", empId: "009", des: "Admin"),
+        home: Dashboardsecondscreen(
+            userName: "Admin", empId: "009", des: "Admin"),
       ),
     );
   }

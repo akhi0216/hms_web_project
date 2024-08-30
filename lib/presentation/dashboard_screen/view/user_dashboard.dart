@@ -8,7 +8,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_bi
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
