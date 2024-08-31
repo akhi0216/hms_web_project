@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 
 class IpBilling extends StatefulWidget {
   @override
@@ -65,385 +66,475 @@ class _IpBillingState extends State<IpBilling> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
-              ),
-              TextFormField(
-                controller: _ageController,
-                decoration: InputDecoration(labelText: 'Age'),
-              ),
-              TextFormField(
-                controller: _sexController,
-                decoration: InputDecoration(labelText: 'Sex'),
-              ),
-              TextFormField(
-                controller: _ipNoController,
-                decoration: InputDecoration(labelText: 'IP No.'),
-              ),
-              TextFormField(
-                controller: _roomNoController,
-                decoration: InputDecoration(labelText: 'Room No.'),
-              ),
-              TextFormField(
-                controller: _admissionDateController,
-                decoration: InputDecoration(labelText: 'Date of Admission'),
-              ),
-              TextFormField(
-                controller: _dischargeDateController,
-                decoration: InputDecoration(labelText: 'Date of Discharge'),
-              ),
-              SizedBox(height: 20),
-              Text(
-                '1. WARD TRANSFERS (to be filled by nurses)',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Date & Time', 'From', 'To', 'Name'],
-                controllers: table1Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '2. ICU CARE (to be filled by nurses)',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTableWithSecondColumnText(
-                titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
-                controllers: table2Controllers,
-                secondColumnText: 'till',
-              ),
-              SizedBox(height: 20),
-              Text(
-                '3. POR CARE (to be filled by nurses)',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTableWithSecondColumnText(
-                titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
-                controllers: table3Controllers,
-                secondColumnText: 'till',
-              ),
-              SizedBox(height: 20),
-              Text(
-                '4. OT BILL DETAILS',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Date',
-                  'Bill No.',
-                  'Name (of staff)',
-                  'Date',
-                  'Bill No.',
-                  'Name (of staff)'
-                ],
-                controllers: table4Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '5. SURGICAL/IMPLANT/OTHER BILLS',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [''],
-                controllers: table5Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '6. X-RAY',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount'
-                ],
-                controllers: table6Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalXRAYController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+    Size size = MediaQuery.sizeOf(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Container(
+        //   width: size.width * .2,
+        //   height: size.height,
+        //   clipBehavior: Clip.antiAlias,
+        //   decoration: BoxDecoration(
+        //     color: ColorConstants.mainBlue,
+        //     borderRadius: BorderRadius.only(
+        //         topRight: Radius.circular(10),
+        //         bottomRight: Radius.circular(10)),
+        //   ),
+        //   child: Column(
+        //     children: [
+        //       Container(
+        //         width: size.width * .199,
+        //         color: ColorConstants.mainwhite,
+        //         child: Image.asset(
+        //           "assets/images/highlandlogo-removebg-preview.png",
+        //         ),
+        //       ),
+        //       SizedBox(height: size.height * .01),
+        //       Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           SizedBox(height: size.height * .05),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(labelText: 'Patient ID'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '7. CT SCAN',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Date', 'Amount', 'Date', 'Amount'],
-                controllers: table7Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalCTScanController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(labelText: 'Name'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '8. USG',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount'
-                ],
-                controllers: table8Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalUSGController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _ageController,
+                      decoration: InputDecoration(labelText: 'Age'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '9. DIALYSIS',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Date', 'Amount', 'Date', 'Amount', 'Date', 'Amount'],
-                controllers: table9Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalDialysisController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _sexController,
+                      decoration: InputDecoration(labelText: 'Sex'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '10. ABG',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount',
-                  'Date',
-                  'Amount'
-                ],
-                controllers: table10Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalABGController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _ipNoController,
+                      decoration: InputDecoration(labelText: 'IP No.'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '11. GRBS',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Date', 'Amount', 'Date', 'Amount', 'Date', 'Amount'],
-                controllers: table11Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalGRBSController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _roomNoController,
+                      decoration: InputDecoration(labelText: 'Room No.'),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                '12. OXYGEN',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Starting date and time', 'Ending date and time'],
-                controllers: table12Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '13. NIV/BIPAP',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Starting date and time',
-                  'Ending date and time',
-                  'Name'
-                ],
-                controllers: table13Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '14. SYRINGE PUMP',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Starting date and time', 'Ending date and time'],
-                controllers: table14Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '15. VENTILATOR',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: ['Starting date and time', 'Ending date and time'],
-                controllers: table15Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '16. CARDIAC MONITOR (NIBP)',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Starting date and time',
-                  'Ending date and time',
-                  'Name'
-                ],
-                controllers: table16Controllers,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '17. NEBULIZATION',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              buildTable(
-                titles: [
-                  'Date',
-                  'Quantity',
-                  'Date',
-                  'Quantity',
-                  'Date',
-                  'Quantity',
-                  'Date',
-                  'Quantity'
-                ],
-                controllers: table17Controllers,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Total: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _totalNEBULIZATIONController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+                    TextFormField(
+                      controller: _admissionDateController,
+                      decoration:
+                          InputDecoration(labelText: 'Date of Admission'),
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      controller: _dischargeDateController,
+                      decoration:
+                          InputDecoration(labelText: 'Date of Discharge'),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '1. WARD TRANSFERS (to be filled by nurses)',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: ['Date & Time', 'From', 'To', 'Name'],
+                      controllers: table1Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '2. ICU CARE (to be filled by nurses)',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTableWithSecondColumnText(
+                      titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
+                      controllers: table2Controllers,
+                      secondColumnText: 'till',
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '3. POR CARE (to be filled by nurses)',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTableWithSecondColumnText(
+                      titles: ['Date & Time', ' ', 'Date & Time', 'Name'],
+                      controllers: table3Controllers,
+                      secondColumnText: 'till',
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '4. OT BILL DETAILS',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Bill No.',
+                        'Name (of staff)',
+                        'Date',
+                        'Bill No.',
+                        'Name (of staff)'
+                      ],
+                      controllers: table4Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '5. SURGICAL/IMPLANT/OTHER BILLS',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [''],
+                      controllers: table5Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '6. X-RAY',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount'
+                      ],
+                      controllers: table6Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalXRAYController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '7. CT SCAN',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: ['Date', 'Amount', 'Date', 'Amount'],
+                      controllers: table7Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalCTScanController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '8. USG',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount'
+                      ],
+                      controllers: table8Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalUSGController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '9. DIALYSIS',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount'
+                      ],
+                      controllers: table9Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalDialysisController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '10. ABG',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount'
+                      ],
+                      controllers: table10Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalABGController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '11. GRBS',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount',
+                        'Date',
+                        'Amount'
+                      ],
+                      controllers: table11Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalGRBSController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '12. OXYGEN',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Starting date and time',
+                        'Ending date and time'
+                      ],
+                      controllers: table12Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '13. NIV/BIPAP',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Starting date and time',
+                        'Ending date and time',
+                        'Name'
+                      ],
+                      controllers: table13Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '14. SYRINGE PUMP',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Starting date and time',
+                        'Ending date and time'
+                      ],
+                      controllers: table14Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '15. VENTILATOR',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Starting date and time',
+                        'Ending date and time'
+                      ],
+                      controllers: table15Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '16. CARDIAC MONITOR (NIBP)',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Starting date and time',
+                        'Ending date and time',
+                        'Name'
+                      ],
+                      controllers: table16Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '17. NEBULIZATION',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    buildTable(
+                      titles: [
+                        'Date',
+                        'Quantity',
+                        'Date',
+                        'Quantity',
+                        'Date',
+                        'Quantity',
+                        'Date',
+                        'Quantity'
+                      ],
+                      controllers: table17Controllers,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _totalNEBULIZATIONController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Process form data here
+                      },
+                      child: Text('Submit'),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Process form data here
-                },
-                child: Text('Submit'),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 

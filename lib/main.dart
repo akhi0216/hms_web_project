@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/controller/complaints_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing_new.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -38,14 +35,31 @@ class MyApp extends StatelessWidget {
           create: (context) => TextSearchController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ComplaintsController(),
-        )
+          create: (context) => StaffListController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ConcernsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StoreController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ViewConcernsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookingDialysisController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // home: SplashScreen(),
 
-        home: Scaffold(body: OpBilling()),
+        home: Dashboardsecondscreen(
+            userName: "Admin", empId: "009", des: "Admin"),
+        // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),
       ),
     );
   }

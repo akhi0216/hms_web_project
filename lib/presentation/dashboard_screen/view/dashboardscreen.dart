@@ -3,20 +3,36 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/dialysis_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/lab/radiology/lab_details.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmcay.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
 
@@ -39,14 +55,20 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   bool searchVisibility = false;
 
   bool _isHovered = false;
+  bool isNotified = false;
 
-  void _handleHover(bool isHovered) {
+  void _handleHover(bool isHovered, int index) {
     setState(() {
       _isHovered = isHovered;
     });
+    if (_isHovered) {
+      _buildPopupMenu(tabLabels[index], tabItems[index], index);
+    }
+    print(tabItems[index]);
   }
 
   List<String> tabLabels = [
+    'Home',
     'Appointments',
     'Doctors',
     'Patients',
@@ -57,62 +79,115 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     'Billing',
     'Insurance',
     'Pharmacy',
+    'Store',
     'General'
+  ];
+
+  List<Widget> screenNames = [
+    HomeDashboard(),
+    AppintmentsMain(),
+    DoctorMain(),
+    PatientsMain(),
+    EmrMain(),
+    LabMain(),
+    DialysisMain(),
+    OtScreenMain(),
+    BillingMain(),
+    DummyPage(),
+    BillingPharmacyMain(),
+    StoreScreen(),
+    GeneralMain(),
   ];
 
   String selectedData = "";
   int itemIndex = 0;
-
+  Map<String, Widget> tabs = {'Home': HomeDashboard()};
   List<Map<String, Widget>> tabItems = [
     {
-      "Booking": NewBookings(),
-      "current bookings": CurrentBookingPage(),
-      "Records": DummyPage(),
-      "Availability": DummyPage(),
+      "Home": HomeDashboard(),
     },
     {
-      "Dept. wise availability": DummyPage(),
-      "Doctors list": DummyPage(),
-      "Doctors on call": DummyPage(),
-      "New Doctor": NewDoctor()
+      // -------------------------------------------------------------------appointments
+
+      "Appointments": AppintmentsMain(),
     },
     {
-      "New patient": NewPatientRegistrationscreen(),
-      "Existing patient": ExistingPatientsPage(),
-      "discharged": DummyPage(),
+      // --------------------------------------------------------------------------doctors
+      "Doctors": DoctorMain(),
     },
-//  emr
-    {"Patient records": EmrPage()},
+    {
+      // -----------------------------------------------------------------------patients
+      "Patients": PatientsMain(),
+    },
+// ------------------------------------------------------------------- emr
+    {
+      "Patient records": EmrMain(),
+    },
     //lAB
-    {"Test details": LabRadiologyScreen()},
+    {
+      "Lab Records": LabMain()
+      // --------------------
+      // "Lab Records":
+      //  LabDetailsPage(
+      //   patientName: 'Akhila',
+      //   testsDone: [
+      //     TestDetail(
+      //       name: 'Blood Test',
+      //       date: '2024-08-01',
+      //       report:
+      //           'No abnormalities detected. All levels within normal range.',
+      //     ),
+      //     TestDetail(
+      //       name: 'X-Ray',
+      //       date: '2024-08-05',
+      //       report: 'Chest X-Ray shows no significant findings.',
+      //     ),
+      //     TestDetail(
+      //       name: 'Urine Test',
+      //       date: '2024-08-10',
+      //       report: 'Normal results. No infections or abnormalities.',
+      //     ),
+      //   ],
+      //   doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
+      // ),
+      // "Lab Tests": LabTests()
+    },
 // DIALYSIS
     {},
 // OPERATION THEATRE
-    {},
     {
-      "Ip billing": IpBilling(),
-      "Op billing": OpBilling(),
-      "Unhealthy billing": DummyPage(),
+      "Operation Theatre": OtScreenMain(),
+    },
+    {
+      "billing": BillingMain()
+      // "Ip billing": IpBilling(),
+      // "Op billing": OpBilling(),
     },
     // INSURANCE
     {},
     // PHARMACY
     {
-      "billing": BillingPharmacy(),
-      "Availale stock": MedicineSearch(),
+      "billing": BillingPharmacyMain(),
+      // "Availale stock": MedicineSearch(),
+    },
+    {
+      // store
+      "Store": StoreScreen(),
     },
     // GENERAL
     {
-      "Accounts": DummyPage(),
-      "Complaints": Complaint(),
-      "HR": DummyPage(),
-      "Stores": DummyPage(),
-      "House Keeping": DummyPage(),
-      "Analysis": DummyPage(),
-      "Nurse": DummyPage(),
-      "SMS Center": DummyPage(),
-      "Reminders": DummyPage(),
-      "Feedback": DummyPage(),
+      "General": GeneralMain()
+      // // ----------------
+      // "Accounts": DummyPage(),
+      // "Complaints": Complaint(),
+      // "HR": DummyPage(),
+      // "Stores": StoreScreen(),
+      // "House Keeping": Housekeeping(),
+      // "Analysis": DummyPage(),
+      // "Nurse": DummyPage(),
+      // "SMS Center": DummyPage(),
+      // "Reminders": DummyPage(),
+      // "Feedback": FeedbackForm(),
     },
   ];
 
@@ -130,7 +205,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 11,
+      length: 13,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
@@ -153,13 +228,22 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     Text(
                       'Menu',
                       style: TextStyle(
-                        color: ColorConstants.mainBlack,
+                        color: ColorConstants.mainwhite,
                         fontSize: 24,
                       ),
                     ),
-                    Text(widget.userName),
-                    Text(widget.empId),
-                    Text(widget.des),
+                    Text(
+                      widget.userName,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
+                    Text(
+                      widget.empId,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
+                    Text(
+                      widget.des,
+                      style: TextStyle(color: ColorConstants.mainwhite),
+                    ),
                   ],
                 ),
               ),
@@ -170,11 +254,18 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminScreen(),
+                          builder: (context) => AdminScreen(
+                            userName: widget.userName,
+                            eid: widget.empId,
+                            des: widget.des,
+                          ),
                         ));
                   },
                   child: ListTile(
-                    leading: Icon(Icons.account_circle),
+                    leading: Icon(
+                      Icons.account_circle,
+                      color: ColorConstants.mainBlue,
+                    ),
                     title: Text('Admin'),
                   ),
                 ),
@@ -189,7 +280,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: Icon(
+                    Icons.settings,
+                    color: ColorConstants.mainBlue,
+                  ),
                   title: Text('Settings'),
                 ),
               ),
@@ -224,7 +318,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.logout),
+                  leading: Icon(
+                    Icons.logout,
+                    color: ColorConstants.mainBlue,
+                  ),
                   title: Text('Logout'),
                 ),
               ),
@@ -233,117 +330,147 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
         ),
 
         // ---------------------------------------------------------------------------------------
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              floating: true,
-              snap: false,
-              pinned: true,
-              backgroundColor: ColorConstants.mainBlue,
-              automaticallyImplyLeading: false,
-              title: Text(
-                'Highland Hospital',
-                style: MyTextStyle.appbartext,
-              ),
-              //     Container(
-              //   height: 95,
-              //   width: 95,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.all(Radius.circular(100)),
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/images/highlandlogo.jpg"))),
-              // ),
-              // expandedHeight: 150,
-              // flexibleSpace: LayoutBuilder(
-              //   builder: (context, constraints) => FlexibleSpaceBar(
-              //     expandedTitleScale: 1,
-              //     stretchModes: [StretchMode.zoomBackground],
-              //     centerTitle: false,
-              //     titlePadding: EdgeInsets.only(
-              //         left: constraints.maxWidth * .6,
-              //         right: constraints.maxWidth * .05,
-              //         top: constraints.maxHeight * .25,
-              //         bottom: constraints.maxHeight * .5),
-              //     title: TextFormField(
-              //       decoration: InputDecoration(
-              //         prefixIcon: Icon(Icons.search),
-              //         hintText: "Search",
-              //         filled: true,
-              //         fillColor: Colors.white,
-              //         border: OutlineInputBorder(),
-              //       ),
-              //     ),
+        // body: CustomScrollView(
+        //   slivers: <Widget>[
+        //     SliverAppBar(
+        //       floating: true,
+        //       snap: false,
+        //       pinned: true,
+        // backgroundColor: ColorConstants.mainBlue,
+        // automaticallyImplyLeading: false,
+        //   title: Text(
+        //     'Highland Hospital',
+        //     style: MyTextStyle.appbartext,
+        //   ),
+        //   bottom: TabBar(
+        //       isScrollable: false,
+        //       labelPadding:
+        //           EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+        //       indicatorColor: Colors.transparent,
+        //       labelColor: ColorConstants.mainOrange,
+        //       unselectedLabelColor: ColorConstants.mainwhite,
+        //       tabs: List.generate(tabLabels.length, (index) {
+        //         return MouseRegion(
+        //             // onEnter: (event) => _handleHover(true),
+        //             onExit: (event) => _handleHover(false),
+        //             onHover: (event) => _handleHover(true),
+        //             child: _buildPopupMenu(
+        //                 tabLabels[index], tabItems[index], index)
+        //             );
+        //       })),
+        //   actions: [
+        //     Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu,
+        //           color: ColorConstants.mainwhite,
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openEndDrawer();
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        //     SliverToBoxAdapter(child: screen),
+        //   ],
+        // ),
+
+        appBar: AppBar(
+          backgroundColor: ColorConstants.mainBlue,
+          automaticallyImplyLeading: false,
+          // title: Text(
+          //   'Highland Hospital',
+          //   style: MyTextStyle.appbartext,
+          // ),
+          // ------
+          // title: CircleAvatar(
+          //     radius: 20,
+          //     backgroundColor: ColorConstants.mainwhite,
+          //     child: Image.asset(
+          //       "assets/images/highlandlogo-removebg-preview.png",
+          //       fit: BoxFit.contain,
+          //     )),
+          bottom: TabBar(
+            isScrollable: false,
+            physics: NeverScrollableScrollPhysics(),
+            labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+            indicatorColor: Colors.transparent,
+            labelColor: isNotified
+                ? ColorConstants.mainwhite
+                : ColorConstants.mainOrange,
+            labelStyle: TextStyle(
+                fontWeight: isNotified ? FontWeight.normal : FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+            unselectedLabelColor: ColorConstants.mainwhite,
+            onTap: (value) {
+              setState(() {
+                isNotified = false;
+              });
+            },
+            tabs: List.generate(tabLabels.length, (index) {
+              return Tab(
+                text: tabLabels[index],
+                // child:
+                // _buildPopupMenu(tabLabels[index], tabItems[index], index),
+                // ------------------------------------------------------------
+              );
+
+              // return MouseRegion(
+              //   onEnter: (event) =>
+              //       _buildPopupMenu(tabLabels[index], tabItems[index], index),
+              //   onExit: (event) => _handleHover(false, index),
+              //   onHover: (event) => _handleHover(true, index),
+              //   child: Tab(
+              //     text: tabLabels[index],
+              //     // child: _buildPopupMenu(
+              //     //     tabLabels[index], tabItems[index], index),
               //   ),
-              // ),
-              bottom: TabBar(
-                  isScrollable: false,
-                  labelPadding:
-                      EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-                  indicatorColor: Colors.transparent,
-                  tabs: List.generate(tabLabels.length, (index) {
-                    return MouseRegion(
-                        // onEnter: (event) => _handleHover(true),
-                        onExit: (event) => _handleHover(false),
-                        onHover: (event) => _handleHover(true),
-                        child: _buildPopupMenu(
-                            tabLabels[index], tabItems[index], index)
-                        // : Tab(
-                        // child: Text(
-                        //   tabLabels[index],
-                        //   style: MyTextStyle.appbartext,
-                        // ),
-                        //   ),
-                        );
-                  })),
-              actions: [
-                Builder(
-                  builder: (context) => IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: ColorConstants.mainwhite,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  ),
-                ),
-              ],
+              // );
+            }),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  isNotified = true;
+                });
+              },
+              icon: Icon(Icons.notifications),
+              color: ColorConstants.mainwhite,
             ),
-            SliverToBoxAdapter(child: screen
-                // child: Center(
-                //   child: Container(
-                //     height: 670,
-                //     width: 670,
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.all(Radius.circular(8)),
-                //         image: DecorationImage(
-                //             image: AssetImage("assets/images/highlandlogo.jpg"))),
-                //   ),
-                // ),
-                //         TabBarView(
-                //             children: List.generate(
-                //   tabLabels.length,
-                //   (index) => DummyPage(title: tabLabels[index]),
-                // ))
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: ColorConstants.mainwhite,
                 ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ),
           ],
         ),
+        body: isNotified
+            ? NotificationsScreen(
+                value: "Notifications",
+                givenScreen: NotificationsScreenSample(),
+              )
+            : TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: screenNames,
+              ),
       ),
+      // ),
     );
   }
 
-  PopupMenuButton<String> _buildPopupMenu(
-      String title, Map<String, Widget> items, int index) {
+  _buildPopupMenu(String title, Map<String, Widget> items, int index) {
     return PopupMenuButton<String>(
       offset:
           Offset(0, 40), // Adjust this value to position the menu below the tab
       onSelected: (value) {
-        // TabBarView(
-        //     children: List.generate(
-        //   items.length,
-        //   (index) => DummyPage(title: title),
-        // ));
-
         if (value.isNotEmpty && value != null) {
           setState(() {
             selectedData = value;

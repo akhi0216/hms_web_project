@@ -193,6 +193,7 @@ class _MedicineSearchState extends State<MedicineSearch> {
             child: Image.asset(
           "assets/images/medcine.jpg",
           fit: BoxFit.cover,
+          opacity: AlwaysStoppedAnimation(0.6),
         )
             // Image.network(
             //   'https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zNzNiYXRjaDE1LTIxNy0wMS5qcGc.jpg',
