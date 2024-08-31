@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:provider/provider.dart';
 
@@ -498,7 +499,7 @@ class _NewBookingsState extends State<NewBookings> {
                                   .contains(index.toString())
                               ? setState(() {
                                   selectedindex = index;
-                                })
+                                }) 
                               : setState(() {
                                   selectedindex = null;
                                 });
@@ -578,7 +579,7 @@ class _NewBookingsState extends State<NewBookings> {
                                         Text("You are successfully appointed"),
                                     actions: [
                                       TextButton(
-                                        child: Text("return"),
+                                        child: Text("Back"),
                                         onPressed: () {
                                           patientidcontroller.clear();
                                           _emailController.clear();

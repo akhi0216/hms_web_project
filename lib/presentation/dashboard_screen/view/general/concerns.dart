@@ -1,23 +1,22 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/controller/complaints_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/concerns_controller.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class Complaint extends StatefulWidget {
-  const Complaint({super.key});
+class ConcernsScreen extends StatefulWidget {
+  const ConcernsScreen({super.key});
 
   @override
-  State<Complaint> createState() => _ComplaintState();
+  State<ConcernsScreen> createState() => _ConcernsScreenState();
 }
 
-class _ComplaintState extends State<Complaint> {
+class _ConcernsScreenState extends State<ConcernsScreen> {
   final datecontroller = TextEditingController();
   final empcodecontroller = TextEditingController();
   final complaintcontroller = TextEditingController();
-  final towhomcontroller = TextEditingController();
 
   String? _selectedDesignation;
 
@@ -29,7 +28,6 @@ class _ComplaintState extends State<Complaint> {
     datecontroller.dispose();
     empcodecontroller.dispose();
     complaintcontroller.dispose();
-    towhomcontroller.dispose();
     super.dispose();
   }
 
@@ -49,7 +47,7 @@ class _ComplaintState extends State<Complaint> {
   }
 
   fetchData() async {
-    await Provider.of<ComplaintsController>(context, listen: false)
+    await Provider.of<ConcernsController>(context, listen: false)
         .designations();
   }
 
@@ -63,8 +61,8 @@ class _ComplaintState extends State<Complaint> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     var functionprovider =
-        Provider.of<ComplaintsController>(context, listen: false);
-    var varprovider = Provider.of<ComplaintsController>(context);
+        Provider.of<ConcernsController>(context, listen: false);
+    var varprovider = Provider.of<ConcernsController>(context);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,18 +208,19 @@ class _ComplaintState extends State<Complaint> {
                               Center(
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    empcodecontroller.clear();
-                                    datecontroller.clear();
-                                    complaintcontroller.clear();
-                                    towhomcontroller.clear();
                                     // -------------------------------
                                     await functionprovider
                                         .complaintRegistration(
                                             empcode: empcodecontroller.text,
                                             date: datecontroller.text,
-                                            towhom: towhomcontroller.text,
+                                            towhom: _selectedDesignation!,
                                             complaints:
                                                 complaintcontroller.text);
+                                    // clear all the textfields
+                                    empcodecontroller.clear();
+                                    datecontroller.clear();
+                                    complaintcontroller.clear();
+                                    _selectedDesignation = null;
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: ColorConstants.mainBlue,

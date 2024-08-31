@@ -15,7 +15,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_d
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/complaint.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
@@ -256,9 +256,9 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AdminScreen(
-                            adminName: widget.userName,
-                            adminId: widget.empId,
-                            admin: widget.des,
+                            userName: widget.userName,
+                            eid: widget.empId,
+                            des: widget.des,
                           ),
                         ));
                   },

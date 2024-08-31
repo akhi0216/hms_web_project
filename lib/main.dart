@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/controller/complaints_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -37,21 +35,21 @@ class MyApp extends StatelessWidget {
           create: (context) => StaffListController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ComplaintsController(),
+          create: (context) => ConcernsController(),
         ),
         ChangeNotifierProvider(
           create: (context) => StoreModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => LoginController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
-        // home: Scaffold(
-        // body: HomeDashboard(),
-        // ),
+        home: SplashScreen(),
 
-        home: Dashboardsecondscreen(
-            userName: "Avanzo", empId: "001", des: "Admin"),
+        // home: Dashboardsecondscreen(
+        //     userName: "Admin", empId: "009", des: "Admin"),
       ),
     );
   }
