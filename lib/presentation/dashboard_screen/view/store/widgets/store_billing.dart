@@ -145,6 +145,75 @@ class _StoreBillingState extends State<StoreBilling> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                SizedBox(
+                  width: 70,
+                ),
+                Container(
+                  // height: 200,
+                  // width: 200,
+                  // color: ColorConstants.mainBlack,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text("ID"),
+                          Container(
+                            height: 30,
+                            width: 50,
+                            child: TextFormField(),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        // height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: ColorConstants.mainBlue,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                            child: Text(
+                          "Return",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        // height: 100,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: ColorConstants.mainBlue,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                            child: Text(
+                          "Previous Records",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 70,
+                ),
+                // SizedBox(
+                //   width: 250,
+                // ),
+                Container(
+                  height: 160,
+                  width: 2,
+                  color: ColorConstants.mainBlue,
+                ),
+                SizedBox(
+                  width: 40,
+                ),
+
                 Expanded(
                   child: Container(
                     // width: size.width * .6,
@@ -152,39 +221,39 @@ class _StoreBillingState extends State<StoreBilling> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Name
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: const Text("Id:",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600)),
-                            ),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       flex: 1,
+                        //       child: const Text("Id:",
+                        //           style: TextStyle(
+                        //               fontSize: 16,
+                        //               fontWeight: FontWeight.w600)),
+                        //     ),
 
-                            Expanded(
-                              flex: 9,
-                              child: Container(
-                                // width: size.width * .15,
-                                child: TextFormField(
-                                  // controller: ,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 1.5),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 8),
-                                    hintText: 'Enter Your patient id',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Spacer(),
-                          ],
-                        ),
+                        //     Expanded(
+                        //       flex: 2,
+                        //       child: Container(
+                        //         // width: size.width * .15,
+                        //         child: TextFormField(
+                        //           // controller: ,
+                        //           decoration: InputDecoration(
+                        //             border: OutlineInputBorder(
+                        //               borderRadius: BorderRadius.all(
+                        //                   Radius.circular(10.0)),
+                        //               borderSide: BorderSide(
+                        //                   color: Colors.black, width: 1.5),
+                        //             ),
+                        //             contentPadding: EdgeInsets.symmetric(
+                        //                 vertical: 12, horizontal: 8),
+                        //             hintText: 'Enter Your patient id',
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     // Spacer(),
+                        //   ],
+                        // ),
                         const SizedBox(height: 10),
                         Row(
                           children: [
@@ -283,46 +352,29 @@ class _StoreBillingState extends State<StoreBilling> {
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 10),
                           ],
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        // Text("helllo")
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          // height: 40,
+                          // width: 50,
+                          // color: ColorConstants.mainBlack,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              color: ColorConstants.mainOrange),
+                          child: Text("Upload Files"),
+                        )
                       ],
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 10,
-                //     ),
-                //     child: Container(
-                //       padding: const EdgeInsets.all(12),
-                //       height: 150,
-                //       // width: size.width * .4,
-                //       decoration: BoxDecoration(
-                //         border: Border.all(color: Colors.black, width: 2),
-                //         borderRadius:
-                //             const BorderRadius.all(Radius.circular(12)),
-                //         color: Colors.white,
-                //       ),
-                //       child: Column(
-                //         children: [
-                //           Text(
-                //             "Doctor prescription",
-                //             style: TextStyle(
-                //                 color: ColorConstants.mainBlue,
-                //                 fontSize: 18,
-                //                 fontWeight: FontWeight.w600),
-                //           ),
-                //           TextFormField(
-                //             decoration: InputDecoration(
-                //                 border: OutlineInputBorder(
-                //                     borderSide: BorderSide.none)),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
+
                 // Image
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -330,7 +382,7 @@ class _StoreBillingState extends State<StoreBilling> {
                     height: size.width * .07,
                     width: size.width * .07,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(30),
                       image: const DecorationImage(
                         image: NetworkImage(
                             "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
