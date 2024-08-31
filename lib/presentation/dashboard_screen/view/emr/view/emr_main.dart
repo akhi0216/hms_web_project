@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/in_patient.records.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/in_patient.records.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/patient_emr.dart';
 
 class EmrMain extends StatefulWidget {
   const EmrMain({super.key});
@@ -18,8 +13,8 @@ class EmrMain extends StatefulWidget {
 }
 
 class _EmrMainState extends State<EmrMain> {
-  String value = "IN Patient Records";
-  Widget screen = IpBilling();
+  String value = "Patient Records";
+  Widget screen = PatientEmr();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -42,8 +37,7 @@ class _EmrMainState extends State<EmrMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                                    ImageConstants.highlandlogonobackground,
-
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -51,13 +45,9 @@ class _EmrMainState extends State<EmrMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(
-                      label: "IN Patient Records", newScreen: IpBillingEMR()),
-                  buttonCall(label: "Patient Records", newScreen: EmrPage()),
-                  // buttonCall(label: "New Store", newScreen: NewStore()),
-                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
-                  // buttonCall(label: "New Stock", newScreen: NewStock()),
-                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
+                  buttonCall(label: "Patient Records", newScreen: PatientEmr()),
+                  // label: "IN Patient Records", newScreen: IpBillingEMR()),
+                  // buttonCall(label: "Patient Records", newScreen: EmrPage()),
                 ],
               ),
             ],
@@ -66,6 +56,7 @@ class _EmrMainState extends State<EmrMain> {
         SizedBox(width: size.width * .02),
         // SingleChildScrollView(child: screen),
         Expanded(child: screen),
+        SizedBox(width: size.width * .02),
       ],
     );
   }

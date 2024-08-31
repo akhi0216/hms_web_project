@@ -8,6 +8,7 @@ class IpBillingEMR extends StatefulWidget {
 
 class _IpBillingEMRState extends State<IpBillingEMR> {
   final _formKey = GlobalKey<FormState>();
+  final _pidController = TextEditingController();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _sexController = TextEditingController();
@@ -109,7 +110,7 @@ class _IpBillingEMRState extends State<IpBillingEMR> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: _nameController,
+                      controller: _pidController,
                       decoration: InputDecoration(labelText: 'Patient ID'),
                     ),
                     TextFormField(
