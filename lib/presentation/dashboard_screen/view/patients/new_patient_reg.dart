@@ -37,6 +37,7 @@ class _NewPatientRegistrationscreenState
   TextEditingController bloodGroupController = TextEditingController();
   TextEditingController maritalStatusController = TextEditingController();
   TextEditingController remarkscontroller = TextEditingController();
+  TextEditingController contactController = TextEditingController();
 
   String? _selectedGender;
   String? _selectedBloodGroup;
@@ -64,6 +65,17 @@ class _NewPatientRegistrationscreenState
     'Married',
     'Divorced',
     'Widowed'
+  ];
+  String? selectedRelationship;
+
+  final List<String> relationshipList = [
+    'Parent',
+    'Sibling',
+    'Spouse',
+    'Child',
+    'Relative',
+    'Friend',
+    'Other',
   ];
 
   final List<String> _doctors = [];
@@ -133,24 +145,27 @@ class _NewPatientRegistrationscreenState
       String uri =
           "https://cybot.avanzosolutions.in/hms/patientregisteration.php";
       var res = await http.post(Uri.parse(uri), body: {
-        "firstnamecontroller": firstnamecontroller.text,
-        "lastnamecontroller": lastnamecontroller.text,
-        "dobController": dobController.text,
-        "occupationController": occupationController.text,
-        "fatherHusbandNameController": fatherHusbandNameController.text,
-        "nationalityController": nationalityController.text,
-        "addressController": addressController.text,
-        "phoneNumberController": phoneNumberController.text,
-        "mobileController": mobileController.text,
-        "emailController": emailController.text,
+        "firstnamecontroller": firstnamecontroller.text.trim(),
+        "lastnamecontroller": lastnamecontroller.text.trim(),
+        "dobController": dobController.text.trim(),
+        "occupationController": occupationController.text.trim(),
+        "fatherHusbandNameController": fatherHusbandNameController.text.trim(),
+        "nationalityController": nationalityController.text.trim(),
+        "addressController": addressController.text.trim(),
+        "phoneNumberController": phoneNumberController.text.trim(),
+        "mobileController": mobileController.text.trim(),
+        "emailController": emailController.text.trim(),
         "empcode": _selectedDoctorEmpId,
-        "idDocumentProvidedController": idDocumentProvidedController.text,
-        "departmentController": departmentController.text,
-        "genderController": genderController.text,
-        "bloodGroupController": bloodGroupController.text,
-        "maritalStatusController": maritalStatusController.text,
-        "remarkscontroller": remarkscontroller.text,
+        "idDocumentProvidedController":
+            idDocumentProvidedController.text.trim(),
+        "departmentController": departmentController.text.trim(),
+        "genderController": genderController.text.trim(),
+        "bloodGroupController": bloodGroupController.text.trim(),
+        "maritalStatusController": maritalStatusController.text.trim(),
+        "remarkscontroller": remarkscontroller.text.trim(),
         "imagecontroller": imageName,
+        "relativetypecontroller": selectedRelationship,
+        "relativecontactnumbercontroller": contactController.text.trim(),
       });
 
       if (res.statusCode == 200) {
@@ -527,14 +542,63 @@ class _NewPatientRegistrationscreenState
                   validator: _validateNotEmpty,
                 ),
                 const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: fatherHusbandNameController,
+                // TextFormField(
+                //   controller: fatherHusbandNameController,
+                //   decoration: InputDecoration(
+                //     contentPadding:
+                //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                //     labelText: 'Father/Husband Name/Relative',
+                //     prefixIcon: Icon(
+                //       Icons.family_restroom,
+                //       color: ColorConstants.mainBlue,
+                //     ),
+                //     filled: true,
+                //     fillColor: Colors.white.withOpacity(0.8),
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(8.0),
+                //     ),
+                //   ),
+                //   validator: _validateNotEmpty,
+                // ),
+                // ------------------------------------------
+
+                DropdownButtonFormField<String>(
+                  value: selectedRelationship,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedRelationship = newValue;
+                    });
+                  },
+                  items: relationshipList
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    labelText: 'Father/Husband Name',
+                    border: OutlineInputBorder(),
+                    labelText: 'Relationship',
                     prefixIcon: Icon(
                       Icons.family_restroom,
+                      color: ColorConstants.mainBlue,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+
+                TextFormField(
+                  controller: contactController,
+                  decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    labelText: 'contact number',
+                    prefixIcon: Icon(
+                      Icons.phone,
                       color: ColorConstants.mainBlue,
                     ),
                     filled: true,
@@ -543,7 +607,7 @@ class _NewPatientRegistrationscreenState
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  validator: _validateNotEmpty,
+                  validator: _validatePhoneNumber,
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
@@ -739,32 +803,36 @@ class _NewPatientRegistrationscreenState
                             : const Color(0xff8d8d8d),
                       ),
                     ),
-                    onPressed: _termsAccepted
-                        ? () async {
-                            bool profile = false;
-                            bool fileupload = false;
-                            if (_formKey.currentState!.validate()) {
-                              // Form is valid, proceed with submission
-                              if (_profileImage != null) {
-                                profile = true;
-                              } else {
-                                profile = false;
-                                imageName = "0";
-                              }
-                              fileupload = files != null ? true : false;
-                              await insertrecord();
-                              if (profile) {
-                                await uploadImage(_profileImage!);
-                              }
-                              if (fileupload) {
-                                await uploadFile(files!);
-                              }
-                              //  print("Form submitted");
-                            } else {
-                              print("Form is invalid");
-                            }
-                          }
-                        : null,
+                    // onPressed:
+                    // _termsAccepted
+                    //     ? () async {
+                    //         bool profile = false;
+                    //         bool fileupload = false;
+                    //         if (_formKey.currentState!.validate()) {
+                    //           // Form is valid, proceed with submission
+                    //           if (_profileImage != null) {
+                    //             profile = true;
+                    //           } else {
+                    //             profile = false;
+                    //             imageName = "0";
+                    //           }
+                    //           fileupload = files != null ? true : false;
+                    //           await insertrecord();
+                    //           if (profile) {
+                    //             await uploadImage(_profileImage!);
+                    //           }
+                    //           if (fileupload) {
+                    //             await uploadFile(files!);
+                    //           }
+                    //           //  print("Form submitted");
+                    //         } else {
+                    //           print("Form is invalid");
+                    //         }
+                    //       }
+                    //     : null,
+                    onPressed: () async {
+                      await insertrecord();
+                    },
                     child: const Text(
                       'Submit',
                       style: TextStyle(color: Colors.black),
