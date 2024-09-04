@@ -25,6 +25,7 @@ class TextSearchController with ChangeNotifier {
       print(ret);
       patientSearchModel = PatientSearchModel.fromJson(ret);
     } on Exception catch (e) {
+      patientSearchModel.list?.clear();
       print(e);
     }
     notifyListeners();

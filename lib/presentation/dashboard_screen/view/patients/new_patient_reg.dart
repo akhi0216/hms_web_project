@@ -143,7 +143,7 @@ class _NewPatientRegistrationscreenState
         "phoneNumberController": phoneNumberController.text,
         "mobileController": mobileController.text,
         "emailController": emailController.text,
-        "empcode": _selectedDoctorEmpId,
+        "doctorToBeConsultedController": _selectedDoctorEmpId,
         "idDocumentProvidedController": idDocumentProvidedController.text,
         "departmentController": departmentController.text,
         "genderController": genderController.text,
@@ -151,6 +151,8 @@ class _NewPatientRegistrationscreenState
         "maritalStatusController": maritalStatusController.text,
         "remarkscontroller": remarkscontroller.text,
         "imagecontroller": imageName,
+        "relativetypecontroller": "",
+        "relativecontactnumbercontroller": "",
       });
 
       if (res.statusCode == 200) {
@@ -696,7 +698,6 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      print("object");
                       FilePickerResult? result =
                           await FilePicker.platform.pickFiles();
                       if (result != null) {

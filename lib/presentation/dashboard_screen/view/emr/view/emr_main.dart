@@ -54,8 +54,17 @@ class _EmrMainState extends State<EmrMain> {
           ),
         ),
         SizedBox(width: size.width * .02),
-        // SingleChildScrollView(child: screen),
-        Expanded(child: screen),
+        // ---------------Screen
+        // Expanded(child: SingleChildScrollView(child: screen)),
+        Expanded(
+            child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: screen,
+            )
+          ],
+        )),
         SizedBox(width: size.width * .02),
       ],
     );

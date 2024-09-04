@@ -133,7 +133,6 @@ class BookingPatientController with ChangeNotifier {
       print(json);
       patientBookingModel = BookingPatientModel.fromJson(json);
     } catch (e) {
-      patientBookingModel.list?.clear();
       log(e.toString());
     }
     notifyListeners();
