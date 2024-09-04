@@ -5,6 +5,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 
 class GeneralMain extends StatefulWidget {
   const GeneralMain({super.key});
@@ -52,6 +53,8 @@ class GeneralMainState extends State<GeneralMain> {
                   buttonCall(label: "Concerns", newScreen: ConcernsScreen()),
 
                   buttonCall(label: "feedback", newScreen: FeedbackForm()),
+                  buttonCall(
+                      label: "Supplimentaries", newScreen: Supplimentaries()),
                   // buttonCall(label: "HR", newScreen: DummyPage()),
                   // buttonCall(label: "Nurse", newScreen: DummyPage()),
                   buttonCall(label: "SMS center", newScreen: DummyPage()),

@@ -359,8 +359,8 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         // quantity = 1;
                         _updateTotalAmount();
                         medicineController
-                            .clear(); // Clear the TextFormField after selection
-                        _updateTotalAmount(); // Update total amount
+                            .clear(); 
+                        _updateTotalAmount(); 
                       });
                     },
                     fieldViewBuilder:
@@ -604,8 +604,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         final medicines = medicine['medicine'] as Medicine;
                         final quantity = medicine['quantity'] as int;
 
-
-                         
                         final totalAmount = medicine['totalAmount'] as double;
 
                         return Padding(
