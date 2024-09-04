@@ -28,48 +28,25 @@ class _SupplimentariesState extends State<Supplimentaries> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Center(
-          child: Column(
-            children: [
-              Container(
-                height: 250,
-                width: 250,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      "https://images.pexels.com/photos/9574420/pexels-photo-9574420.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Add Supplementaries",
-                style: TextStyle(
-                  color: ColorConstants.mainBlack,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 30),
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 1,
+        Expanded(
+          flex: 3,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  "Add Supplementaries",
+                  style: TextStyle(
+                    color: ColorConstants.mainBlack,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 30),
                 _buildInputField(
                   label: "Item",
                   controller: _itemNameController,
@@ -109,6 +86,22 @@ class _SupplimentariesState extends State<Supplimentaries> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 100,
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                  "https://images.pexels.com/photos/9574420/pexels-photo-9574420.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
