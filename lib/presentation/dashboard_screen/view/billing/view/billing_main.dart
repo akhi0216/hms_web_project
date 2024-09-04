@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/in_patient.records.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/ip_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
 
-class EmrMain extends StatefulWidget {
-  const EmrMain({super.key});
+class BillingMain extends StatefulWidget {
+  const BillingMain({super.key});
 
   @override
-  State<EmrMain> createState() => _EmrMainState();
+  State<BillingMain> createState() => BillingMainState();
 }
 
-class _EmrMainState extends State<EmrMain> {
-  String value = "IN Patient Records";
-  Widget screen = IpBilling();
+class BillingMainState extends State<BillingMain> {
+  String value = "OP Billing";
+  Widget screen = OpBilling();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -41,7 +43,7 @@ class _EmrMainState extends State<EmrMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -49,13 +51,8 @@ class _EmrMainState extends State<EmrMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(
-                      label: "IN Patient Records", newScreen: IpBillingEMR()),
-                  buttonCall(label: "Patient Records", newScreen: EmrPage()),
-                  // buttonCall(label: "New Store", newScreen: NewStore()),
-                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
-                  // buttonCall(label: "New Stock", newScreen: NewStock()),
-                  // buttonCall(label: "Current Stock", newScreen: CurrentStock()),
+                  // buttonCall(label: "IP Billing", newScreen:IpBilling()),
+                  buttonCall(label: "OP Billing", newScreen: OpBilling()),
                 ],
               ),
             ],

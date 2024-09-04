@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/new_ot_booking.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/ot_status.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/previous_ot_booking.dart';
@@ -29,7 +30,7 @@ class _OtScreenMainState extends State<OtScreenMain> {
               Container(
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),

@@ -157,99 +157,7 @@ class _NewBookingsState extends State<NewBookings> {
                     return null;
                   },
                 ),
-                // const SizedBox(height: 20.0),
-                // TextFormField(
-                //   controller: firstnamecontroller,
-                //   readOnly: true,
-                //   decoration: InputDecoration(
-                //     contentPadding:
-                //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                //     labelText: 'First Name',
-                //     prefixIcon: Icon(
-                //       Icons.person_outline,
-                //       color: ColorConstants.mainBlue,
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white.withOpacity(0.8),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //     ),
-                //   ),
-                //   validator: (name) => name!.length < 3
-                //       ? "Name should be at least 3 characters"
-                //       : null,
-                //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                // ),
-                // const SizedBox(height: 20.0),
-                // TextFormField(
-                //   controller: lastnamecontroller,
-                //   readOnly: true,
-                //   decoration: InputDecoration(
-                //     contentPadding:
-                //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                //     labelText: 'Last Name',
-                //     prefixIcon: Icon(
-                //       Icons.person_outline,
-                //       color: ColorConstants.mainBlue,
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white.withOpacity(0.8),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(height: 20.0),
-                // TextFormField(
-                //   controller: _emailController,
-                //   readOnly: true,
-                //   decoration: InputDecoration(
-                //     contentPadding:
-                //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                //     labelText: 'Email',
-                //     prefixIcon: Icon(
-                //       Icons.email,
-                //       color: ColorConstants.mainBlue,
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //     ),
-                //   ),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter your address';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                // const SizedBox(height: 20.0),
-                // TextFormField(
-                //   controller: phnumbercontroller,
-                //   readOnly: true,
-                //   decoration: InputDecoration(
-                //     contentPadding:
-                //         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                //     labelText: 'Phone Number',
-                //     prefixIcon: Icon(
-                //       Icons.phone,
-                //       color: ColorConstants.mainBlue,
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white.withOpacity(0.8),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //     ),
-                //   ),
-                //   validator: (value) {
-                //     if (value != null && value.length >= 7) {
-                //       return null;
-                //     } else {
-                //       return "Mobile number is required";
-                //     }
-                //   },
-                // ),
+                
                 const SizedBox(height: 20.0),
                 DropdownButtonFormField<String>(
                   value: _selectedDepartment,
@@ -604,7 +512,11 @@ class _NewBookingsState extends State<NewBookings> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeDashboard(),
+                                                    // HomeDashboard(),=====================================================
+                                                    Dashboardsecondscreen(
+                                                        userName: "Avanzo",
+                                                        empId: "001",
+                                                        des: "Admin"),
                                               ));
                                         },
                                       )

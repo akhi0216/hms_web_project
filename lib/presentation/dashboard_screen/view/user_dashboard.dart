@@ -3,36 +3,26 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/billing_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/ip_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/dialysis_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/ot_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
-
-import 'lab/radiology/lab_details.dart';
 
 class UserDashBoardScreen extends StatefulWidget {
   const UserDashBoardScreen(
@@ -79,7 +69,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     HomeDashboard(),
     PatientsMain(),
     LabMain(),
-    DummyPage(),
+    DialysisMain(),
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
@@ -156,6 +146,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   ];
 
   Widget? screen;
+  bool concerns = false;
 
   @override
   void initState() {
@@ -169,7 +160,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 12,
+      length: 8,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 
@@ -220,6 +211,18 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
                     leading: Icon(Icons.account_circle),
                     title: Text('Admin'),
                   ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    concerns = true;
+                  });
+                  Navigator.pop(context);
+                },
+                child: ListTile(
+                  leading: Icon(Icons.check_circle),
+                  title: Text('View Concerns'),
                 ),
               ),
               InkWell(
@@ -333,8 +336,14 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             isScrollable: false,
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             indicatorColor: Colors.transparent,
-            labelColor: ColorConstants.mainOrange,
+            labelColor:
+                concerns ? ColorConstants.mainwhite : ColorConstants.mainOrange,
             unselectedLabelColor: ColorConstants.mainwhite,
+            onTap: (value) {
+              setState(() {
+                concerns = false;
+              });
+            },
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
                 text: tabLabels[index],
@@ -368,10 +377,18 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
             ),
           ],
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: screenNames,
-        ),
+        body: concerns
+            ? NotificationsScreen(
+                value: "View Concerns",
+                givenScreen: ViewConcerns(
+                  designation: widget.des,
+                  empId: widget.empId,
+                ),
+              )
+            : TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: screenNames,
+              ),
       ),
       // ),
     );

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/pharmacy_notifications.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 
 class BillingPharmacyMain extends StatefulWidget {
-  BillingPharmacyMain({super.key, this.notifications = false});
-  final bool notifications;
+  BillingPharmacyMain({
+    super.key,
+  });
 
   @override
   State<BillingPharmacyMain> createState() => _BillingPharmacyMainState();
@@ -18,13 +20,6 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
   @override
   void initState() {
     super.initState();
-    if (widget.notifications) {
-      value = "Notifications";
-      screen = PharmacyNotifications();
-    } else {
-      value = "Billing";
-      screen = BillingPharmacy();
-    }
   }
 
   @override
@@ -46,7 +41,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
               width: size.width * .199,
               color: ColorConstants.mainwhite,
               child: Image.asset(
-                "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
               ),
             ),
             SizedBox(height: size.height * .01),
@@ -54,13 +49,9 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: size.height * .05),
+                buttonCall(label: "Billing", newScreen: BillingPharmacy()),
                 buttonCall(
-                    label: widget.notifications ? "Notifications" : "Billing",
-                    newScreen: widget.notifications
-                        ? PharmacyNotifications()
-                        : BillingPharmacy()),
-                buttonCall(
-                    label: "Medicine search", newScreen: MedicineSearch()),
+                    label: "Medicine Search", newScreen: MedicineSearch()),
               ],
             ),
           ],
@@ -78,7 +69,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
     return LayoutBuilder(builder: (context, constraints) {
       return InkWell(
         onTap: () {
-          // value = label;
+          value = label;
           setState(() {
             screen = newScreen;
           });

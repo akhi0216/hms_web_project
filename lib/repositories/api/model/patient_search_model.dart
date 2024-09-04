@@ -44,6 +44,10 @@ class ListElement {
   String? department;
   String? email;
   String? img;
+  String? reltype;
+  String? relcontact;
+  String? gender;
+  String? bldgrp;
 
   ListElement({
     this.fname,
@@ -57,6 +61,10 @@ class ListElement {
     this.department,
     this.email,
     this.img,
+    this.reltype,
+    this.relcontact,
+    this.gender,
+    this.bldgrp,
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
@@ -71,6 +79,10 @@ class ListElement {
         department: json["Department"],
         email: json["email"],
         img: json["img"],
+        reltype: json["reltype"],
+        relcontact: json["relcontact"],
+        gender: json["gender"],
+        bldgrp: json["bldgrp"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,5 +97,9 @@ class ListElement {
         "Department": department,
         "email": email,
         "img": img,
+        "reltype": reltype,
+        "relcontact": relcontact,
+        "gender": gender,
+        "bldgrp": bldgrp,
       };
 }

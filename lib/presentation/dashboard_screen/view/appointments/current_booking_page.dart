@@ -20,16 +20,16 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
 
   // Map to track selected times for each row
 
-  callFuction() async {
-    await Provider.of<BookingPatientController>(context, listen: false)
-        .department();
-  }
-
   @override
   void initState() {
     super.initState();
     // Initialize the maps with all times set to false (not selected)
     callFuction();
+  }
+
+  callFuction() async {
+    await Provider.of<BookingPatientController>(context, listen: false)
+        .department();
   }
 
   @override

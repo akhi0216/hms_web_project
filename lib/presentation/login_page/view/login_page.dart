@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                           // color: Colors.black,
                           borderRadius: BorderRadius.circular(100),
                           image: DecorationImage(
-                            image: AssetImage("assets/images/highlandlogo.jpg"),
+                            image: AssetImage(ImageConstants.highlandlogo),
                             fit: BoxFit.fill,
                           ),
                         ),

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
 
 class AppintmentsMain extends StatefulWidget {
   const AppintmentsMain({super.key});
@@ -40,7 +36,7 @@ class AppintmentsMainState extends State<AppintmentsMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                 ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),

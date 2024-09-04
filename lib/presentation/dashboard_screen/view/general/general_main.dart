@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 
 class GeneralMain extends StatefulWidget {
   const GeneralMain({super.key});
@@ -37,7 +39,7 @@ class GeneralMainState extends State<GeneralMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -51,6 +53,8 @@ class GeneralMainState extends State<GeneralMain> {
                   buttonCall(label: "Concerns", newScreen: ConcernsScreen()),
 
                   buttonCall(label: "feedback", newScreen: FeedbackForm()),
+                  buttonCall(
+                      label: "Supplimentaries", newScreen: Supplimentaries()),
                   // buttonCall(label: "HR", newScreen: DummyPage()),
                   // buttonCall(label: "Nurse", newScreen: DummyPage()),
                   buttonCall(label: "SMS center", newScreen: DummyPage()),

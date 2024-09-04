@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/patient_emr.dart';
 
-class BillingMain extends StatefulWidget {
-  const BillingMain({super.key});
+class EmrMain extends StatefulWidget {
+  const EmrMain({super.key});
 
   @override
-  State<BillingMain> createState() => BillingMainState();
+  State<EmrMain> createState() => _EmrMainState();
 }
 
-class BillingMainState extends State<BillingMain> {
-  String value = "IP Billing";
-  Widget screen = IpBilling();
+class _EmrMainState extends State<EmrMain> {
+  String value = "Patient Records";
+  Widget screen = PatientEmr();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -42,7 +35,7 @@ class BillingMainState extends State<BillingMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                  "assets/images/highlandlogo-removebg-preview.png",
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -50,19 +43,27 @@ class BillingMainState extends State<BillingMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "IP Billing", newScreen:IpBilling()),
-                  buttonCall(
-                      label: "OP Billing",
-                      newScreen: OpBilling()),
-                  
+                  buttonCall(label: "Patient Records", newScreen: PatientEmr()),
+                  // label: "IN Patient Records", newScreen: IpBillingEMR()),
+                  // buttonCall(label: "Patient Records", newScreen: EmrPage()),
                 ],
               ),
             ],
           ),
         ),
         SizedBox(width: size.width * .02),
-        // SingleChildScrollView(child: screen),
-        Expanded(child: screen),
+        // ---------------Screen
+        // Expanded(child: SingleChildScrollView(child: screen)),
+        Expanded(
+            child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: screen,
+            )
+          ],
+        )),
+        SizedBox(width: size.width * .02),
       ],
     );
   }

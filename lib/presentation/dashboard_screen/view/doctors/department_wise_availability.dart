@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _DepartmentWiseAvailabilityScreenState
   @override
   Widget build(BuildContext context) {
     var deptVarProvider = Provider.of<BookingPatientController>(context);
-    var docVarProvider = Provider.of<BookingPatientController>(context);
+    var docVarProvider = Provider.of<TextSearchController>(context);
     var deptProvider =
         Provider.of<BookingPatientController>(context, listen: false);
     var docProvider = Provider.of<TextSearchController>(context, listen: false);
@@ -40,16 +41,19 @@ class _DepartmentWiseAvailabilityScreenState
             mainAxisExtent: 230),
         itemBuilder: (context, index) => InkWell(
           onTap: () async {
+            doctorDetails.clear();
             await deptProvider.doctors(deptVarProvider.deptList[index]);
             for (var i = 0; i < deptVarProvider.doctorIdList.length; i++) {
               await docProvider.searchDoctor(deptVarProvider.doctorIdList[i]);
-              doctorDetails.add(docProvider.doctorSearchModel);
+              doctorDetails.add(docVarProvider.doctorSearchModel);
             }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => doctorGrid(),
-                ));
+            if (doctorDetails.isNotEmpty) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => doctorGrid(),
+                  ));
+            }
           },
           child: Container(
             decoration: BoxDecoration(
@@ -79,6 +83,15 @@ class _DepartmentWiseAvailabilityScreenState
     var varProvider = Provider.of<BookingPatientController>(context);
     print(varProvider.doctorList);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorConstants.mainBlue,
+        // title: IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       Icons.arrow_back,
+        //       color: ColorConstants.mainwhite,
+        //     )),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: GridView.builder(

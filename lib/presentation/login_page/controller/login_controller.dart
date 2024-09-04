@@ -8,7 +8,7 @@ import 'package:hms_web_project/repositories/api/model/user_details_model.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController with ChangeNotifier {
-  String isLoggined = "";
+  int isLoggined = 0;
   String empId = "";
   String designation = "";
   String userName = "";
@@ -24,13 +24,13 @@ class LoginController with ChangeNotifier {
         "loginusernamecontroller": username,
         "loginpasswordcontroller": password,
       });
-      isLoggined = res.body;
+      isLoggined = res.statusCode;
     } on Exception catch (e) {
       print(e);
     }
 
     print(isLoggined);
-    if (isLoggined == "success") {
+    if (isLoggined == 200) {
       try {
         var url = "https://cybot.avanzosolutions.in/hms/loginname.php";
         var res = await http.post(Uri.parse(url), body: {

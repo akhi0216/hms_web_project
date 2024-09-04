@@ -6,19 +6,18 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/appintments_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/billing_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/billing_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/ip_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/dialysis_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/department_wise_availability.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/doctors_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/emr_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/emr.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/emr_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
@@ -29,6 +28,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patients_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -53,6 +53,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   bool searchVisibility = false;
 
   bool _isHovered = false;
+  bool isNotified = false;
 
   void _handleHover(bool isHovered, int index) {
     setState(() {
@@ -87,13 +88,11 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     PatientsMain(),
     EmrMain(),
     LabMain(),
-    DummyPage(),
+    DialysisMain(),
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
-    BillingPharmacyMain(
-      notifications: false,
-    ),
+    BillingPharmacyMain(),
     StoreScreen(),
     GeneralMain(),
   ];
@@ -166,9 +165,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     {},
     // PHARMACY
     {
-      "billing": BillingPharmacyMain(
-        notifications: false,
-      ),
+      "billing": BillingPharmacyMain(),
       // "Availale stock": MedicineSearch(),
     },
     {
@@ -394,13 +391,21 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
           //     )),
           bottom: TabBar(
             isScrollable: false,
+            physics: NeverScrollableScrollPhysics(),
             labelPadding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             indicatorColor: Colors.transparent,
-            labelColor: ColorConstants.mainOrange,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            labelColor: isNotified
+                ? ColorConstants.mainwhite
+                : ColorConstants.mainOrange,
+            labelStyle: TextStyle(
+                fontWeight: isNotified ? FontWeight.normal : FontWeight.bold),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
             unselectedLabelColor: ColorConstants.mainwhite,
-            onTap: (value) => print(value),
+            onTap: (value) {
+              setState(() {
+                isNotified = false;
+              });
+            },
             tabs: List.generate(tabLabels.length, (index) {
               return Tab(
                 text: tabLabels[index],
@@ -426,9 +431,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  screen = BillingPharmacyMain(
-                    notifications: true,
-                  );
+                  isNotified = true;
                 });
               },
               icon: Icon(Icons.notifications),
@@ -447,10 +450,15 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
             ),
           ],
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: screenNames,
-        ),
+        body: isNotified
+            ? NotificationsScreen(
+                value: "Notifications",
+                givenScreen: NotificationsScreenSample(),
+              )
+            : TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: screenNames,
+              ),
       ),
       // ),
     );
