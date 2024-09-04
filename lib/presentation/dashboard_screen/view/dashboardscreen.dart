@@ -16,8 +16,6 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_d
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/admin_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/emr.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/emr_main.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
