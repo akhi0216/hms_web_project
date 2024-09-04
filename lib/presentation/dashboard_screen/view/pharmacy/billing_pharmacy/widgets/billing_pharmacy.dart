@@ -11,6 +11,7 @@ class BillingPharmacy extends StatefulWidget {
 }
 
 class _BillingPharmacyState extends State<BillingPharmacy> {
+
   Medicine? selectedMedicine;
   final TextEditingController _medicineController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
@@ -53,13 +54,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   String controllerValue = "";
 
   @override
-  void dispose() {
-    _medicineController.dispose();
-    _quantityController.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     showableMedicines = medicines;
@@ -75,6 +69,13 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _medicineController.dispose();
+    _quantityController.dispose();
+    super.dispose();
   }
 
   void _updateTotalAmount() {
@@ -604,8 +605,6 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         final medicines = medicine['medicine'] as Medicine;
                         final quantity = medicine['quantity'] as int;
 
-
-                         
                         final totalAmount = medicine['totalAmount'] as double;
 
                         return Padding(

@@ -760,7 +760,6 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      print("object");
                       FilePickerResult? result =
                           await FilePicker.platform.pickFiles();
                       if (result != null) {
