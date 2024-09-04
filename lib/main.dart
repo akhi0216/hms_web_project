@@ -3,12 +3,12 @@ import 'package:hms_web_project/presentation/dashboard_screen/controller/concern
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/controller/billing_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BookingDialysisController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BillingController(),
         ),
       ],
       child: MaterialApp(

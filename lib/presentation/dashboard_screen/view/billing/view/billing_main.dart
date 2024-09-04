@@ -3,8 +3,8 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/current_booking_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/appointments/new_bookings.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/op_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/ip_billing.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/billing/view/widgets/op_billing.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
@@ -19,8 +19,8 @@ class BillingMain extends StatefulWidget {
 }
 
 class BillingMainState extends State<BillingMain> {
-  String value = "IP Billing";
-  Widget screen = IpBilling();
+  String value = "OP Billing";
+  Widget screen = OpBilling();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -51,11 +51,8 @@ class BillingMainState extends State<BillingMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "IP Billing", newScreen:IpBilling()),
-                  buttonCall(
-                      label: "OP Billing",
-                      newScreen: OpBilling()),
-                  
+                  // buttonCall(label: "IP Billing", newScreen:IpBilling()),
+                  buttonCall(label: "OP Billing", newScreen: OpBilling()),
                 ],
               ),
             ],

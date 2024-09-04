@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/billing/ip_billing.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/in_patient.records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/widgets/patient_emr.dart';
 
 class EmrMain extends StatefulWidget {

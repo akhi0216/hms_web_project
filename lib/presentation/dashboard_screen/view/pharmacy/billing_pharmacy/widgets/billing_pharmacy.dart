@@ -360,8 +360,8 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         // quantity = 1;
                         _updateTotalAmount();
                         medicineController
-                            .clear(); // Clear the TextFormField after selection
-                        _updateTotalAmount(); // Update total amount
+                            .clear(); 
+                        _updateTotalAmount(); 
                       });
                     },
                     fieldViewBuilder:
