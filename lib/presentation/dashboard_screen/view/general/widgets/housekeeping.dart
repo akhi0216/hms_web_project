@@ -54,93 +54,65 @@ class _HousekeepingState extends State<Housekeeping> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextFormField(
-                              controller: patientIdController,
-                              decoration: InputDecoration(
-                                labelText: 'Patient ID',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                filled: true,
-                                fillColor: ColorConstants.mainwhite,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            TextFormField(
-                              controller: roomNoController,
-                              decoration: InputDecoration(
-                                labelText: 'Patient Room Number',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                filled: true,
-                                fillColor: ColorConstants.mainwhite,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            TextFormField(
-                              controller: floorNoController,
-                              decoration: InputDecoration(
-                                labelText: 'Floor Number',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                filled: true,
-                                fillColor: ColorConstants.mainwhite,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            DropdownButtonFormField<String>(
-                              value: selectedRequirement,
-                              hint: Text('Select Requirement'),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                filled: true,
-                                fillColor: ColorConstants.mainwhite,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              items: requirements.map((requirement) {
-                                return DropdownMenuItem<String>(
-                                  value: requirement,
-                                  child: Text(requirement),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedRequirement = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                  Text(
+                    "Housekeeping Request",
+                    style: TextStyle(
+                      color: ColorConstants.mainBlack,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  _buildInputField(
+                    controller: patientIdController,
+                    labelText: 'Patient ID',
+                  ),
+                  SizedBox(height: 16),
+                  _buildInputField(
+                    controller: roomNoController,
+                    labelText: 'Patient Room Number',
+                  ),
+                  SizedBox(height: 16),
+                  _buildInputField(
+                    controller: floorNoController,
+                    labelText: 'Floor Number',
+                  ),
+                  SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    value: selectedRequirement,
+                    hint: Text('Select Requirement'),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      filled: true,
+                      fillColor: ColorConstants.mainwhite,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ],
+                    ),
+                    items: requirements.map((requirement) {
+                      return DropdownMenuItem<String>(
+                        value: requirement,
+                        child: Text(requirement),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedRequirement = value;
+                      });
+                    },
                   ),
                   SizedBox(height: 24),
                   Center(
@@ -158,7 +130,7 @@ class _HousekeepingState extends State<Housekeeping> {
                         backgroundColor: ColorConstants.mainBlue,
                         padding: EdgeInsets.symmetric(
                           horizontal: 40,
-                          vertical: 20,
+                          vertical: 16,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -174,8 +146,51 @@ class _HousekeepingState extends State<Housekeeping> {
               ),
             ),
           ),
+          SizedBox(
+            width: 100,
+          ),
+          // Expanded(
+          // flex: 3,
+          // child:
+          Container(
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(color: ColorConstants.mainBlue)),
+            child: Container(
+              height: 400,
+              width: 400,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(100)),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/5253089.jpg"),
+                    fit: BoxFit.fill
+                    // fit: BoxFit.cover,s
+                    ),
+              ),
+            ),
+          ),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String labelText,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        filled: true,
+        fillColor: ColorConstants.mainwhite,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
-      ],
+      ),
     );
   }
 

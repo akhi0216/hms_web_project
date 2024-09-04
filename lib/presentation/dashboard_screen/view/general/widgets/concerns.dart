@@ -232,13 +232,26 @@ class _ConcernsScreenState extends State<ConcernsScreen> {
                           ),
                         ),
                         SizedBox(width: 16),
-                        Expanded(
-                          flex: 1,
-                          child: Image.network(
-                            'https://images.pexels.com/photos/6098052/pexels-photo-6098052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 1,
+                        // child:
+
+                        Container(
+                          height: 250,
+                          width: 250,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/3658163.jpg',
+                                    // fit: BoxFit.cover,
+                                  ),
+                                  fit: BoxFit.fill)),
+                        )
+                        // Image.asset(
+                        //   'assets/images/3658163.jpg',
+                        //   // fit: BoxFit.cover,
+                        // ),
+                        // ),
                       ],
                     ),
                   ],
