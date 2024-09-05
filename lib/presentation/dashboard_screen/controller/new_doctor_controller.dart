@@ -127,6 +127,13 @@ class NewDoctorController with ChangeNotifier {
         'starttimecontroller': startTime,
         'endtimecontroller': endTime,
         'oncallcontroller': onCall,
+
+        
+
+
+
+
+
       });
       print(res.body);
     } catch (e) {

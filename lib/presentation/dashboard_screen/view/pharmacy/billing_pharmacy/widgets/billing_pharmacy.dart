@@ -337,6 +337,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                 Expanded(
                   flex: 7,
                   child: Autocomplete<Medicine>(
+                    
                     optionsBuilder: (TextEditingValue textEditingValue) {
                       // if (textEditingValue.text.isEmpty) {
                       //   return const Iterable<Medicine>.empty();
