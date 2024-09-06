@@ -59,9 +59,6 @@ class MyApp extends StatelessWidget {
           create: (context) => EmrScreenController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => BookingDialysisController(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => BillingController(),
         ),
       ],
