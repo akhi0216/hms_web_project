@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -125,6 +126,7 @@ class _PatientEmrState extends State<PatientEmr> {
     var patientDataFunctionProvider =
         Provider.of<TextSearchController>(context, listen: false);
     var patientDataProvider = Provider.of<TextSearchController>(context);
+    var emrprovider = Provider.of<EmrScreenController>(context);
     return Column(
       children: [
         SizedBox(height: 30),
@@ -258,15 +260,22 @@ class _PatientEmrState extends State<PatientEmr> {
             label: "Enter IP id",
             controller: ipIdController,
             focusNode: ipFocusNode,
-            onChanged: () {
-              setState(() {
-                ipIdVisible = true;
-                opIdVisible = false;
-                daycareIdVisible = false;
-                ipVisible = true;
-                opVisible = false;
-                daycareVisible = false;
-              });
+            onChanged: () async {
+              await emrprovider.ipEmrDetails(
+                pid: pidController.text.trim(),
+                ipid: ipIdController.text.trim(),
+              );
+              if (emrprovider.emrDetailsModel.ipno ==
+                  ipIdController.text.trim()) {
+                setState(() {
+                  ipIdVisible = true;
+                  opIdVisible = false;
+                  daycareIdVisible = false;
+                  ipVisible = true;
+                  opVisible = false;
+                  daycareVisible = false;
+                });
+              }
             },
           ),
         ),
@@ -308,10 +317,18 @@ class _PatientEmrState extends State<PatientEmr> {
         ),
         SizedBox(height: size.height * .01),
         // ----------------------------------------------------------------------------------------------
-        patientEmrView(visibility: ipVisible, patientDetails: ipPatientDetails),
-        patientEmrView(visibility: opVisible, patientDetails: opPatientDetails),
         patientEmrView(
-            visibility: daycareVisible, patientDetails: daycarePatientDetails),
+            visibility: ipVisible,
+            patientDetails: ipPatientDetails,
+            emrprovider: emrprovider),
+        patientEmrView(
+            visibility: opVisible,
+            patientDetails: opPatientDetails,
+            emrprovider: emrprovider),
+        patientEmrView(
+            visibility: daycareVisible,
+            patientDetails: daycarePatientDetails,
+            emrprovider: emrprovider),
         SizedBox(height: size.height * .01),
       ],
     );
@@ -423,7 +440,9 @@ class _PatientEmrState extends State<PatientEmr> {
   }
 
   Widget patientEmrView(
-      {required bool visibility, required Map<String, String> patientDetails}) {
+      {required bool visibility,
+      required Map<String, String> patientDetails,
+      EmrScreenController? emrprovider}) {
     return Visibility(
       visible: visibility,
       child: Column(
@@ -465,20 +484,24 @@ class _PatientEmrState extends State<PatientEmr> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text("  : ${emrprovider?.emrDetailsModel.ipno}"),
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text("  : ${emrprovider?.emrDetailsModel.date}"),
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text(
+                                "  : ${emrprovider?.emrDetailsModel.sosIssue}"),
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text(
+                                "  : ${emrprovider?.emrDetailsModel.bookingDoctorName}"),
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text(
+                                "  : ${emrprovider?.emrDetailsModel.bookingReason}"),
                             SizedBox(height: 10),
-                            Text("  : "),
+                            Text(
+                                "  : ${emrprovider?.emrDetailsModel.bookingDepartment}"),
                             SizedBox(height: 10),
-                            Text("  : "),
-                            SizedBox(height: 10),
+                            // Text("  : "),
+                            // SizedBox(height: 10),
                           ],
                         ),
                       ],
@@ -513,7 +536,7 @@ class _PatientEmrState extends State<PatientEmr> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10),
-                              Text("  : "),
+                              Text("  : Discharged"),
                               SizedBox(height: 10),
                               Text("  : "),
                               SizedBox(height: 10),
@@ -567,25 +590,33 @@ class _PatientEmrState extends State<PatientEmr> {
                       // ),
                       columns: [
                         DataColumn(label: Text("Test")),
-                        DataColumn(label: Text("Date")),
-                        DataColumn(label: Text("Result")),
-                        DataColumn(label: Text("Remarks")),
+                        DataColumn(label: Text("Duration")),
+                        DataColumn(label: Text("Staff Alloted")),
+                        DataColumn(label: Text("price")),
                       ],
                       rows: List.generate(
-                        3,
+                        emrprovider?.emrDetailsModel.labTestName?.length ?? 0,
                         (index) {
                           return DataRow(cells: [
                             DataCell(
-                              Text("data"),
+                              Text(emrprovider?.emrDetailsModel
+                                      .labTestName?[index].testName ??
+                                  ''),
                             ),
                             DataCell(
-                              Text("data"),
+                              Text(emrprovider?.emrDetailsModel
+                                      .labTestName?[index].duration ??
+                                  ''),
                             ),
                             DataCell(
-                              Text("data"),
+                              Text(emrprovider?.emrDetailsModel
+                                      .labTestName?[index].staffAlloted ??
+                                  ''),
                             ),
                             DataCell(
-                              Text("data"),
+                              Text(emrprovider?.emrDetailsModel
+                                      .labTestName?[index].price ??
+                                  ''),
                             ),
                           ]);
                         },
