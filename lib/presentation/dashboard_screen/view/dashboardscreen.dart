@@ -71,13 +71,14 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     'Doctors',
     'Patients',
     'EMR',
-    'Lab/Radiology',
+    'Lab',
     'Dialysis',
     'Operation Theatre',
     'Billing',
     'Insurance',
     'Pharmacy',
     'Store',
+    'Radiology',
     'General'
   ];
 
@@ -94,6 +95,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     DummyPage(),
     BillingPharmacyMain(),
     StoreScreen(),
+    DummyPage(),
     GeneralMain(),
   ];
 
@@ -203,7 +205,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 13,
+      length: 14,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 

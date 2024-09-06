@@ -57,11 +57,12 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   List<String> tabLabels = [
     'Home',
     'Patients',
-    'Lab/Radiology',
+    'Lab',
     'Dialysis',
     'Operation Theatre',
     'Billing',
     'Insurance',
+    'Radiology'
     'General'
   ];
 
@@ -73,6 +74,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     OtScreenMain(),
     BillingMain(),
     DummyPage(),
+     DummyPage(),
     GeneralMain(),
   ];
 
@@ -133,7 +135,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     {
       "billing": BillingPharmacyMain(),
       "Availale stock": MedicineSearch(),
-    },
+    },{"Radiology":DummyPage()},
 // GENERAL
     {
       "Complaints": ConcernsScreen(),
@@ -160,7 +162,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 8,
+      length: 9,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class UserReg extends StatefulWidget {
   const UserReg({super.key});
@@ -10,10 +12,14 @@ class UserReg extends StatefulWidget {
 }
 
 class _UserRegState extends State<UserReg> {
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy').format(now);
+    var varProvider = Provider.of<TextSearchController>(context);
+    var functionProvider =
+        Provider.of<TextSearchController>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -22,27 +28,50 @@ class _UserRegState extends State<UserReg> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border:
-                        Border.all(color: ColorConstants.mainBlue, width: 2),
-                    borderRadius: BorderRadius.circular(10),
+            Container(
+              padding: EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                border: Border.all(color: ColorConstants.mainBlue, width: 2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Container(
+                  //   height: 200,
+                  //   width: 200,
+                  //   decoration: BoxDecoration(
+                  //       image: DecorationImage(
+                  //           image: AssetImage(
+                  //               "assets/images/highlandlogo-removebg-preview.png"))),
+                  // ),
+
+                  Text(
+                    "Staff Registration",
+                    style: TextStyle(
+                        color: ColorConstants.mainBlack,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Date:",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text(formattedDate, style: TextStyle(fontSize: 16)),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        // border:
+                        //     Border.all(color: ColorConstants.mainBlue, width: 2),
+                        // borderRadius: BorderRadius.circular(10),
+                        ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Date:",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(formattedDate, style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SizedBox(height: 30),
             Row(
@@ -51,27 +80,136 @@ class _UserRegState extends State<UserReg> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildTextField("Employee ID", "Emp ID"),
-                      buildTextField("First Name", "First Name"),
-                      buildTextField("Last Name", "Last Name"),
-                      buildTextField("Department", "Department"),
-                      buildTextField("Phone No", "Phone No"),
-                      buildTextField("E-mail", "Email"),
-                      buildTextField("Username", "Username"),
-                      buildTextField("Password", "Password"),
+                      SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          controller: searchController,
+                          onFieldSubmitted: (value) async {
+                            setState(() {});
+                            await functionProvider
+                                .searchDoctor(searchController.text.trim());
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter emp id',
+                            helperStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: ColorConstants.mainBlack),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                            suffixIcon: IconButton(
+                              onPressed: () async {
+                                setState(() {});
+                                await functionProvider
+                                    .searchDoctor(searchController.text.trim());
+                              },
+                              icon: Icon(Icons.search),
+                              color: ColorConstants.mainBlue,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      // buildTextField("Employee ID", "${varProvider.doctorSearchModel.fname ?? ""}"),
+                      buildTextField(" Name",
+                          "${varProvider.doctorSearchModel.fname ?? ""}"),
+                      // buildTextField("Last Name", "Last Name"),
+                      buildTextField("Department",
+                          "${varProvider.doctorSearchModel.department ?? ""}"),
+                      buildTextField("Phone No",
+                          "${varProvider.doctorSearchModel.mob ?? ""}"),
+                      buildTextField("E-mail",
+                          "${varProvider.doctorSearchModel.email ?? ""}"),
+                      // buildTextField("Username", "Username"),
+                      // buildTextField("Password", "Password"),
+                      Text("Username",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          controller: searchController,
+                          onFieldSubmitted: (value) async {
+                            // setState(() {});
+                            // await functionProvider
+                            //     .searchDoctor(searchController.text.trim());
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter username',
+                            helperStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: ColorConstants.mainBlack),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                          ),
+                        ),
+                      ),
+                      Text("Password",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          controller: searchController,
+                          onFieldSubmitted: (value) async {
+                            // setState(() {});
+                            // await functionProvider
+                            //     .searchDoctor(searchController.text.trim());
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter username',
+                            helperStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: ColorConstants.mainBlack),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(width: 20),
+                // Expanded(
+                //   child: Container(
+                //     height: 300,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(15.0),
+                //       image: DecorationImage(
+                //         fit: BoxFit.cover,
+                //         image: AssetImage(
+                //           "assets/images/highlandlogo-removebg-preview.png",
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Expanded(
+                  // flex: 2,
                   child: Container(
                     height: 300,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 194, 214, 230)
+                              .withOpacity(0.2),
+                          // spreadRadius: 2,
+                          // blurRadius: 2,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                          "https://images.pexels.com/photos/1081685/pexels-photo-1081685.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        image: AssetImage(
+                          "assets/images/highlandlogo-removebg-preview.png",
                         ),
                       ),
                     ),
@@ -94,7 +232,17 @@ class _UserRegState extends State<UserReg> {
     );
   }
 
-  Widget buildTextField(String label, String hintText) {
+// Widget detailsContainer({required String label, required String title}) {
+//   return Container(
+//     height: 60,
+//     decoration:
+//         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+//     child: Row(
+//       children: [Text(label), Text(title)],
+//     ),
+//   );
+// }
+  Widget buildTextField(String label, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: Column(
@@ -107,25 +255,25 @@ class _UserRegState extends State<UserReg> {
             constraints: const BoxConstraints(maxWidth: 300),
             child: TextFormField(
               decoration: InputDecoration(
-                hintText: hintText,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: ColorConstants.mainBlue),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: ColorConstants.mainBlue,
-                    width: 2.0,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: ColorConstants.mainBlue,
-                    width: 1.5,
-                  ),
-                ),
+                hintText: title,
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.circular(10.0),
+                //   borderSide: BorderSide(color: ColorConstants.mainBlue),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderRadius: BorderRadius.circular(10.0),
+                //   borderSide: BorderSide(
+                //     color: ColorConstants.mainBlue,
+                //     width: 2.0,
+                //   ),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderRadius: BorderRadius.circular(10.0),
+                //   borderSide: BorderSide(
+                //     color: ColorConstants.mainBlue,
+                //     width: 1.5,
+                //   ),
+                // ),
                 filled: true,
                 fillColor: Colors.white,
                 contentPadding:

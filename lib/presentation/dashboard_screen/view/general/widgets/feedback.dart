@@ -42,9 +42,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-   
-
-   
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
@@ -94,7 +91,49 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                 child: TextFormField(
                                   controller: _nameController,
                                   decoration: InputDecoration(
+                                    labelText: 'Patient ID',
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(
+                                      Icons.person,
+                                      color: ColorConstants.mainBlue,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  decoration: InputDecoration(
                                     labelText: 'Name',
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(
+                                      Icons.person,
+                                      color: ColorConstants.mainBlue,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Mobile No',
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(
                                       Icons.person,
