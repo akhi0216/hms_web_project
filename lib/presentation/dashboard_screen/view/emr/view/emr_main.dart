@@ -12,7 +12,16 @@ class EmrMain extends StatefulWidget {
 
 class _EmrMainState extends State<EmrMain> {
   String value = "Patient Records";
-  Widget screen = PatientEmr();
+  ScrollController _scrollController = ScrollController();
+
+  Widget? screen;
+
+  @override
+  void initState() {
+    super.initState();
+    screen = PatientEmr(scrollController: _scrollController);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -43,7 +52,11 @@ class _EmrMainState extends State<EmrMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "Patient Records", newScreen: PatientEmr()),
+                  buttonCall(
+                      label: "Patient Records",
+                      newScreen: PatientEmr(
+                        scrollController: _scrollController,
+                      )),
                   // label: "IN Patient Records", newScreen: IpBillingEMR()),
                   // buttonCall(label: "Patient Records", newScreen: EmrPage()),
                 ],
@@ -56,6 +69,7 @@ class _EmrMainState extends State<EmrMain> {
         // Expanded(child: SingleChildScrollView(child: screen)),
         Expanded(
             child: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             SliverFillRemaining(
               hasScrollBody: false,
