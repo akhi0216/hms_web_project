@@ -5,6 +5,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 
 class GeneralMain extends StatefulWidget {
@@ -46,7 +47,7 @@ class GeneralMainState extends State<GeneralMain> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: size.height * .05),
+                  SizedBox(height: size.height * .02),
                   // buttonCall(label: "Store", newScreen: StoreScreen()),
                   buttonCall(label: "HouseKeeping", newScreen: Housekeeping()),
                   buttonCall(label: "Accounts", newScreen: DummyPage()),
@@ -59,6 +60,8 @@ class GeneralMainState extends State<GeneralMain> {
                   // buttonCall(label: "Nurse", newScreen: DummyPage()),
                   buttonCall(label: "SMS center", newScreen: DummyPage()),
                   buttonCall(label: "Reminders", newScreen: DummyPage()),
+                  buttonCall(
+                      label: "Passing section", newScreen: PassingSection()),
                 ],
               ),
             ],

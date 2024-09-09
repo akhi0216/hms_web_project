@@ -441,7 +441,7 @@ class _NewBookingsState extends State<NewBookings> {
                             child: Text(
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: varprovider.selectedtimeList
+                                  color: varprovider.selectedtimeList  
                                           .contains(index.toString())
                                       ? selectedindex == index
                                           ? Colors.red
