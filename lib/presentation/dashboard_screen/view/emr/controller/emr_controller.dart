@@ -12,7 +12,7 @@ class EmrScreenController with ChangeNotifier {
   //   print(res.body);
   // }
   Future<void> ipEmrDetails({required String pid, required String ipid}) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/emrtest.php";
+    String uri = "https://cybot.avanzosolutions.in/hms/emrtestnew.php";
     var res = await http.post(Uri.parse(uri), body: {
       'patientidcontroller': pid,
       'ipnocontroller': ipid,

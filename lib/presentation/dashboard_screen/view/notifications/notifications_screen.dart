@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/model/bill_pharmacy.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:intl/intl.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -102,20 +100,26 @@ class NotificationsScreenSample extends StatefulWidget {
 }
 
 class _NotificationsScreenSampleState extends State<NotificationsScreenSample> {
-  List<Medicine> medicineList = [
-    Medicine(name: 'Paracetamol', stock: 10, price: 10.0, gst: 12),
-    Medicine(name: 'Ibuprofen', stock: 8, price: 15.0, gst: 18),
-    Medicine(name: 'Amoxicillin', stock: 12, price: 20.0, gst: 5),
-    Medicine(name: 'Aspirin', stock: 10, price: 12.0, gst: 18),
-    Medicine(name: 'Ciprofloxacin', stock: 9, price: 18.0, gst: 12),
-    Medicine(name: 'Cetirizine', stock: 2, price: 8.0, gst: 5),
-  ];
+  // List<BillingPharmacyModel> medicineList = [
+  //   BillingPharmacyModel(
+  //       name: 'Paracetamol', stock: 10, price: 10.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Ibuprofen', stock: 8, price: 15.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Amoxicillin', stock: 12, price: 20.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Aspirin', stock: 10, price: 12.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Ciprofloxacin', stock: 9, price: 18.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Cetirizine', stock: 2, price: 8.0, gst: 5),
+  // ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Container(
       child: ListView.builder(
-        itemCount: medicineList.length,
+        itemCount: 0,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -148,13 +152,13 @@ class _NotificationsScreenSampleState extends State<NotificationsScreenSample> {
                       rows: List.generate(1, (index2) {
                         return DataRow(
                           cells: [
-                            DataCell(Text(medicineList[index].name)),
+                            DataCell(Text('medicineList[index].name')),
                             DataCell(Text("Store 1")),
                             DataCell(Text(DateFormat('d-mm-yyyy')
                                 .format(DateTime.now())
                                 .toString())),
                             DataCell(
-                                Text(medicineList[index].stock.toString())),
+                                Text('medicineList[index].stock.toString()')),
                             DataCell(Text("15")),
                             DataCell(Text("Low")),
                           ],

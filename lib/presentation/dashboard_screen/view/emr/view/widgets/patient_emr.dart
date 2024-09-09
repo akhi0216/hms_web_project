@@ -322,13 +322,13 @@ class _PatientEmrState extends State<PatientEmr> {
             patientDetails: ipPatientDetails,
             emrprovider: emrprovider),
         patientEmrView(
-            visibility: opVisible,
-            patientDetails: opPatientDetails,
-            emrprovider: emrprovider),
+          visibility: opVisible,
+          patientDetails: opPatientDetails,
+        ),
         patientEmrView(
-            visibility: daycareVisible,
-            patientDetails: daycarePatientDetails,
-            emrprovider: emrprovider),
+          visibility: daycareVisible,
+          patientDetails: daycarePatientDetails,
+        ),
         SizedBox(height: size.height * .01),
       ],
     );

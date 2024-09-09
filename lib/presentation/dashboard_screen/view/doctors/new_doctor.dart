@@ -16,6 +16,7 @@ class _NewDoctorState extends State<NewDoctor> {
   final _lastNameController = TextEditingController();
   final _dobController = TextEditingController();
   final _contactNumberController = TextEditingController();
+  final _emergencyContactController = TextEditingController();
   final _emailController = TextEditingController();
   final _residentialAddressController = TextEditingController();
   final _medicalLicenseNumberController = TextEditingController();
@@ -151,6 +152,8 @@ class _NewDoctorState extends State<NewDoctor> {
                 ),
                 buildTextFormField(
                     'Contact Number', Icons.phone, _contactNumberController),
+                buildTextFormField('Emergency Contact', Icons.contact_emergency,
+                    _emergencyContactController),
                 buildTextFormField(
                     'Email Address', Icons.email, _emailController),
                 buildTextFormField('Residential Address', Icons.home,
