@@ -12,6 +12,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/view/insurance_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/widgets/insurance.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
@@ -63,7 +65,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     'Billing',
     'Insurance',
     'Radiology'
-    'General'
+        'General'
   ];
 
   List<Widget> screenNames = [
@@ -73,8 +75,8 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     DialysisMain(),
     OtScreenMain(),
     BillingMain(),
+    InsuranceMain(),
     DummyPage(),
-     DummyPage(),
     GeneralMain(),
   ];
 
@@ -135,7 +137,8 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     {
       "billing": BillingPharmacyMain(),
       "Availale stock": MedicineSearch(),
-    },{"Radiology":DummyPage()},
+    },
+    {"Radiology": DummyPage()},
 // GENERAL
     {
       "Complaints": ConcernsScreen(),

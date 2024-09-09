@@ -45,49 +45,61 @@ class _PassingSectionState extends State<PassingSection> {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              height: 400,
-              width: 400,
-              child: GridView.builder(
-                itemCount: pageList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    mainAxisExtent: 200),
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedPage = pageList[index]['page'] as Widget?;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ColorConstants.lightOrange,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 130,
-                            child: Image.network(
-                              pageList[index]["itemimage"],
-                              fit: BoxFit.fill,
+            child: SingleChildScrollView(
+              // Wrap in SingleChildScrollView to make the whole page scrollable
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 400,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics:
+                          const NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                      itemCount: pageList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              mainAxisExtent: 200),
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedPage = pageList[index]['page'] as Widget?;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ColorConstants.lightOrange,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 130,
+                                  child: Image.network(
+                                    pageList[index]["itemimage"],
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                const SizedBox(height: 15),
+                                Text(
+                                  pageList[index]["title"],
+                                  style: TextStyle(
+                                      color: ColorConstants.mainBlack),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          Text(
-                            pageList[index]["title"],
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
