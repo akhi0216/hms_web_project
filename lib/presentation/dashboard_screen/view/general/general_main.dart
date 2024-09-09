@@ -5,6 +5,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_page.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 
@@ -18,9 +19,11 @@ class GeneralMain extends StatefulWidget {
 class GeneralMainState extends State<GeneralMain> {
   String value = "HouseKeeping";
   Widget screen = Housekeeping();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,8 +34,9 @@ class GeneralMainState extends State<GeneralMain> {
           decoration: BoxDecoration(
             color: ColorConstants.mainBlue,
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
           ),
           child: Column(
             children: [
@@ -44,31 +48,41 @@ class GeneralMainState extends State<GeneralMain> {
                 ),
               ),
               SizedBox(height: size.height * .01),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: size.height * .02),
-                  // buttonCall(label: "Store", newScreen: StoreScreen()),
-                  buttonCall(label: "HouseKeeping", newScreen: Housekeeping()),
-                  buttonCall(label: "Accounts", newScreen: DummyPage()),
-                  buttonCall(label: "Concerns", newScreen: ConcernsScreen()),
-
-                  buttonCall(label: "feedback", newScreen: FeedbackForm()),
-                  buttonCall(
-                      label: "Supplimentaries", newScreen: Supplimentaries()),
-                  // buttonCall(label: "HR", newScreen: DummyPage()),
-                  // buttonCall(label: "Nurse", newScreen: DummyPage()),
-                  buttonCall(label: "SMS center", newScreen: DummyPage()),
-                  buttonCall(label: "Reminders", newScreen: DummyPage()),
-                  buttonCall(
-                      label: "Passing section", newScreen: PassingSection()),
-                ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: size.height * 0.9, // Limits the height
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: size.height * .02),
+                        buttonCall(
+                            label: "HouseKeeping", newScreen: Housekeeping()),
+                        buttonCall(label: "Accounts", newScreen: DummyPage()),
+                        buttonCall(
+                            label: "Concerns", newScreen: ConcernsScreen()),
+                        buttonCall(
+                            label: "Feedback", newScreen: FeedbackForm()),
+                        buttonCall(
+                            label: "Supplimentaries",
+                            newScreen: Supplimentaries()),
+                        buttonCall(label: "SMS Center", newScreen: DummyPage()),
+                        buttonCall(label: "Reminders", newScreen: DummyPage()),
+                        buttonCall(
+                            label: "Passing Section",
+                            newScreen: PassingSection()),
+                        buttonCall(label: "HR", newScreen: HrPage()),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
         SizedBox(width: size.width * .02),
-        // SingleChildScrollView(child: screen),
         Expanded(child: screen),
       ],
     );
@@ -78,8 +92,8 @@ class GeneralMainState extends State<GeneralMain> {
     return LayoutBuilder(builder: (context, constraints) {
       return InkWell(
         onTap: () {
-          value = label;
           setState(() {
+            value = label;
             screen = newScreen;
           });
         },
