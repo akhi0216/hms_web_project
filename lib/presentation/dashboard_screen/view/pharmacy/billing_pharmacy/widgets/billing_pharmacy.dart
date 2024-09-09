@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/model/bill_pharmacy.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/model/billing_pharmacy_model.dart';
+import 'package:provider/provider.dart';
 
 class BillingPharmacy extends StatefulWidget {
   const BillingPharmacy({super.key});
@@ -11,14 +13,13 @@ class BillingPharmacy extends StatefulWidget {
 }
 
 class _BillingPharmacyState extends State<BillingPharmacy> {
-
-  Medicine? selectedMedicine;
+  BillingPharmacyModel? selectedMedicine;
   final TextEditingController _medicineController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController fullAmountController = TextEditingController();
   late TextEditingController medicineController = TextEditingController();
 
-  List<Medicine> showableMedicines = [];
+  List<BillingPharmacyModel> showableMedicines = [];
 
   // State variables for quantity and total amount
   int quantity = 1;
@@ -29,39 +30,60 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   // List to keep track of added medicines
   List<Map<String, dynamic>> addedMedicines = [];
 
-  final List<Medicine> medicines = [
-    Medicine(name: 'Paracetamol', stock: 150, price: 10.0, gst: 12),
-    Medicine(name: 'Ibuprofen', stock: 80, price: 15.0, gst: 18),
-    Medicine(name: 'Amoxicillin', stock: 120, price: 20.0, gst: 5),
-    Medicine(name: 'Aspirin', stock: 100, price: 12.0, gst: 18),
-    Medicine(name: 'Ciprofloxacin', stock: 90, price: 18.0, gst: 12),
-    Medicine(name: 'Cetirizine', stock: 200, price: 8.0, gst: 5),
-    Medicine(name: 'Omeprazole', stock: 75, price: 22.0, gst: 18),
-    Medicine(name: 'Loratadine', stock: 60, price: 11.0, gst: 12),
-    Medicine(name: 'Metformin', stock: 130, price: 25.0, gst: 5),
-    Medicine(name: 'Atorvastatin', stock: 95, price: 30.0, gst: 18),
-    Medicine(name: 'Simvastatin', stock: 85, price: 28.0, gst: 12),
-    Medicine(name: 'Amlodipine', stock: 110, price: 17.0, gst: 5),
-    Medicine(name: 'Hydrochlorothiazide', stock: 55, price: 19.0, gst: 12),
-    Medicine(name: 'Lisinopril', stock: 140, price: 21.0, gst: 18),
-    Medicine(name: 'Azithromycin', stock: 70, price: 23.0, gst: 5),
-    Medicine(name: 'Clindamycin', stock: 50, price: 26.0, gst: 18),
-    Medicine(name: 'Gabapentin', stock: 160, price: 13.0, gst: 12),
-    Medicine(name: 'Losartan', stock: 120, price: 14.0, gst: 5),
-    Medicine(name: 'Doxycycline', stock: 65, price: 16.0, gst: 12),
-    Medicine(name: 'Hydrocodone', stock: 45, price: 35.0, gst: 18),
-  ];
+  List<BillingPharmacyModel> medicines = [];
+  //   BillingPharmacyModel(
+  //       name: 'Paracetamol', stock: 150, price: 10.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Ibuprofen', stock: 80, price: 15.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Amoxicillin', stock: 120, price: 20.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Aspirin', stock: 100, price: 12.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Ciprofloxacin', stock: 90, price: 18.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Cetirizine', stock: 200, price: 8.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Omeprazole', stock: 75, price: 22.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Loratadine', stock: 60, price: 11.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Metformin', stock: 130, price: 25.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Atorvastatin', stock: 95, price: 30.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Simvastatin', stock: 85, price: 28.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Amlodipine', stock: 110, price: 17.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Hydrochlorothiazide', stock: 55, price: 19.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Lisinopril', stock: 140, price: 21.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Azithromycin', stock: 70, price: 23.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Clindamycin', stock: 50, price: 26.0, gst: 18),
+  //   BillingPharmacyModel(
+  //       name: 'Gabapentin', stock: 160, price: 13.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Losartan', stock: 120, price: 14.0, gst: 5),
+  //   BillingPharmacyModel(
+  //       name: 'Doxycycline', stock: 65, price: 16.0, gst: 12),
+  //   BillingPharmacyModel(
+  //       name: 'Hydrocodone', stock: 45, price: 35.0, gst: 18),
+  // ];
   String controllerValue = "";
 
   @override
   void initState() {
     super.initState();
-    showableMedicines = medicines;
+    fetchMedicine();
     _quantityController.addListener(() {
       final text = _quantityController.text;
       if (text.isNotEmpty) {
         final number = int.tryParse(text);
-        if (number != null && number > selectedMedicine!.stock) {
+        if (number != null &&
+            number > int.parse(selectedMedicine?.stock ?? "0")) {
           _quantityController.text = selectedMedicine!.stock.toString();
           _quantityController.selection = TextSelection.fromPosition(
             TextPosition(offset: _quantityController.text.length),
@@ -69,6 +91,15 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
         }
       }
     });
+  }
+
+  fetchMedicine() async {
+    await Provider.of<BillingPharmacyController>(context, listen: false)
+        .medicinesListFunction();
+    medicines = List<BillingPharmacyModel>.from(
+        Provider.of<BillingPharmacyController>(context, listen: false)
+            .medicineList);
+    showableMedicines = List<BillingPharmacyModel>.from(medicines);
   }
 
   @override
@@ -82,9 +113,10 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
     if (selectedMedicine != null) {
       setState(() {
         quantity = int.tryParse(_quantityController.text) ?? 0;
-        totalAmount = (selectedMedicine!.price * quantity) +
-            ((selectedMedicine!.price * quantity) *
-                (selectedMedicine!.gst / 100));
+        totalAmount =
+            (double.parse(selectedMedicine?.price ?? '0') * quantity) +
+                ((double.parse(selectedMedicine?.price ?? '0') * quantity) *
+                    (double.parse(selectedMedicine?.gst ?? '0') / 100));
       });
     } else {
       setState(() {
@@ -336,33 +368,32 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                 const SizedBox(width: 5),
                 Expanded(
                   flex: 7,
-                  child: Autocomplete<Medicine>(
-                    
+                  child: Autocomplete<BillingPharmacyModel>(
                     optionsBuilder: (TextEditingValue textEditingValue) {
                       // if (textEditingValue.text.isEmpty) {
                       //   return const Iterable<Medicine>.empty();
                       // } else {
-                      return showableMedicines.where((Medicine medicine) {
-                        return medicine.name
+                      return showableMedicines
+                          .where((BillingPharmacyModel medicine) {
+                        return medicine.particulars!
                             .toLowerCase()
                             .contains(textEditingValue.text.toLowerCase());
                       }).toList();
                       // }
                     },
-                    displayStringForOption: (Medicine medicine) {
-                      controllerValue = medicine.name;
+                    displayStringForOption: (BillingPharmacyModel medicine) {
+                      controllerValue = medicine.particulars ?? '';
                       print(controllerValue);
                       return controllerValue;
                     },
-                    onSelected: (Medicine medicine) {
+                    onSelected: (BillingPharmacyModel medicine) {
                       setState(() {
                         selectedMedicine = medicine;
                         _quantityController.text = '1';
                         // quantity = 1;
                         _updateTotalAmount();
-                        medicineController
-                            .clear(); 
-                        _updateTotalAmount(); 
+                        medicineController.clear();
+                        _updateTotalAmount();
                       });
                     },
                     fieldViewBuilder:
@@ -435,7 +466,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                     onPressed: () {
                       setState(() {});
                       int inc = int.parse(_quantityController.text.trim());
-                      if (inc < selectedMedicine!.stock) {
+                      if (inc < int.parse(selectedMedicine?.stock ?? '0')) {
                         inc++;
                       }
                       _quantityController.text = inc.toString();
@@ -484,7 +515,8 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white,
                             ),
-                            child: Text("Name: ${selectedMedicine!.name}"),
+                            child: Text(
+                                "Name: ${selectedMedicine?.particulars ?? ''}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -512,7 +544,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               color: Colors.white,
                             ),
                             child: Text(
-                                "Current Stock: ${selectedMedicine!.stock - quantity}"),
+                                "Current Stock: ${int.parse(selectedMedicine?.stock ?? '0') - quantity}"),
                           ),
                         ),
                         // ----------------------------------------       ----------------
@@ -529,7 +561,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               color: Colors.white,
                             ),
                             child: Text(
-                                "Price: ${selectedMedicine!.price.toStringAsFixed(2)}"),
+                                "Price: ${int.parse(selectedMedicine?.price ?? '0').toStringAsFixed(2)}"),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -603,7 +635,8 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                         const SizedBox(height: 10),
                       ] +
                       addedMedicines.map((medicine) {
-                        final medicines = medicine['medicine'] as Medicine;
+                        final medicines =
+                            medicine['medicine'] as BillingPharmacyModel;
                         final quantity = medicine['quantity'] as int;
 
                         final totalAmount = medicine['totalAmount'] as double;
@@ -622,7 +655,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white,
                                   ),
-                                  child: Text("Name: ${medicines.name}"),
+                                  child: Text("Name: ${medicines.particulars}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -651,7 +684,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     color: Colors.white,
                                   ),
                                   child: Text(
-                                      "Current Stock: ${medicines.stock - quantity}"),
+                                      "Current Stock: ${int.parse(medicines.stock ?? '0') - quantity}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -669,7 +702,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     color: Colors.white,
                                   ),
                                   child: Text(
-                                      "Price: ${medicines.price.toStringAsFixed(2)}"),
+                                      "Price: ${int.parse(medicines.price ?? '0').toStringAsFixed(2)}"),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -775,11 +808,11 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    int stock = selectedMedicine!.stock -
+                    int stock = int.parse(selectedMedicine?.stock ?? '0') -
                         int.parse(_quantityController.text.trim());
                     print(selectedMedicine!.stock);
-                    Medicine medicine = medicines.firstWhere((med) {
-                      return med.name == selectedMedicine?.name;
+                    BillingPharmacyModel medicine = medicines.firstWhere((med) {
+                      return med.particulars == selectedMedicine?.particulars;
                     });
                     medicine.stock = selectedMedicine!.stock;
                     selectedMedicine = null;

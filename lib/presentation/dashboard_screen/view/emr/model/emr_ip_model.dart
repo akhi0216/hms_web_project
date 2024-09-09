@@ -4,24 +4,23 @@
 
 import 'dart:convert';
 
-EmrDetailsModel emrDetailsModelFromJson(String str) =>
-    EmrDetailsModel.fromJson(json.decode(str));
+EmrIpModel emrDetailsModelFromJson(String str) =>
+    EmrIpModel.fromJson(json.decode(str));
 
-String emrDetailsModelToJson(EmrDetailsModel data) =>
-    json.encode(data.toJson());
+String emrDetailsModelToJson(EmrIpModel data) => json.encode(data.toJson());
 
-class EmrDetailsModel {
+class EmrIpModel {
   String? ipno;
-  DateTime? date;
+  String? date;
   List<LabTestName>? labTestName;
-  DateTime? ambulanceDate;
+  String? ambulanceDate;
   String? ambulanceIssueRegistered;
   String? ambulanceDepartment;
   String? ambulanceId;
   String? ambulanceDoctor;
   String? sosDepartment;
   String? sosIssue;
-  DateTime? sosDate;
+  String? sosDate;
   String? sosContact;
   String? sosRelativeContact;
   String? bookingDate;
@@ -30,7 +29,7 @@ class EmrDetailsModel {
   String? bookingTimeBookStart;
   String? bookingReason;
 
-  EmrDetailsModel({
+  EmrIpModel({
     this.ipno,
     this.date,
     this.labTestName,
@@ -51,25 +50,21 @@ class EmrDetailsModel {
     this.bookingReason,
   });
 
-  factory EmrDetailsModel.fromJson(Map<String, dynamic> json) =>
-      EmrDetailsModel(
+  factory EmrIpModel.fromJson(Map<String, dynamic> json) => EmrIpModel(
         ipno: json["ipno"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        date: json["date"],
         labTestName: json["lab_test_name"] == null
             ? []
             : List<LabTestName>.from(
                 json["lab_test_name"]!.map((x) => LabTestName.fromJson(x))),
-        ambulanceDate: json["ambulance_date"] == null
-            ? null
-            : DateTime.parse(json["ambulance_date"]),
+        ambulanceDate: json["ambulance_date"],
         ambulanceIssueRegistered: json["ambulance_issue_registered"],
         ambulanceDepartment: json["ambulance_department"],
         ambulanceId: json["ambulance_id"],
         ambulanceDoctor: json["ambulance_doctor"],
         sosDepartment: json["sos_department"],
         sosIssue: json["sos_issue"],
-        sosDate:
-            json["sos_date"] == null ? null : DateTime.parse(json["sos_date"]),
+        sosDate: json["sos_date"],
         sosContact: json["sos_contact"],
         sosRelativeContact: json["sos_relative_contact"],
         bookingDate: json["booking_date"],
@@ -81,19 +76,18 @@ class EmrDetailsModel {
 
   Map<String, dynamic> toJson() => {
         "ipno": ipno,
-        "date":
-            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "date": date,
         "lab_test_name": labTestName == null
             ? []
             : List<dynamic>.from(labTestName!.map((x) => x.toJson())),
-        "ambulance_date": ambulanceDate?.toIso8601String(),
+        "ambulance_date": ambulanceDate,
         "ambulance_issue_registered": ambulanceIssueRegistered,
         "ambulance_department": ambulanceDepartment,
         "ambulance_id": ambulanceId,
         "ambulance_doctor": ambulanceDoctor,
         "sos_department": sosDepartment,
         "sos_issue": sosIssue,
-        "sos_date": sosDate?.toIso8601String(),
+        "sos_date": sosDate,
         "sos_contact": sosContact,
         "sos_relative_contact": sosRelativeContact,
         "booking_date": bookingDate,

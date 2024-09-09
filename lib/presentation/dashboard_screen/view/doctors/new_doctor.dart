@@ -20,6 +20,7 @@ class _NewDoctorState extends State<NewDoctor> {
   final _lastNameController = TextEditingController();
   final _dobController = TextEditingController();
   final _contactNumberController = TextEditingController();
+  final _emergencyContactController = TextEditingController();
   final _emailController = TextEditingController();
   final _residentialAddressController = TextEditingController();
   final _medicalLicenseNumberController = TextEditingController();
