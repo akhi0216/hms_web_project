@@ -4,6 +4,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/doctors/new_doctor.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/doctor_search_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/staff_list_screen.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/user_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
 
@@ -65,6 +66,9 @@ class _AdminScreenState extends State<AdminScreen> {
                           designation: widget.des,
                           empId: widget.eid,
                         )),
+                    buttonCall(
+                        label: "User registration", newScreen: UserReg()),
+
                     // buttonCall(label: "Home", newScreen: HomeDashboard()),
 
                     TextButton(

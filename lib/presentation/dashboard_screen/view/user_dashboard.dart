@@ -12,6 +12,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/view/insurance_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/widgets/insurance.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
@@ -57,12 +59,13 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   List<String> tabLabels = [
     'Home',
     'Patients',
-    'Lab/Radiology',
+    'Lab',
     'Dialysis',
     'Operation Theatre',
     'Billing',
     'Insurance',
-    'General'
+    'Radiology'
+        'General'
   ];
 
   List<Widget> screenNames = [
@@ -72,6 +75,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
     DialysisMain(),
     OtScreenMain(),
     BillingMain(),
+    InsuranceMain(),
     DummyPage(),
     GeneralMain(),
   ];
@@ -134,6 +138,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
       "billing": BillingPharmacyMain(),
       "Availale stock": MedicineSearch(),
     },
+    {"Radiology": DummyPage()},
 // GENERAL
     {
       "Complaints": ConcernsScreen(),
@@ -160,7 +165,7 @@ class _UserDashBoardScreenState extends State<UserDashBoardScreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 8,
+      length: 9,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 

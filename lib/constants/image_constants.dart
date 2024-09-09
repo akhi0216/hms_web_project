@@ -1,5 +1,9 @@
 class ImageConstants {
   static const String highlandlogo = "assets/images/highlandlogo.jpg";
+  // static const String highlandlogo = "assets/images/avzlogo.png";   ----avanzo logo
+
+
+
   static const String highlandlogonobackground =
       "assets/images/highlandlogo-removebg-preview.png";
 

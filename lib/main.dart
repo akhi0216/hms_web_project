@@ -9,7 +9,6 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/cont
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
@@ -61,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BillingController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthController(),
         ),
         ChangeNotifierProvider(
           create: (context) => BillingPharmacyController(),

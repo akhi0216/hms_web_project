@@ -19,6 +19,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/emr/view/emr_
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/general_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/view/insurance_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/insurance/widgets/insurance.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_records.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/lab/lab_tests.dart';
@@ -71,13 +73,14 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     'Doctors',
     'Patients',
     'EMR',
-    'Lab/Radiology',
+    'Lab',
     'Dialysis',
     'Operation Theatre',
     'Billing',
     'Insurance',
     'Pharmacy',
     'Store',
+    'Radiology',
     'General'
   ];
 
@@ -91,9 +94,10 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     DialysisMain(),
     OtScreenMain(),
     BillingMain(),
-    DummyPage(),
+    InsuranceMain(),
     BillingPharmacyMain(),
     StoreScreen(),
+    DummyPage(),
     GeneralMain(),
   ];
 
@@ -203,7 +207,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return DefaultTabController(
-      length: 13,
+      length: 14,
       child: Scaffold(
         backgroundColor: ColorConstants.mainwhite,
 

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_doctor_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +35,10 @@ class _NewDoctorState extends State<NewDoctor> {
   final _availabilityOnCallController = TextEditingController();
   final _startTimeController = TextEditingController();
   final _endTimeController = TextEditingController();
-
+  File? files;
+  bool visible = false;
   String _gender = 'Male';
+  String specialization = 'Pg';
   String _nationality = 'India';
   String _onCall = "Yes";
   String _specialty = 'Cardiology'; // Default value for the dropdown
@@ -150,12 +156,24 @@ class _NewDoctorState extends State<NewDoctor> {
                   },
                   Icons.flag,
                 ),
+                buildTextFormField('Contact Number(Work)', Icons.phone,
+                    _contactNumberController),
+
+                // --------------------------------------------------------------------------------------
+
+                buildTextFormField('Contact Number(Personal)', Icons.phone,
+                    _contactNumberController),
+                buildTextFormField('Contact Number(Emergency)', Icons.phone,
+                    _contactNumberController),
+
+                // --------------------------------------------------------------------------------------
                 buildTextFormField(
-                    'Contact Number', Icons.phone, _contactNumberController),
-                buildTextFormField('Emergency Contact', Icons.contact_emergency,
-                    _emergencyContactController),
+                    'Email Address(work)', Icons.email, _emailController),
+                // -----------------------------------------------------------------
                 buildTextFormField(
-                    'Email Address', Icons.email, _emailController),
+                    'Email Address(Personal)', Icons.email, _emailController),
+
+                // ---------------------------------------------------------------------
                 buildTextFormField('Residential Address', Icons.home,
                     _residentialAddressController),
                 sectionHeader('Professional Information'),
@@ -176,10 +194,49 @@ class _NewDoctorState extends State<NewDoctor> {
                     Icons.account_balance, _medicalSchoolController),
                 buildTextFormField('Year of Graduation', Icons.calendar_today,
                     _yearOfGraduationController),
+
+                // ------------------------------------------------------------------------
+
+                buildspeacializationRadioButtons(),
+
+                buildTextFormField(
+                    'Residency Number', Icons.work, _residencyInfoController),
+                // -------------------------------------------------------------------------
                 buildTextFormField('Residency Information', Icons.work,
                     _residencyInfoController),
                 buildTextFormField('Board Certifications', Icons.book,
                     _boardCertificationsController),
+// --------------------------------------------------------------------------------
+                Center(
+                  child: InkWell(
+                    onTap: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        files = File(result.files.single.path!);
+                      }
+                      setState(() {
+                        visible = true;
+                      });
+                      print(files);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: ColorConstants.mainBlue,
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text("Upload files"),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                // ------------------------------------------------------------------------------
                 sectionHeader('Work Experience'),
                 buildTextFormField('Current Position/Title', Icons.badge,
                     _currentPositionController),
@@ -236,6 +293,7 @@ class _NewDoctorState extends State<NewDoctor> {
                   Icons.call,
                 ),
                 SizedBox(height: 20),
+
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -427,6 +485,59 @@ class _NewDoctorState extends State<NewDoctor> {
       ),
     );
   }
+
+  // ----------------------------------------------------------------------------------------------------------
+  Widget buildspeacializationRadioButtons() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Specialization',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal)),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: ListTile(
+                  title: const Text('Pg'),
+                  leading: Radio<String>(
+                    value: 'Pg',
+                    groupValue: specialization,
+                    onChanged: (String? value) {
+                      setState(() {
+                        specialization = value!;
+                      });
+                    },
+                    activeColor: Colors.teal,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: const Text('Super specialization'),
+                  leading: Radio<String>(
+                    value: 'Super specialization',
+                    groupValue: specialization,
+                    onChanged: (String? value) {
+                      setState(() {
+                        specialization = value!;
+                      });
+                    },
+                    activeColor: Colors.teal,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ---------------------------------------------------------------------------------------------------------------
 
   Widget buildDropdownFormField(String label, String currentValue,
       List<String> items, ValueChanged<String?> onChanged, IconData icon) {
