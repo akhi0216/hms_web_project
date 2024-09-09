@@ -8,8 +8,11 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/auth_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BookingDialysisController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EmrScreenController(),
         ),
         ChangeNotifierProvider(
           create: (context) => BillingController(),
