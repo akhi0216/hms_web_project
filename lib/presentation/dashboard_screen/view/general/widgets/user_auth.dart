@@ -48,6 +48,12 @@ class _UserAuthState extends State<UserAuth> {
         child: Column(
           children: [
             Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(7),
+                  ),
+                  border: Border.all(color: ColorConstants.mainBlue, width: 2)),
               child: Row(
                 children: [Text("Date"), Text(formattedDate)],
               ),
@@ -234,6 +240,7 @@ class _UserAuthState extends State<UserAuth> {
                                               userid: deptpassingProvider
                                                       .authList[index].userId ??
                                                   '');
+                                      dropDownView = false;
                                     },
                                     child: Container(
                                       padding: EdgeInsets.all(5),
@@ -244,7 +251,11 @@ class _UserAuthState extends State<UserAuth> {
                                           border: Border.all(
                                               color: ColorConstants.mainBlue,
                                               width: 2)),
-                                      child: Text("Authorise"),
+                                      child: Text(
+                                        "Authorise",
+                                        style: TextStyle(
+                                            color: ColorConstants.mainwhite),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
@@ -261,6 +272,7 @@ class _UserAuthState extends State<UserAuth> {
                                               userid: deptpassingProvider
                                                       .authList[index].userId ??
                                                   '');
+                                      dropDownView = false;
                                     },
                                     child: Container(
                                       padding: EdgeInsets.all(5),
@@ -271,21 +283,35 @@ class _UserAuthState extends State<UserAuth> {
                                           border: Border.all(
                                               color: ColorConstants.mainBlue,
                                               width: 2)),
-                                      child: Text("Unauthorise"),
+                                      child: Text(
+                                        "Unauthorise",
+                                        style: TextStyle(
+                                            color: ColorConstants.mainwhite),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: 13,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        color: ColorConstants.lightBlue,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: ColorConstants.mainBlue,
-                                            width: 2)),
-                                    child: Text("Cancel"),
+                                  InkWell(
+                                    onTap: () {
+                                      dropDownView = false;
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: ColorConstants.lightBlue,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: ColorConstants.mainBlue,
+                                              width: 2)),
+                                      child: Text(
+                                        "Cancel",
+                                        style: TextStyle(
+                                            color: ColorConstants.mainwhite),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               )
