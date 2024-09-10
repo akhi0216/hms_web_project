@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/alloted_leave.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback_response.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_1.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/newstaff_auth.dart';
@@ -27,7 +28,7 @@ class _PassingSectionState extends State<HrPage> {
       {
         "title": "Alloted leave",
         "itemimage": "assets/images/leave.png",
-        "page": Hr1(),
+        "page": AllottedLeave(),
       },
       {
         "title": "Leave Request",
