@@ -8,7 +8,9 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/auth_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/splash_screen/splash_screen.dart';
@@ -59,14 +61,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AllotedLeaveController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeaveReqControllers(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeaveReqControllers(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // home: SplashScreen(),
-        // home: SplashScreen(),
+        home: SplashScreen(),
 
-        home: Dashboardsecondscreen(
-            userName: "Admin", empId: "009", des: "Admin"),
+        // home: Dashboardsecondscreen(
+        // userName: "Admin", empId: "009", des: "Admin"),
         // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),
       ),
     );
