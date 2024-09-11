@@ -898,5 +898,19 @@ class _PatientEmrState extends State<PatientEmr> {
       items: items,
       onChanged: onChanged,
     );
+    // return Autocomplete(
+    //   optionsBuilder: (textEditingValue) {
+    //     return items!.where(
+    //       (element) {
+    //         return element.value
+    //             .toString()
+    //             .contains(textEditingValue.text.toLowerCase());
+    //       },
+    //     );
+    //   },
+    //   displayStringForOption: (option) {
+    //     return option.value.toString();
+    //   },
+    // );
   }
 }
