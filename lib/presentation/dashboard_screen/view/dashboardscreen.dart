@@ -33,8 +33,10 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/bill
 import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
 import 'package:hms_web_project/presentation/settings_screen/settings_screen.dart';
+import 'package:provider/provider.dart';
 
 class Dashboardsecondscreen extends StatefulWidget {
   const Dashboardsecondscreen(

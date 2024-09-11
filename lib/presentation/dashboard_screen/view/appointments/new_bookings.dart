@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/home_dashboard.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class NewBookings extends StatefulWidget {
@@ -53,8 +53,13 @@ class _NewBookingsState extends State<NewBookings> {
     super.dispose();
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
+  DateTime? picked;
+
+  Future<void> _selectDate(
+      {required BuildContext context,
+      required BookingPatientController varprovider,
+      required BookingPatientController functionprovider}) async {
+    picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
@@ -62,8 +67,32 @@ class _NewBookingsState extends State<NewBookings> {
     );
     if (picked != null) {
       setState(() {
-        _dateController.text = "${picked.toLocal()}".split(' ')[0];
+        _dateController.text =
+            DateFormat("yyyy-MM-dd").format(picked!.toLocal());
       });
+    }
+    selectingTimeslots(
+        varprovider: varprovider, functionprovider: functionprovider);
+  }
+
+  selectingTimeslots(
+      {required BookingPatientController varprovider,
+      required BookingPatientController functionprovider}) async {
+    int itemid = 0;
+    for (var i = 0; i < varprovider.doctorList.length; i++) {
+      if (varprovider.doctorList[i] == _selectedDoctor) {
+        itemid = i;
+      }
+    }
+    varprovider.timeList.clear();
+    if (_dateController.text.isNotEmpty) {
+      await functionprovider
+          .doctorTime(varprovider.doctorsmodelclass.list?[itemid].empcode);
+      await functionprovider.doctorTimeSlots(
+        empid: varprovider.doctorsmodelclass.list?[itemid].empcode,
+        dept: _selectedDepartment,
+        date: DateFormat("dd-MM-yyyy").format(picked!.toLocal()),
+      );
     }
   }
 
@@ -157,7 +186,7 @@ class _NewBookingsState extends State<NewBookings> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20.0),
                 DropdownButtonFormField<String>(
                   value: _selectedDepartment,
@@ -185,7 +214,6 @@ class _NewBookingsState extends State<NewBookings> {
                     setState(() {
                       _selectedDepartment = newValue;
                     });
-                    int itemid = 0;
                     await functionprovider.doctors(_selectedDepartment);
 
                     _selectedDoctor = varprovider.doctorList.isNotEmpty
@@ -194,19 +222,9 @@ class _NewBookingsState extends State<NewBookings> {
                     _selectedDoctorId = varprovider.doctorList.isNotEmpty
                         ? varprovider.doctorIdList[0]
                         : null;
-                    for (var i = 0; i < varprovider.doctorList.length; i++) {
-                      if (varprovider.doctorList[i] == _selectedDoctor) {
-                        itemid = i;
-                      }
-                    }
-                    await functionprovider.doctorTime(
-                        varprovider.doctorsmodelclass.list?[itemid].empcode);
-                    await functionprovider.doctorTimeSlots(
-                      empid:
-                          varprovider.doctorsmodelclass.list?[itemid].empcode,
-                      dept: _selectedDepartment,
-                      // _dateController.text.trim()
-                    );
+                    selectingTimeslots(
+                        varprovider: varprovider,
+                        functionprovider: functionprovider);
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -242,25 +260,23 @@ class _NewBookingsState extends State<NewBookings> {
                     );
                   }).toList(),
                   onChanged: (newValue) async {
-                    int itemid = 0;
                     setState(() {
                       _selectedDoctor = newValue;
                     });
+                    int itemid = 0;
                     for (var i = 0; i < varprovider.doctorList.length; i++) {
                       if (varprovider.doctorList[i] == _selectedDoctor) {
                         itemid = i;
                       }
                     }
-                    varprovider.timeList.clear();
-                    await functionprovider.doctorTime(
-                        varprovider.doctorsmodelclass.list?[itemid].empcode);
-                    await functionprovider.doctorTimeSlots(
-                      empid:
-                          varprovider.doctorsmodelclass.list?[itemid].empcode,
-                      dept: _selectedDepartment,
-                      // _dateController.text.trim()
-                    );
                     _selectedDoctorId = varprovider.doctorIdList[itemid];
+                    selectingTimeslots(
+                        varprovider: varprovider,
+                        functionprovider: functionprovider);
+                    // _dateController.clear();
+                    // picked = null;
+                    // varprovider.timeList.clear();
+                    // varprovider.selectedtimeList.clear();
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -312,7 +328,10 @@ class _NewBookingsState extends State<NewBookings> {
                     return null;
                   },
                   readOnly: true,
-                  onTap: () => _selectDate(context),
+                  onTap: () => _selectDate(
+                      context: context,
+                      functionprovider: functionprovider,
+                      varprovider: varprovider),
                 ),
                 const SizedBox(height: 20.0),
 
@@ -407,7 +426,7 @@ class _NewBookingsState extends State<NewBookings> {
                                   .contains(index.toString())
                               ? setState(() {
                                   selectedindex = index;
-                                }) 
+                                })
                               : setState(() {
                                   selectedindex = null;
                                 });
@@ -441,7 +460,7 @@ class _NewBookingsState extends State<NewBookings> {
                             child: Text(
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: varprovider.selectedtimeList  
+                                  color: varprovider.selectedtimeList
                                           .contains(index.toString())
                                       ? selectedindex == index
                                           ? Colors.red
@@ -462,8 +481,6 @@ class _NewBookingsState extends State<NewBookings> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () async {
-                      print(_selectedDoctorId);
-                      print(_selectedDoctor);
                       if (_formKey.currentState?.validate() ?? false) {
                         await functionprovider.patientBooking(
                           patientId: patientidcontroller.text.trim(),

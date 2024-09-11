@@ -71,13 +71,13 @@ class BookingPatientController with ChangeNotifier {
     notifyListeners();
   }
 
-  listOfTimes({required String? dept}) async {
+  listOfTimes({required String? dept, required String? date}) async {
     listOfDoctors.clear();
     await doctors(dept);
     for (var i = 0; i < doctorsmodelclass.list!.length; i++) {
       await doctorTime(doctorsmodelclass.list?[i].empcode);
       await doctorTimeSlots(
-          empid: doctorsmodelclass.list?[i].empcode, dept: dept);
+          empid: doctorsmodelclass.list?[i].empcode, dept: dept, date: date);
       listOfDoctors.add({
         'name': doctorList[i],
         'timeslots': List<String>.from(timeList),
@@ -94,6 +94,7 @@ class BookingPatientController with ChangeNotifier {
   doctorTimeSlots({
     required String? empid,
     required String? dept,
+    required String? date,
   }) async {
     selectedtimeList.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
@@ -101,9 +102,9 @@ class BookingPatientController with ChangeNotifier {
       var res = await http.post(Uri.parse(uri), body: {
         "doctoridcontroller": empid,
         "departmentidcontroller": dept,
-        // "datecontroller": date
+        "datecontroller": date,
       });
-      // print("-------------${res.body}");
+      print("-------------${res.body}");
       Map<String, dynamic> timeSlotMap = await jsonDecode(res.body);
       print(timeSlotMap);
       for (var i = 1; i < timeList.length + 2; i++) {
@@ -115,7 +116,6 @@ class BookingPatientController with ChangeNotifier {
         }
       }
       print("----$selectedtimeList");
-      // print("----$listOfSelectedTimeList");
     } catch (e) {
       log(e.toString());
     }

@@ -28,8 +28,6 @@ class LoginController with ChangeNotifier {
     } on Exception catch (e) {
       print(e);
     }
-
-    print(isLoggined);
     if (isLoggined == 200) {
       try {
         var url = "https://cybot.avanzosolutions.in/hms/loginname.php";

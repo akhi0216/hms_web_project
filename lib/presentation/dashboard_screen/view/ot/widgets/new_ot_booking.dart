@@ -52,7 +52,10 @@ class _NewOtBookingState extends State<NewOtBooking> {
     super.dispose();
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(
+      {required BuildContext context,
+      required BookingPatientController varprovider,
+      required BookingPatientController functionprovider}) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -63,6 +66,19 @@ class _NewOtBookingState extends State<NewOtBooking> {
       setState(() {
         _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });
+      int itemid = 0;
+      for (var i = 0; i < varprovider.doctorList.length; i++) {
+        if (varprovider.doctorList[i] == _selectedDoctor) {
+          itemid = i;
+        }
+      }
+      await functionprovider
+          .doctorTime(varprovider.doctorsmodelclass.list?[itemid].empcode);
+      await functionprovider.doctorTimeSlots(
+        empid: varprovider.doctorsmodelclass.list?[itemid].empcode,
+        dept: _selectedDepartment,
+        date: "${picked.toLocal()}".split(' ')[0],
+      );
     }
   }
 
@@ -205,7 +221,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
                       setState(() {
                         _selectedDepartment = newValue;
                       });
-                      int itemid = 0;
                       await functionprovider.doctors(_selectedDepartment);
 
                       _selectedDoctor = varprovider.doctorList.isNotEmpty
@@ -214,19 +229,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
                       _selectedDoctorId = varprovider.doctorList.isNotEmpty
                           ? varprovider.doctorIdList[0]
                           : null;
-                      for (var i = 0; i < varprovider.doctorList.length; i++) {
-                        if (varprovider.doctorList[i] == _selectedDoctor) {
-                          itemid = i;
-                        }
-                      }
-                      await functionprovider.doctorTime(
-                          varprovider.doctorsmodelclass.list?[itemid].empcode);
-                      await functionprovider.doctorTimeSlots(
-                        empid:
-                            varprovider.doctorsmodelclass.list?[itemid].empcode,
-                        dept: _selectedDepartment,
-                        // _dateController.text.trim()
-                      );
                     },
                     validate: (value) {
                       if (value == null || value.isEmpty) {
@@ -259,15 +261,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
                           itemid = i;
                         }
                       }
-                      varprovider.timeList.clear();
-                      await functionprovider.doctorTime(
-                          varprovider.doctorsmodelclass.list?[itemid].empcode);
-                      await functionprovider.doctorTimeSlots(
-                        empid:
-                            varprovider.doctorsmodelclass.list?[itemid].empcode,
-                        dept: _selectedDepartment,
-                        // _dateController.text.trim()
-                      );
                       _selectedDoctorId = varprovider.doctorIdList[itemid];
                     },
                     validate: (value) {
@@ -310,7 +303,10 @@ class _NewOtBookingState extends State<NewOtBooking> {
                       return null;
                     },
                     onTap: () {
-                      _selectDate(context);
+                      _selectDate(
+                          context: context,
+                          varprovider: varprovider,
+                          functionprovider: functionprovider);
                     },
                   ),
                   const SizedBox(height: 20.0),

@@ -4,6 +4,7 @@ import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_ip_model.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,8 @@ class _PatientEmrState extends State<PatientEmr> {
   bool opVisible = false;
   bool daycareVisible = false;
 
+  int? ipSelectedValue;
+  int? opSelectedValue;
   String? firstName;
   String? lastName;
 
@@ -93,6 +96,7 @@ class _PatientEmrState extends State<PatientEmr> {
 
   String calculateAge(TextSearchController patientDataProvider) {
     String? date = patientDataProvider.patientSearchModel.list?[0].dob;
+    print(date);
     DateTime today = DateTime.now();
     DateTime dob = date != "" ? DateFormat('yyyy-MM-dd').parse(date!) : today;
     print(today);
@@ -129,11 +133,12 @@ class _PatientEmrState extends State<PatientEmr> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-
     var patientDataFunctionProvider =
         Provider.of<TextSearchController>(context, listen: false);
     var patientDataProvider = Provider.of<TextSearchController>(context);
     var emrprovider = Provider.of<EmrScreenController>(context);
+    var emrFunctionProvider =
+        Provider.of<EmrScreenController>(context, listen: false);
     return Column(
       children: [
         SizedBox(height: 30),
@@ -172,6 +177,12 @@ class _PatientEmrState extends State<PatientEmr> {
                     "";
                 buttonVisible = true;
               });
+              ipIdVisible = false;
+              opIdVisible = false;
+              daycareIdVisible = false;
+              ipVisible = false;
+              opVisible = false;
+              daycareVisible = false;
             } else {
               setState(() {
                 nameController.clear();
@@ -214,8 +225,9 @@ class _PatientEmrState extends State<PatientEmr> {
             children: [
               buildButton(
                 text: "IP DETAILS",
-                onTap: () {
+                onTap: () async {
                   setState(() {
+                    ipSelectedValue = null;
                     ipIdVisible = true;
                     opIdVisible = false;
                     daycareIdVisible = false;
@@ -225,12 +237,16 @@ class _PatientEmrState extends State<PatientEmr> {
                     daycareIdController.clear();
                     ipFocusNode.requestFocus();
                   });
+                  await emrFunctionProvider.ipidFetch(
+                    pid: pidController.text.trim(),
+                  );
                 },
               ),
               buildButton(
                 text: "OP DETAILS",
-                onTap: () {
+                onTap: () async {
                   setState(() {
+                    opSelectedValue = null;
                     opIdVisible = true;
                     ipIdVisible = false;
                     daycareIdVisible = false;
@@ -240,6 +256,9 @@ class _PatientEmrState extends State<PatientEmr> {
                     daycareIdController.clear();
                     opFocusNode.requestFocus();
                   });
+                  await emrFunctionProvider.opidFetch(
+                    pid: pidController.text.trim(),
+                  );
                 },
               ),
               buildButton(
@@ -263,60 +282,130 @@ class _PatientEmrState extends State<PatientEmr> {
         SizedBox(height: size.height * .01),
         Visibility(
           visible: ipIdVisible,
-          child: buildActionTextField(
-            label: "Enter IP id",
-            controller: ipIdController,
-            focusNode: ipFocusNode,
-            onChanged: () async {
+          child: buildDropDownField(
+            hint: "Select a ip id",
+            items: List.generate(
+              emrprovider.ipIdList.length,
+              (index) => DropdownMenuItem(
+                child: Text(emrprovider.ipIdList[index]),
+                value: int.parse(emrprovider.ipIdList[index]),
+              ),
+            ),
+            selectedValue: ipSelectedValue,
+            onChanged: (value) async {
+              setState(() {});
+              ipSelectedValue = value;
               await emrprovider.ipEmrDetails(
                 pid: pidController.text.trim(),
-                ipid: ipIdController.text.trim(),
+                ipid: ipSelectedValue.toString(),
               );
               _scrollToBottom();
-              if (emrprovider.emrIpModel.ipno == ipIdController.text.trim()) {
+              if (emrprovider.emrIpModel.ipno == ipSelectedValue.toString()) {
                 setState(() {
                   ipIdVisible = true;
+                  ipVisible = true;
                   opIdVisible = false;
                   daycareIdVisible = false;
-                  ipVisible = true;
                   opVisible = false;
                   daycareVisible = false;
                 });
               } else {
                 setState(() {});
-                ipIdController.clear();
+                ipSelectedValue = null;
+                emrprovider.ipIdList.clear();
                 ipVisible = false;
               }
             },
           ),
+          // buildActionTextField(
+          //   label: "Enter IP id",
+          //   controller: ipIdController,
+          //   focusNode: ipFocusNode,
+          //   onChanged: () async {
+          // await emrprovider.ipEmrDetails(
+          //   pid: pidController.text.trim(),
+          //   ipid: ipIdController.text.trim(),
+          // );
+          // _scrollToBottom();
+          // if (emrprovider.emrIpModel.ipno == ipIdController.text.trim()) {
+          //   setState(() {
+          //     ipIdVisible = true;
+          //     opIdVisible = false;
+          //     daycareIdVisible = false;
+          //     ipVisible = true;
+          //     opVisible = false;
+          //     daycareVisible = false;
+          //   });
+          // } else {
+          //   setState(() {});
+          //   ipIdController.clear();
+          //   ipVisible = false;
+          // }
+          //   },
+          // ),
         ),
         Visibility(
           visible: opIdVisible,
-          child: buildActionTextField(
-            label: "Enter OP id",
-            controller: opIdController,
-            focusNode: opFocusNode,
-            onChanged: () async {
+          child: buildDropDownField(
+            hint: "Select a op id",
+            items: List.generate(
+              emrprovider.opIdList.length,
+              (index) => DropdownMenuItem(
+                child: Text(emrprovider.opIdList[index]),
+                value: int.parse(emrprovider.opIdList[index]),
+              ),
+            ),
+            selectedValue: opSelectedValue,
+            onChanged: (value) async {
+              setState(() {});
+              opSelectedValue = value;
               await emrprovider.opEmrDetails(
                 pid: pidController.text.trim(),
-                opid: ipIdController.text.trim(),
+                opid: opSelectedValue.toString(),
               );
-              if (opIdController.text == emrprovider.emrOpModel.opno) {
+              _scrollToBottom();
+              if (emrprovider.emrOpModel.opno == opSelectedValue.toString()) {
                 setState(() {
                   opIdVisible = true;
-                  ipIdVisible = false;
-                  daycareIdVisible = false;
                   opVisible = true;
+                  ipIdVisible = false;
                   ipVisible = false;
+                  daycareIdVisible = false;
                   daycareVisible = false;
                 });
               } else {
                 setState(() {});
-                opIdController.clear();
+                opSelectedValue = null;
+                emrprovider.opIdList.clear();
                 opVisible = false;
               }
             },
           ),
+          // buildActionTextField(
+          //   label: "Enter OP id",
+          //   controller: opIdController,
+          //   focusNode: opFocusNode,
+          //   onChanged: () async {
+          //     await emrprovider.opEmrDetails(
+          //       pid: pidController.text.trim(),
+          //       opid: ipIdController.text.trim(),
+          //     );
+          //     if (opIdController.text == emrprovider.emrOpModel.opno) {
+          //       setState(() {
+          // opIdVisible = true;
+          // ipIdVisible = false;
+          // daycareIdVisible = false;
+          // opVisible = true;
+          // ipVisible = false;
+          // daycareVisible = false;
+          //       });
+          //     } else {
+          //       setState(() {});
+          //       opIdController.clear();
+          //       opVisible = false;
+          //     }
+          //   },
+          // ),
         ),
         Visibility(
           visible: daycareIdVisible,
@@ -485,6 +574,9 @@ class _PatientEmrState extends State<PatientEmr> {
           color: ColorConstants.mainBlue,
           borderRadius: BorderRadius.circular(10),
         ),
+        constraints: BoxConstraints(
+            // maxWidth: 150,
+            ),
         child: Text(
           text,
           style: MyTextStyle.normalWhiteText,
@@ -492,6 +584,10 @@ class _PatientEmrState extends State<PatientEmr> {
       ),
     );
   }
+
+  bool ambulanceVisible = false;
+  bool sosVisible = false;
+  TextEditingController controller = TextEditingController();
 
   Widget patientEmrView(
       {required bool visibility,
@@ -626,52 +722,181 @@ class _PatientEmrState extends State<PatientEmr> {
                     ],
                   ),
                   child: DataTable(
-                      // border: TableBorder(),
-                      headingRowColor: WidgetStateColor.resolveWith(
-                        (states) => ColorConstants.mainBlue,
-                      ),
-                      headingTextStyle: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      // clipBehavior: Clip.antiAlias,
-                      // decoration: BoxDecoration(
-                      //   borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(10),
-                      //     topRight: Radius.circular(10),
-                      //   ),
-                      // ),
-                      columns: [
-                        DataColumn(label: Text("Test")),
-                        DataColumn(label: Text("Duration")),
-                        DataColumn(label: Text("Staff Alloted")),
-                        DataColumn(label: Text("price")),
-                      ],
-                      rows: List.generate(
-                        labTests?.length ?? 0,
-                        (index) {
-                          return DataRow(cells: [
-                            DataCell(
-                              Text(labTests?[index].testName ?? ''),
-                            ),
-                            DataCell(
-                              Text(labTests?[index].duration ?? ''),
-                            ),
-                            DataCell(
-                              Text(labTests?[index].staffAlloted ?? ''),
-                            ),
-                            DataCell(
-                              Text(labTests?[index].price ?? ''),
-                            ),
-                          ]);
-                        },
-                      )),
+                    // border: TableBorder(),
+                    headingRowColor: WidgetStateColor.resolveWith(
+                      (states) => ColorConstants.mainBlue,
+                    ),
+                    headingTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    // clipBehavior: Clip.antiAlias,
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(10),
+                    //     topRight: Radius.circular(10),
+                    //   ),
+                    // ),
+                    columns: [
+                      DataColumn(label: Text("Test")),
+                      DataColumn(label: Text("Duration")),
+                      DataColumn(label: Text("Staff Alloted")),
+                      DataColumn(label: Text("price")),
+                    ],
+                    rows: List.generate(
+                      labTests?.length ?? 0,
+                      (index) {
+                        return DataRow(cells: [
+                          DataCell(
+                            Text(labTests?[index].testName ?? ''),
+                          ),
+                          DataCell(
+                            Text(labTests?[index].duration ?? ''),
+                          ),
+                          DataCell(
+                            Text(labTests?[index].staffAlloted ?? ''),
+                          ),
+                          DataCell(
+                            Text(labTests?[index].price ?? ''),
+                          ),
+                        ]);
+                      },
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          Visibility(
+            visible: opVisible ? false : true,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildButton(
+                        text: "Ambulance Details",
+                        onTap: () {
+                          setState(() {
+                            sosVisible = false;
+                            ambulanceVisible = !ambulanceVisible;
+                          });
+                        }),
+                    buildButton(
+                        text: "SOS Details",
+                        onTap: () {
+                          setState(() {
+                            ambulanceVisible = false;
+                            sosVisible = !sosVisible;
+                          });
+                        }),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+                additionalDetails(
+                  visibility: ambulanceVisible,
+                  labels: [
+                    'ambulance_date',
+                    'ambulance_issue_registered',
+                    'ambulance_department',
+                    'ambulance_id',
+                    'ambulance_doctor',
+                  ],
+                  details: [
+                    patientDetails['ambulance_date'] ?? '',
+                    patientDetails['ambulance_issue_registered'] ?? '',
+                    patientDetails['ambulance_department'] ?? '',
+                    patientDetails['ambulance_id'] ?? '',
+                    patientDetails['ambulance_doctor'] ?? '',
+                  ],
+                ),
+                additionalDetails(
+                  visibility: sosVisible,
+                  labels: [
+                    'sos_department',
+                    'sos_issue',
+                    'sos_date',
+                    'sos_contact',
+                    'sos_relative_contact',
+                  ],
+                  details: [
+                    patientDetails['sos_department'] ?? '',
+                    patientDetails['sos_issue'] ?? '',
+                    patientDetails['sos_date'] ?? '',
+                    patientDetails['sos_contact'] ?? '',
+                    patientDetails['sos_relative_contact'] ?? '',
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget additionalDetails({
+    required bool visibility,
+    required List<String> labels,
+    required List<String> details,
+  }) {
+    return Visibility(
+      visible: visibility,
+      child: Container(
+        constraints:
+            BoxConstraints(minWidth: MediaQuery.sizeOf(context).width * .9),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        decoration: BoxDecoration(
+          border: Border.all(),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            labels.length,
+            (index) =>
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: EdgeInsets.only(top: index == 0 ? 0 : 10),
+                  child: Row(
+                    children: [
+                      Text(labels[index]),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 7,
+                child: Padding(
+                  padding: EdgeInsets.only(top: index == 0 ? 0 : 10),
+                  child: Row(
+                    children: [
+                      Text(" : ${details[index]}"),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDropDownField({
+    required List<DropdownMenuItem<int>>? items,
+    required ValueChanged<int?>? onChanged,
+    required int? selectedValue,
+    required String hint,
+  }) {
+    return DropdownButtonFormField(
+      decoration: InputDecoration(border: OutlineInputBorder()),
+      hint: Text(hint),
+      value: selectedValue,
+      items: items,
+      onChanged: onChanged,
     );
   }
 }
