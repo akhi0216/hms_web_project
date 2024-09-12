@@ -7,6 +7,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/widge
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_page_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/leave_request_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 
@@ -64,6 +65,9 @@ class GeneralMainState extends State<GeneralMain> {
                         buttonCall(label: "Accounts", newScreen: DummyPage()),
                         buttonCall(
                             label: "Concerns", newScreen: ConcernsScreen()),
+                        buttonCall(
+                            label: "Leave Request",
+                            newScreen: LeaveRequestScreen()),
                         buttonCall(
                             label: "Feedback", newScreen: FeedbackForm()),
                         buttonCall(

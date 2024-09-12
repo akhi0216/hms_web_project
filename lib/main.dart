@@ -9,7 +9,9 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/cont
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/auth_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
@@ -68,6 +70,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BillingPharmacyController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AllotedLeaveController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeaveReqControllers(),
         ),
       ],
       child: MaterialApp(

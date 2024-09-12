@@ -75,4 +75,31 @@ class LeaveReqControllers with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  int? leaveRequest;
+  leaveRequestFunction({
+    required String eid,
+    required String currentDate,
+    required String reason,
+    required String startDate,
+    required String endDate,
+    required String dept,
+  }) async {
+    if (endDate == null || endDate == '') {
+      endDate = startDate;
+    }
+    String url = 'https://cybot.avanzosolutions.in/hms/leaverequest.php';
+    var res = await http.post(Uri.parse(url), body: {
+      'empcodecontroller': eid,
+      'datecontroller': currentDate,
+      'reasoncontroller': reason,
+      'leaverequestedoncontroller': startDate,
+      'returncontroller': endDate,
+      'departmentcontroller': dept,
+    });
+    print(res.body);
+    print(res.statusCode);
+    leaveRequest = res.statusCode;
+    notifyListeners();
+  }
 }
