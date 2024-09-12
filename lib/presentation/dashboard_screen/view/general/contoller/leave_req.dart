@@ -37,6 +37,9 @@ class LeaveReqControllers with ChangeNotifier {
       {required String date,
       required String leaveid,
       required String empid}) async {
+    //
+    leavereqList.clear();
+    //
     String uri = "https://cybot.avanzosolutions.in/hms/leaverequestauth.php";
 
     try {
@@ -59,6 +62,7 @@ class LeaveReqControllers with ChangeNotifier {
       {required String date,
       required String leaveid,
       required String empid}) async {
+    leavereqList.clear();
     String uri = "https://cybot.avanzosolutions.in/hms/leaverequestunauth.php";
 
     try {

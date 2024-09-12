@@ -47,10 +47,14 @@ class _StoreScreenState extends State<StoreScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
+                  buttonCall(label: "New Stock", newScreen: NewStore()),
+                  buttonCall(label: "Invoice", newScreen: NewStore()),
+                  buttonCall(label: "Purchase order", newScreen: NewStore()),
+                  buttonCall(label: "Maintenance", newScreen: NewStore()),
                   buttonCall(label: "Billing", newScreen: StoreBilling()),
-                  buttonCall(label: "New Store", newScreen: NewStore()),
-                  buttonCall(label: "Open Stock", newScreen: OpenStock()),
-                  buttonCall(label: "New Stock", newScreen: NewStock()),
+
+                  // buttonCall(label: "Open Stock", newScreen: OpenStock()),
+                  // buttonCall(label: "New Stock", newScreen: NewStock()),
                   buttonCall(label: "Current Stock", newScreen: CurrentStock()),
                 ],
               ),
