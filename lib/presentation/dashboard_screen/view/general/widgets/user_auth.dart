@@ -46,8 +46,11 @@ class _UserAuthState extends State<UserAuth> {
       padding: const EdgeInsets.all(10.0),
       child: SingleChildScrollView(
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              width: 160,
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -55,6 +58,7 @@ class _UserAuthState extends State<UserAuth> {
                   ),
                   border: Border.all(color: ColorConstants.mainBlue, width: 2)),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [Text("Date"), Text(formattedDate)],
               ),
             ),
