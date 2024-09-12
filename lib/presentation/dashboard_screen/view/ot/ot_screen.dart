@@ -4,6 +4,7 @@ import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/new_ot_booking.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/ot_status.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/previous_ot_booking.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/ot/widgets/text_sample.dart';
 
 class OtScreenMain extends StatefulWidget {
   const OtScreenMain({super.key});
@@ -38,10 +39,11 @@ class _OtScreenMainState extends State<OtScreenMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "New Booking", newScreen: NewOtBooking()),
+                  buttonCall(
+                      label: "New Booking", newScreen: PreviousOtBooking()),
                   buttonCall(
                       label: "Previous Booking",
-                      newScreen: PreviousOtBooking()),
+                      newScreen: TextFieldWithPopup()),
                   buttonCall(label: "OT Status", newScreen: OtStatus()),
                 ],
               ),

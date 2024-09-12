@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 class StaffListController with ChangeNotifier {
   List deptList = [];
   List<Map<String, dynamic>> staffList = [];
+  // List<String> doctorList = [];
   Doctorsmodelclass? doctorsmodelclass;
   department() async {
     String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
@@ -37,6 +38,7 @@ class StaffListController with ChangeNotifier {
               "dept": deptList[i],
               "doc": doctorsmodelclass?.list?[j].name ?? ""
             });
+            // doctorList.add(doctorsmodelclass?.list?[j].name ?? "");
           }
         }
       }

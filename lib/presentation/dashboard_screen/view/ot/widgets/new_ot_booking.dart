@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
 import 'package:provider/provider.dart';
 
 class NewOtBooking extends StatefulWidget {
@@ -28,10 +29,14 @@ class _NewOtBookingState extends State<NewOtBooking> {
   String phoneNumber = "";
 //
   int? selectedindex;
+  List doctorDetails = [];
 
   callFuction() async {
     await Provider.of<BookingPatientController>(context, listen: false)
         .department();
+    await Provider.of<StaffListController>(context, listen: false).department();
+    await Provider.of<StaffListController>(context, listen: false)
+        .staffListFunction();
   }
 
   @override
@@ -82,11 +87,107 @@ class _NewOtBookingState extends State<NewOtBooking> {
     }
   }
 
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  OverlayEntry? _overlayEntry;
+  final LayerLink _layerLink = LayerLink();
+
+  List<Map<String, dynamic>> _filteredOptions = [];
+  List<Map<String, dynamic>> doctorsList = [];
+
+  void _showOverlay({required StaffListController listOfDoctorsProvider}) {
+    _overlayEntry = _createOverlayEntry();
+    Overlay.of(context).insert(_overlayEntry!);
+  }
+
+  void _hideOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
+  OverlayEntry _createOverlayEntry() {
+    return OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          width: MediaQuery.of(context).size.width - 32,
+          child: CompositedTransformFollower(
+            link: _layerLink,
+            showWhenUnlinked: false,
+            offset: const Offset(0.0, 40.0), // Position below the text field
+            child: Material(
+              elevation: 4.0,
+              child: Container(
+                constraints: BoxConstraints(
+                  maxHeight: 200,
+                ),
+                child: ListView.builder(
+                  itemCount: _filteredOptions.length,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) => ListTile(
+                    leading: Icon(Icons.person),
+                    title: Row(
+                      children: [
+                        Expanded(child: Text(_filteredOptions[index]['doc'])),
+                        Expanded(child: Text(_filteredOptions[index]['dept'])),
+                      ],
+                    ),
+                    onTap: () {
+                      String currentText = _controller.text;
+                      // If the current text contains a comma, keep only what's before the last comma
+                      int lastCommaIndex = currentText.trim().lastIndexOf(',');
+                      if (lastCommaIndex != -1) {
+                        _controller.text =
+                            currentText.substring(0, lastCommaIndex + 1);
+                      } else {
+                        _controller
+                            .clear(); // If there's no comma, clear everything
+                      }
+                      // If the text field is not empty (i.e., previous selections), ensure the new option is added after a comma
+                      if (_controller.text.isNotEmpty) {
+                        if (!_controller.text.trim().endsWith(',')) { 
+                          _controller.text += ', ';
+                        }
+                        _controller.text +=
+                            ' ${_filteredOptions[index]['doc']}, ';
+                      } else {
+                        _controller.text +=
+                            '${_filteredOptions[index]['doc']}, ';
+                      }
+                      // print(_filteredOptions[index]['doc']);
+                      doctorsList.remove(_filteredOptions[index]);
+                      _hideOverlay();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _filterOptions(String input, StaffListController listOfDoctorsProvider) {
+    setState(() {
+      _filteredOptions = doctorsList
+          .where((option) => option['doc']
+              .toLowerCase()
+              .contains(input.split(', ').removeLast().trim().toLowerCase()))
+          .toList();
+      _overlayEntry?.markNeedsBuild(); // Rebuild the overlay
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var functionprovider =
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
+
+    var listOfDoctorsProvider = Provider.of<StaffListController>(context);
+
     fieldSubmitted() async {
       varprovider.doctorList.clear();
       varprovider.deptList[0];
@@ -108,7 +209,10 @@ class _NewOtBookingState extends State<NewOtBooking> {
           ),
         );
       } else {
+        doctorsList =
+            Provider.of<StaffListController>(context, listen: false).staffList;
         setState(() {});
+
         firstnamecontroller.text =
             varprovider.patientBookingModel.list?[0].fname ?? "";
         lastnamecontroller.text =
@@ -270,6 +374,73 @@ class _NewOtBookingState extends State<NewOtBooking> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 20.0),
+                  CompositedTransformTarget(
+                      link: _layerLink,
+                      child: buildTextFormField(
+                        label: 'Enter Assistant Doctors',
+                        controller: _controller,
+                        readOnly:
+                            varprovider.patientBookingModel.list?[0].fname ==
+                                    null
+                                ? true
+                                : false,
+                        icon: Icons.people,
+                        validate: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select doctors';
+                          }
+                          return null;
+                        },
+                        // onTapOutside: (event) {
+                        //   _hideOverlay();
+                        // },
+                        onChanged: (value) {
+                          setState(() {});
+                          // print(value.trim().split(',').last.trim());
+                          if (value.trim().split(',').last.trim().isNotEmpty) {
+                            if (_overlayEntry == null) {
+                              _showOverlay(
+                                  listOfDoctorsProvider: listOfDoctorsProvider);
+                            }
+                            _filterOptions(value, listOfDoctorsProvider);
+                          } else {
+                            _hideOverlay();
+                          }
+                        },
+                        onTap: () {
+                          if (_controller.text.isNotEmpty &&
+                              !_controller.text.trim().endsWith(',')) {
+                            _showOverlay(
+                                listOfDoctorsProvider: listOfDoctorsProvider);
+                          }
+                        },
+                      )
+                      // TextField(
+                      //   controller: _controller,
+                      //   focusNode: _focusNode,
+                      //   decoration: InputDecoration(labelText: 'Enter name'),
+                      // onChanged: (value) {
+                      //   setState(() {});
+                      //   print(value.trim().split(',').last.trim());
+
+                      //   if (value.trim().split(',').last.trim().isNotEmpty) {
+                      //     if (_overlayEntry == null) {
+                      //       _showOverlay();
+                      //     }
+                      //     _filterOptions(value);
+                      //   } else {
+                      //     _hideOverlay();
+                      //   }
+                      // },
+                      //   onTap: () {
+                      //     if (_controller.text.isNotEmpty &&
+                      //         !_controller.text.trim().endsWith(',')) {
+                      //       _showOverlay();
+                      //     }
+                      //   },
+                      // ),
+                      ),
                   const SizedBox(height: 20.0),
                   buildDropDownButton(
                     label: 'OT Number',
@@ -467,11 +638,19 @@ class _NewOtBookingState extends State<NewOtBooking> {
     required TextEditingController controller,
     required IconData icon,
     required FormFieldValidator<String?> validate,
-    required void Function()? onTap,
+    void Function()? onTap,
+    ValueChanged? onChanged,
+    TapRegionCallback? onTapOutside,
+    FocusNode? focusNode,
+    bool readOnly = true,
   }) {
     return TextFormField(
       controller: controller,
-      readOnly: true,
+      readOnly: readOnly,
+      focusNode: focusNode,
+      onTap: onTap,
+      onChanged: onChanged,
+      onTapOutside: onTapOutside,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         labelText: label,
