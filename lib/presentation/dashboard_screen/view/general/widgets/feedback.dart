@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Import for formatting the date
 import 'package:hms_web_project/constants/color_constants.dart';
 
 class FeedbackForm extends StatefulWidget {
@@ -12,28 +13,8 @@ class _FeedbackFormState extends State<FeedbackForm> {
   final _emailController = TextEditingController();
   final _feedbackController = TextEditingController();
 
-  void _submitFeedback() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Handle form submission logic
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Feedback Submitted'),
-          content: Text('Thank you for your feedback!'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _nameController.clear();
-                _emailController.clear();
-                _feedbackController.clear();
-              },
-            ),
-          ],
-        ),
-      );
-    }
+  String getCurrentDate() {
+    return DateFormat('MMMM dd, yyyy').format(DateTime.now());
   }
 
   @override
@@ -70,6 +51,14 @@ class _FeedbackFormState extends State<FeedbackForm> {
                           height: 5,
                           color: ColorConstants.mainBlue,
                         ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Date: ${getCurrentDate()}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -98,12 +87,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                       color: ColorConstants.mainBlue,
                                     ),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
                               SizedBox(height: 16),
@@ -119,12 +102,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                       color: ColorConstants.mainBlue,
                                     ),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
                               SizedBox(height: 16),
@@ -136,16 +113,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                     labelText: 'Mobile No',
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(
-                                      Icons.person,
+                                      Icons.phone,
                                       color: ColorConstants.mainBlue,
                                     ),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
                               SizedBox(height: 16),
@@ -162,15 +133,6 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                     ),
                                   ),
                                   keyboardType: TextInputType.emailAddress,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
-                                    } else if (!RegExp(r'\S+@\S+\.\S+')
-                                        .hasMatch(value)) {
-                                      return 'Please enter a valid email address';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
                               SizedBox(height: 16),
@@ -185,16 +147,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
                                   ),
                                 ),
                                 maxLines: 9,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please provide your feedback';
-                                  }
-                                  return null;
-                                },
                               ),
                               SizedBox(height: 20),
                               ElevatedButton(
-                                onPressed: _submitFeedback,
+                                onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorConstants.mainBlue,
                                   padding: EdgeInsets.symmetric(
