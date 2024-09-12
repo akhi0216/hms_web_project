@@ -5,7 +5,8 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscre
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_page.dart';
+
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_page_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
 

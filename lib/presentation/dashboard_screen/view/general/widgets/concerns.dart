@@ -121,14 +121,14 @@ class _ConcernsScreenState extends State<ConcernsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Staff Concerns/Requirement Form",
+                                "STAFF CONCERNS/REQUIREMENT FORM",
                                 style: MyTextStyle.highlandheading,
                               ),
                               SizedBox(height: 16),
                               Text("Employee Code:",
                                   style: MyTextStyle.normalText),
                               Container(
-                                width: 200, // Set a specific width
+                                width: 200, 
                                 child: TextFormField(
                                   controller: empcodecontroller,
                                   decoration: InputDecoration(

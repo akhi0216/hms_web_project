@@ -3,19 +3,20 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/constants/texts.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/auth_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
+import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AllottedLeave extends StatefulWidget {
-  const AllottedLeave({super.key});
+class LeaveRequest extends StatefulWidget {
+  const LeaveRequest({super.key});
 
   @override
-  State<AllottedLeave> createState() => _AllottedLeaveState();
+  State<LeaveRequest> createState() => _LeaveRequestState();
 }
 
-class _AllottedLeaveState extends State<AllottedLeave> {
+class _LeaveRequestState extends State<LeaveRequest> {
   bool dropDownView = false;
   bool dateSelected = false;
   // bool isRejected = false;
@@ -25,9 +26,19 @@ class _AllottedLeaveState extends State<AllottedLeave> {
   String? selectedDate;
   @override
   Widget build(BuildContext context) {
-    var deptpassingProvider = Provider.of<AllotedLeaveController>(context);
+//  List<ExpansionTileController> concernsExpansionController = List.generate(
+//       selectedDept != null || selectedDate != null
+//           ? viewConcernsProvider.departmentWiseConcernsList.length
+//           : viewConcernsProvider.concernsModel.list?.length ?? 0,
+//       (index) {
+//         return ExpansionTileController();
+//       },
+//     );
+
+    var varloginprovider = Provider.of<LoginController>(context);
+    var deptpassingProvider = Provider.of<LeaveReqControllers>(context);
     var deptpassingfunctionProvider =
-        Provider.of<AllotedLeaveController>(context, listen: false);
+        Provider.of<LeaveReqControllers>(context, listen: false);
 
     var departmentProvider = Provider.of<BookingPatientController>(context);
     var departmentfunctionProvider =
@@ -93,32 +104,6 @@ class _AllottedLeaveState extends State<AllottedLeave> {
                         );
                       }),
                       SizedBox(height: 10),
-                      LayoutBuilder(builder: (context, constraints) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              dropDownView = false;
-                              selectedDept = null;
-                              selectedDate = null;
-                              dateSelected = !dateSelected;
-                            });
-                            // _selectDate(context, viewConcernsFunctionProvider,
-                            //     viewConcernsProvider);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: constraints.maxWidth * .8,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorConstants.mainBlue,
-                            ),
-                            child: Text(
-                              "Date ",
-                              style: MyTextStyle.normalWhiteText,
-                            ),
-                          ),
-                        );
-                      }),
                     ],
                   ),
                 ),
@@ -144,10 +129,8 @@ class _AllottedLeaveState extends State<AllottedLeave> {
                             setState(() {
                               selectedDept = value;
                             });
-
                             // await deptpassingfunctionProvider.deptPassing(
                             //     dept: selectedDept!);
-
                             await deptpassingfunctionProvider.deptPassing(
                                 dept: selectedDept!);
                           },
@@ -158,20 +141,17 @@ class _AllottedLeaveState extends State<AllottedLeave> {
                         height: 20,
                       ),
 
-                      // --------------------------
-
                       ListView.builder(
+                        itemCount: deptpassingProvider.leavereqList.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: deptpassingProvider.allottedleaveList.length,
                         itemBuilder: (context, index) {
                           return ExpansionTile(
-                            title: Text(deptpassingProvider
-                                    .allottedleaveList[index].name ??
-                                ''),
-                            collapsedBackgroundColor:
-                                const Color.fromARGB(255, 208, 150, 63),
-                            collapsedIconColor: ColorConstants.mainwhite,
+                            title: Text(
+                                deptpassingProvider.leavereqList[index].name ??
+                                    ''),
+                            collapsedBackgroundColor: ColorConstants.mainBlue,
+                            collapsedTextColor: ColorConstants.mainwhite,
                             childrenPadding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             expandedAlignment: Alignment.center,
@@ -183,67 +163,153 @@ class _AllottedLeaveState extends State<AllottedLeave> {
                                     child: DataTable(
                                         headingRowColor:
                                             WidgetStateColor.resolveWith(
-                                          (states) => ColorConstants.mainOrange,
-                                        ),
+                                                (states) =>
+                                                    ColorConstants.mainBlue),
                                         headingTextStyle: TextStyle(
                                             color: ColorConstants.mainwhite,
                                             fontWeight: FontWeight.bold),
                                         columns: [
                                           DataColumn(label: Text('Name')),
                                           DataColumn(label: Text('Date')),
-                                          DataColumn(label: Text('Dep')),
-                                          DataColumn(
-                                              label: Text('Leave_approved')),
-                                          DataColumn(label: Text('Status')),
+                                          DataColumn(label: Text('Dept')),
                                           DataColumn(label: Text('End date')),
                                           DataColumn(label: Text('Reason')),
-                                          DataColumn(label: Text('Approved_by'))
+                                          DataColumn(label: Text('Leave_ID')),
                                         ],
                                         rows: [
                                           DataRow(cells: [
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .name ??
+                                                    .leavereqList[index].name ??
                                                 '')),
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .date ??
+                                                    .leavereqList[index].date ??
                                                 '')),
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .dep ??
+                                                    .leavereqList[index].dep ??
                                                 '')),
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .leaveApproved ??
-                                                '')),
-                                            DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .status ??
-                                                '')),
-                                            DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
+                                                    .leavereqList[index]
                                                     .enddate ??
                                                 '')),
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
+                                                    .leavereqList[index]
                                                     .reason ??
                                                 '')),
                                             DataCell(Text(deptpassingProvider
-                                                    .allottedleaveList[index]
-                                                    .approvedBy ??
+                                                    .leavereqList[index]
+                                                    .leaveid ??
                                                 '')),
                                           ])
                                         ]),
                                   );
                                 },
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      deptpassingfunctionProvider
+                                          .deptAuthpassing(
+                                              date: formattedDate,
+                                              leaveid: deptpassingProvider
+                                                      .leavereqList[index]
+                                                      .leaveid ??
+                                                  '',
+                                              empid: varloginprovider.empId);
+                                      dropDownView = false;
+                                      // print(varloginprovider.empId);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: ColorConstants.lightBlue,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: ColorConstants.mainBlue,
+                                              width: 2)),
+                                      child: Text(
+                                        "Authorise",
+                                        style: TextStyle(
+                                            color: ColorConstants.mainwhite),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 13,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      // deptpassingfunctionProvider
+                                      //     .deptunauthpassing(
+                                      //         empcode: deptpassingProvider
+                                      //                 .authList[index]
+                                      //                 .empcode ??
+                                      //             '',
+                                      //         userid: deptpassingProvider
+                                      //                 .authList[index].userId ??
+                                      // -------------------------------------------------
+
+                                      //             '');
+                                      deptpassingfunctionProvider
+                                          .deptUnauthpassing(
+                                              date: formattedDate,
+                                              leaveid: deptpassingProvider
+                                                      .leavereqList[index]
+                                                      .leaveid ??
+                                                  '',
+                                              empid: varloginprovider.empId);
+
+                                      dropDownView = false;
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: ColorConstants.lightBlue,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: ColorConstants.mainBlue,
+                                              width: 2)),
+                                      child: Text(
+                                        "Unauthorise",
+                                        style: TextStyle(
+                                            color: ColorConstants.mainwhite),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 13,
+                                  ),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     dropDownView = false;
+                                  //   },
+                                  //   child: Container(
+                                  //     padding: EdgeInsets.all(5),
+                                  //     decoration: BoxDecoration(
+                                  //         color: ColorConstants.lightBlue,
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(5),
+                                  //         border: Border.all(
+                                  //             color: ColorConstants.mainBlue,
+                                  //             width: 2)),
+                                  //     child: Text(
+                                  //       "Cancel",
+                                  //       style: TextStyle(
+                                  //           color: ColorConstants.mainwhite),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               )
                             ],
                           );
                         },
-                      )
+                      ),
 
-                      // ------------------------------------
+                      // --------------------------
                     ],
                   ),
                 ),
