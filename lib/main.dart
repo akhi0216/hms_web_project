@@ -69,23 +69,18 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthController(),
         ),
         ChangeNotifierProvider(
+          create: (context) => BillingPharmacyController(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => AllotedLeaveController(),
         ),
         ChangeNotifierProvider(
           create: (context) => LeaveReqControllers(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => LeaveReqControllers(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BillingPharmacyController(),
-        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // home: SplashScreen(),
-        // home: SplashScreen(),
-
         home: Dashboardsecondscreen(
             userName: "Admin", empId: "009", des: "Admin"),
         // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),

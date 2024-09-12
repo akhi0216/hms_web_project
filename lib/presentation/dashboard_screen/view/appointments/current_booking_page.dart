@@ -105,7 +105,8 @@ class _CurrentBookingPageState extends State<CurrentBookingPage> {
                         // setState(() {});
                         // print(varprovider.listOfTimeList);
                         await functionprovider.listOfTimes(
-                            dept: _selectedDepartment);
+                            dept: _selectedDepartment,
+                            date: DateTime.now().toString());
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
