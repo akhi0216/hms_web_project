@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/current_stock.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/invoice_main.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/maintenance.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_stock.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/new_store.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/open_stock.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/purchase_order.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/widgets/store_billing.dart';
 
 class StoreScreen extends StatefulWidget {
@@ -15,13 +18,12 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  String value = "Billing";
-  Widget screen = StoreBilling();
+  String value = "New Stock";
+  Widget screen = NewStore();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           width: size.width * .2,
@@ -48,9 +50,10 @@ class _StoreScreenState extends State<StoreScreen> {
                 children: [
                   SizedBox(height: size.height * .05),
                   buttonCall(label: "New Stock", newScreen: NewStore()),
-                  buttonCall(label: "Invoice", newScreen: NewStore()),
-                  buttonCall(label: "Purchase order", newScreen: NewStore()),
-                  buttonCall(label: "Maintenance", newScreen: NewStore()),
+                  buttonCall(label: "Invoice", newScreen: Invoice()),
+                  buttonCall(
+                      label: "Purchase order", newScreen: PurchaseOrder()),
+                  buttonCall(label: "Maintenance", newScreen: Maintenance()),
                   buttonCall(label: "Billing", newScreen: StoreBilling()),
 
                   // buttonCall(label: "Open Stock", newScreen: OpenStock()),

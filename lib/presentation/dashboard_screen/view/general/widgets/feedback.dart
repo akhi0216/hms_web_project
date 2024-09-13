@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/feedback_controller.dart';
 import 'package:intl/intl.dart'; // Import for formatting the date
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:provider/provider.dart';
 
 class FeedbackForm extends StatefulWidget {
   @override
@@ -9,16 +11,19 @@ class FeedbackForm extends StatefulWidget {
 
 class _FeedbackFormState extends State<FeedbackForm> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _feedbackController = TextEditingController();
 
-  String getCurrentDate() {
-    return DateFormat('MMMM dd, yyyy').format(DateTime.now());
-  }
+  final patientidContoller = TextEditingController();
+  final nameController = TextEditingController();
+  final phnContoller = TextEditingController();
+  final emailController = TextEditingController();
+  final feedbackController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var functionprovider =
+        Provider.of<FeedbackController>(context, listen: false);
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd-MM-yyyy').format(now);
     Size size = MediaQuery.sizeOf(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +58,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Date: ${getCurrentDate()}',
+                          'Date: $formattedDate',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
@@ -78,7 +83,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               SizedBox(
                                 width: 500,
                                 child: TextFormField(
-                                  controller: _nameController,
+                                  controller: patientidContoller,
                                   decoration: InputDecoration(
                                     labelText: 'Patient ID',
                                     border: OutlineInputBorder(),
@@ -93,7 +98,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               SizedBox(
                                 width: 500,
                                 child: TextFormField(
-                                  controller: _nameController,
+                                  controller: nameController,
                                   decoration: InputDecoration(
                                     labelText: 'Name',
                                     border: OutlineInputBorder(),
@@ -108,7 +113,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               SizedBox(
                                 width: 500,
                                 child: TextFormField(
-                                  controller: _nameController,
+                                  controller: phnContoller,
                                   decoration: InputDecoration(
                                     labelText: 'Mobile No',
                                     border: OutlineInputBorder(),
@@ -123,7 +128,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               SizedBox(
                                 width: 500,
                                 child: TextFormField(
-                                  controller: _emailController,
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     labelText: 'Email',
                                     border: OutlineInputBorder(),
@@ -137,7 +142,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               ),
                               SizedBox(height: 16),
                               TextFormField(
-                                controller: _feedbackController,
+                                controller: feedbackController,
                                 decoration: InputDecoration(
                                   labelText: 'Feedback',
                                   border: OutlineInputBorder(),
@@ -150,7 +155,30 @@ class _FeedbackFormState extends State<FeedbackForm> {
                               ),
                               SizedBox(height: 20),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await functionprovider.feedbackSaving(
+                                    patientid: patientidContoller.text,
+                                    name: nameController.text,
+                                    email: emailController.text,
+                                    phn: phnContoller.text,
+                                    feedback: feedbackController.text,
+                                    date: formattedDate,
+                                  );
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Thank you for your valuable feedback!'),
+                                      backgroundColor: ColorConstants.mainBlue,
+                                    ),
+                                  );
+
+                                  patientidContoller.clear();
+                                  nameController.clear();
+                                  emailController.clear();
+                                  phnContoller.clear();
+                                  feedbackController.clear();
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorConstants.mainBlue,
                                   padding: EdgeInsets.symmetric(

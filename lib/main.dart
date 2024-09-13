@@ -11,9 +11,11 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/auth_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/feedback_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/supplier_contoller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
@@ -77,6 +79,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => LeaveReqControllers(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => FeedbackController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SupplierContoller(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
