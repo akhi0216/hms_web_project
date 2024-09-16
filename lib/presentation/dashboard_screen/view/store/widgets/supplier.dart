@@ -13,6 +13,7 @@ class Supplier extends StatefulWidget {
 class _SupplierState extends State<Supplier> {
   bool isGstdetails = false;
   TextEditingController supplieridController = TextEditingController();
+
   fetchData() async {
     await Provider.of<SupplierContoller>(context, listen: false)
         .suppliearidGeneration();
@@ -33,391 +34,288 @@ class _SupplierState extends State<Supplier> {
     var varprovider = Provider.of<SupplierContoller>(context);
 
     return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // Supplier Details
           Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                ),
+              ],
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      "ID : ",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text("ID: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: TextFormField(
+                        controller: supplieridController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                        ),
+                      ),
                     ),
-                    Container(
-                        height: 60,
-                        width: 100,
-                        child: TextFormField(
-                          controller: supplieridController,
-                          onTap: () {},
-                          decoration:
-                              InputDecoration(border: OutlineInputBorder()),
-                        )),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Name :    ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Name :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Address : ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Address :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Phone :     ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Phone :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Pin code : ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Pin code :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Mobile(1) : ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Mobile(1) :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Mobile(2) : ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Mobile(2) :",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        Container(
-                            height: 60,
-                            width: 300,
-                            child: TextFormField(
-                                // decoration: InputDecoration(border: OutlineInputBorder()),
-                                )),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  height: 7,
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      isGstdetails = true;
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        color: ColorConstants.majenta),
-                    child: Center(
+                SizedBox(height: 20),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isGstdetails = true;
+                      });
+                    },
+                    child: Container(
+                      width: 200,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: ColorConstants.majenta,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
                         child: Text(
-                      "GST",
-                      style: TextStyle(color: ColorConstants.mainwhite),
-                    )),
+                          "GST",
+                          style: TextStyle(color: ColorConstants.mainwhite),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
+          // GST Details
           Visibility(
-              visible: isGstdetails,
-              child: Container(
-                padding: EdgeInsets.all(22),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border:
-                        Border.all(color: ColorConstants.majenta, width: 2)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text("GST No : "),
-                            SizedBox(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder()),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 9,
-                        ),
-
-                        Row(
-                          children: [
-                            Text("CGST :   "),
-                            SizedBox(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder()),
-                              ),
-                            )
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: 11,
-                        ),
-
-                        Row(
-                          children: [
-                            Text("IGST :    "),
-                            SizedBox(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder()),
-                              ),
-                            )
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: 11,
-                        ),
-                        // Row(
-                        //   children: [
-                        Row(
-                          children: [
-                            Text("Products : "),
-                            SizedBox(
-                                width: 280,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder()),
-                                ))
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: 11,
-                        ),
-                        Row(
-                          children: [
-                            Text("SGST : "),
-                            SizedBox(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder()),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 11,
-                        ),
-                        Row(
-                          children: [
-                            Text("TDS   : "),
-                            SizedBox(
-                              width: 300,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder()),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text("Attachments :  "),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 50,
-                          width: 320,
-                          padding: EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: const Color.fromARGB(255, 230, 207, 234)),
-                          child: Center(
-                            child: Text(
-                              "upload files",
-                              style: TextStyle(color: Colors.black),
-                            ),
+            visible: isGstdetails,
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "GST No :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
                           ),
                         ),
-                        SizedBox(
-                          height: 11,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "CGST :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
+                          ),
                         ),
-                        Container(
-                          width: 110,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: ColorConstants.majenta),
-                          child: Center(
-                              child: Text(
-                            "Submit",
-                            style: TextStyle(color: ColorConstants.mainwhite),
-                          )),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "IGST :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
+                          ),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Container(
-                      height: 300,
-                      width: 300,
-                      // color: ColorConstants.lightBlue,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "SGST :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "TDS :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Products :",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 12),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Attachments",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Container(
+                        height: 50,
+                        padding: EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 230, 207, 234),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Upload Files",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      width: 200,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 7),
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/truck.png"),
-                              fit: BoxFit.fill)),
+                        color: ColorConstants.majenta,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(color: ColorConstants.mainwhite),
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Row(
-                        //   children: [
-                        //     Text("SGST : "),
-                        //     SizedBox(
-                        //       width: 200,
-                        //       child: TextFormField(
-                        //         decoration:
-                        //             InputDecoration(border: OutlineInputBorder()),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: 11,
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     Text("TDS   : "),
-                        //     SizedBox(
-                        //       width: 200,
-                        //       child: TextFormField(
-                        //         decoration:
-                        //             InputDecoration(border: OutlineInputBorder()),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: 8,
-                        // ),
-                        // Text("Attachments :  "),
-                        // SizedBox(
-                        //   height: 5,
-                        // ),
-                        // Container(
-                        //   height: 50,
-                        //   width: 240,
-                        //   padding: EdgeInsets.all(7),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(7),
-                        //       color: const Color.fromARGB(255, 230, 207, 234)),
-                        //   child: Center(
-                        //     child: Text(
-                        //       "upload files",
-                        //       style: TextStyle(color: Colors.black),
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    ),
-                  ],
-                ),
-              ))
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
