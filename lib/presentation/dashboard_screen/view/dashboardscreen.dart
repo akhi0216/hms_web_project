@@ -32,6 +32,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/bill
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/view/radiology_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
 import 'package:hms_web_project/presentation/login_page/view/login_page.dart';
@@ -99,7 +100,7 @@ class _DashboardsecondscreenState extends State<Dashboardsecondscreen> {
     InsuranceMain(),
     BillingPharmacyMain(),
     StoreScreen(),
-    DummyPage(),
+    RadiologyMain(),
     GeneralMain(),
   ];
 

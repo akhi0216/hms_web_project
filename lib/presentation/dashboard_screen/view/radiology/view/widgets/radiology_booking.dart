@@ -4,32 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_time_picker_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class NewOtBooking extends StatefulWidget {
-  const NewOtBooking({super.key});
+class RadiologyBooking extends StatefulWidget {
+  const RadiologyBooking({super.key});
 
   @override
-  State<NewOtBooking> createState() => _NewOtBookingState();
+  State<RadiologyBooking> createState() => _RadiologyBookingState();
 }
 
-class _NewOtBookingState extends State<NewOtBooking> {
+class _RadiologyBookingState extends State<RadiologyBooking> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController firstnamecontroller = TextEditingController();
   final TextEditingController lastnamecontroller = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController phnumbercontroller = TextEditingController();
-  final TextEditingController _reasonController = TextEditingController();
+  final TextEditingController departmentcontroller = TextEditingController();
+  final TextEditingController doctorcontroller = TextEditingController();
+  final TextEditingController bookingCountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController patientidcontroller = TextEditingController();
-  String? _selectedDoctor;
-  String? _selectedOT;
-  String? _selectedDoctorId;
-  String? _selectedDepartment;
+  String? selectRadiologyType;
+  String? docId;
   String phoneNumber = "";
-//
   int? selectedindex;
   List doctorDetails = [];
+  List<String> radiologyTypesList = [
+    'CT Scan',
+    'X-ray',
+    'Ultra Sound',
+  ];
 
   callFuction() async {
     await Provider.of<BookingPatientController>(context, listen: false)
@@ -49,7 +55,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
   void dispose() {
     patientidcontroller.dispose();
     _emailController.dispose();
-    _reasonController.dispose();
     _dateController.dispose();
     firstnamecontroller.dispose();
     lastnamecontroller.dispose();
@@ -57,11 +62,13 @@ class _NewOtBookingState extends State<NewOtBooking> {
     super.dispose();
   }
 
+  DateTime? picked;
+
   Future<void> _selectDate(
       {required BuildContext context,
-      required BookingPatientController varprovider,
-      required BookingPatientController functionprovider}) async {
-    DateTime? picked = await showDatePicker(
+      required RadiologyTimePickerController varprovider,
+      required RadiologyTimePickerController functionprovider}) async {
+    picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
@@ -69,135 +76,37 @@ class _NewOtBookingState extends State<NewOtBooking> {
     );
     if (picked != null) {
       setState(() {
-        _dateController.text = "${picked.toLocal()}".split(' ')[0];
+        _dateController.text = "${picked!.toLocal()}".split(' ')[0];
       });
-      int itemid = 0;
-      for (var i = 0; i < varprovider.doctorList.length; i++) {
-        if (varprovider.doctorList[i] == _selectedDoctor) {
-          itemid = i;
-        }
+      if (selectRadiologyType != null) {
+        await functionprovider.radiologyTimePicker(
+            date: DateFormat("dd-MM-yyyy").format(picked!),
+            dept: selectRadiologyType!);
       }
-      await functionprovider
-          .doctorTime(varprovider.doctorsmodelclass.list?[itemid].empcode);
-      await functionprovider.doctorTimeSlots(
-        empid: varprovider.doctorsmodelclass.list?[itemid].empcode,
-        dept: _selectedDepartment,
-        date: "${picked.toLocal()}".split(' ')[0],
-      );
     }
-  }
-
-  final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-  OverlayEntry? _overlayEntry;
-  final LayerLink _layerLink = LayerLink();
-
-  List<Map<String, dynamic>> _filteredOptions = [];
-  List<Map<String, dynamic>> doctorsList = [];
-
-  void _showOverlay({required StaffListController listOfDoctorsProvider}) {
-    _overlayEntry = _createOverlayEntry();
-    Overlay.of(context).insert(_overlayEntry!);
-  }
-
-  void _hideOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          width: MediaQuery.of(context).size.width - 32,
-          child: CompositedTransformFollower(
-            link: _layerLink,
-            showWhenUnlinked: false,
-            offset: const Offset(0.0, 40.0), // Position below the text field
-            child: Material(
-              elevation: 4.0,
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: 200,
-                ),
-                child: ListView.builder(
-                  itemCount: _filteredOptions.length,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) => ListTile(
-                    leading: Icon(Icons.person),
-                    title: Row(
-                      children: [
-                        Expanded(child: Text(_filteredOptions[index]['doc'])),
-                        Expanded(child: Text(_filteredOptions[index]['dept'])),
-                      ],
-                    ),
-                    onTap: () {
-                      String currentText = _controller.text;
-                      // If the current text contains a comma, keep only what's before the last comma
-                      int lastCommaIndex = currentText.trim().lastIndexOf(',');
-                      if (lastCommaIndex != -1) {
-                        _controller.text =
-                            currentText.substring(0, lastCommaIndex + 1);
-                      } else {
-                        _controller
-                            .clear(); // If there's no comma, clear everything
-                      }
-                      // If the text field is not empty (i.e., previous selections), ensure the new option is added after a comma
-                      if (_controller.text.isNotEmpty) {
-                        if (!_controller.text.trim().endsWith(',')) {
-                          _controller.text += ', ';
-                        }
-                        _controller.text +=
-                            ' ${_filteredOptions[index]['doc']}, ';
-                      } else {
-                        _controller.text +=
-                            '${_filteredOptions[index]['doc']}, ';
-                      }
-                      // print(_filteredOptions[index]['doc']);
-                      doctorsList.remove(_filteredOptions[index]);
-                      _hideOverlay();
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _filterOptions(String input, StaffListController listOfDoctorsProvider) {
-    setState(() {
-      _filteredOptions = doctorsList
-          .where((option) => option['doc']
-              .toLowerCase()
-              .contains(input.split(', ').removeLast().trim().toLowerCase()))
-          .toList();
-      _overlayEntry?.markNeedsBuild(); // Rebuild the overlay
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var functionprovider =
+    var bookingPatientFunctionController =
         Provider.of<BookingPatientController>(context, listen: false);
-    var varprovider = Provider.of<BookingPatientController>(context);
+    var bookingPatientController =
+        Provider.of<BookingPatientController>(context);
 
-    var listOfDoctorsProvider = Provider.of<StaffListController>(context);
+    var radiologyTimePickerProvider =
+        Provider.of<RadiologyTimePickerController>(context);
+    var radiologyTimePickerFunctionProvider =
+        Provider.of<RadiologyTimePickerController>(context, listen: false);
 
     fieldSubmitted() async {
-      varprovider.doctorList.clear();
-      varprovider.deptList[0];
-      varprovider.timeList.clear();
-      varprovider.patientBookingModel.list?.clear();
-      await functionprovider.patientdata(patientidcontroller.text.trim());
-      if (varprovider.patientBookingModel.list == null ||
-          varprovider.patientBookingModel.list!.isEmpty) {
+      bookingPatientController.doctorList.clear();
+      bookingPatientController.deptList[0];
+      bookingPatientController.patientBookingModel.list?.clear();
+      await bookingPatientFunctionController
+          .patientdata(patientidcontroller.text.trim());
+      if (bookingPatientController.patientBookingModel.list == null ||
+          bookingPatientController.patientBookingModel.list!.isEmpty) {
         _emailController.clear();
-        _reasonController.clear();
         _dateController.clear();
         firstnamecontroller.clear();
         lastnamecontroller.clear();
@@ -209,25 +118,28 @@ class _NewOtBookingState extends State<NewOtBooking> {
           ),
         );
       } else {
-        doctorsList =
-            Provider.of<StaffListController>(context, listen: false).staffList;
         setState(() {});
 
         firstnamecontroller.text =
-            varprovider.patientBookingModel.list?[0].fname ?? "";
+            bookingPatientController.patientBookingModel.list?[0].fname ?? "";
         lastnamecontroller.text =
-            varprovider.patientBookingModel.list?[0].lname ?? "";
+            bookingPatientController.patientBookingModel.list?[0].lname ?? "";
         _emailController.text =
-            varprovider.patientBookingModel.list?[0].email ?? "";
-        phoneNumber = varprovider.patientBookingModel.list?[0].phn ?? "";
-        phnumbercontroller.text = varprovider.patientBookingModel.list?[0].phn
+            bookingPatientController.patientBookingModel.list?[0].email ?? "";
+        phoneNumber =
+            bookingPatientController.patientBookingModel.list?[0].phn ?? "";
+        phnumbercontroller.text = bookingPatientController
+                .patientBookingModel.list?[0].phn
                 ?.replaceRange(0, 6, "******") ??
             "";
-        _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
-        await functionprovider.doctors(_selectedDepartment);
-        _selectedDoctor = varprovider.doctorList[0];
-        _selectedDoctorId = varprovider.doctorIdList[0];
+        departmentcontroller.text = 'Radiology';
+        doctorcontroller.text =
+            bookingPatientController.patientBookingModel.list?[0].doc ?? '';
+        docId =
+            bookingPatientController.patientBookingModel.list?[0].empid ?? '';
       }
+      print(doctorcontroller.text);
+      print(docId);
     }
 
     return Padding(
@@ -302,7 +214,7 @@ class _NewOtBookingState extends State<NewOtBooking> {
                     icon: Icons.email,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your address';
+                        return 'Please enter your email address';
                       }
                       return null;
                     },
@@ -310,154 +222,94 @@ class _NewOtBookingState extends State<NewOtBooking> {
                     // autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 20.0),
-                  buildDropDownButton(
-                    value: _selectedDepartment,
-                    label: 'Select Department',
+                  buildTextFormField(
+                    controller: phnumbercontroller,
+                    label: 'Mobile',
+                    icon: Icons.phone,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter mobile number';
+                      }
+                      return null;
+                    },
+                    onTap: () {},
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildTextFormField(
+                    label: 'Department',
+                    readOnly: true,
+                    controller: departmentcontroller,
                     icon: Icons.local_hospital,
-                    suffixIcon: null,
-                    items: varprovider.deptList.map((String value) {
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your address';
+                      }
+                      return null;
+                    },
+                    onTap: () {
+                      // //////////////////////////////
+                      //
+                    },
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildTextFormField(
+                    label: 'Doctor',
+                    readOnly: true,
+                    controller: doctorcontroller,
+                    icon: Icons.person,
+                    validate: (value) {
+                      return null;
+                    },
+                    onTap: () {},
+                  ),
+                  Visibility(
+                    visible: selectRadiologyType != null ? true : false,
+                    child: SizedBox(height: 20.0),
+                  ),
+                  Visibility(
+                    visible: selectRadiologyType != null ? true : false,
+                    child: buildTextFormField(
+                      label: 'Booking Id',
+                      readOnly: true,
+                      controller: bookingCountController,
+                      icon: Icons.numbers,
+                      validate: (value) {
+                        return null;
+                      },
+                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  buildDropDownButton(
+                    value: selectRadiologyType,
+                    label: 'Select Type',
+                    icon: Icons.scanner,
+                    items: radiologyTypesList.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
                     onChanged: (newValue) async {
-                      setState(() {
-                        _selectedDepartment = newValue;
-                      });
-                      await functionprovider.doctors(_selectedDepartment);
-
-                      _selectedDoctor = varprovider.doctorList.isNotEmpty
-                          ? varprovider.doctorList[0]
-                          : null;
-                      _selectedDoctorId = varprovider.doctorList.isNotEmpty
-                          ? varprovider.doctorIdList[0]
-                          : null;
-                    },
-                    validate: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a department';
+                      setState(() {});
+                      selectRadiologyType = newValue;
+                      if (selectRadiologyType != null && picked != null) {
+                        await radiologyTimePickerFunctionProvider
+                            .radiologyTimePicker(
+                                date: DateFormat("dd-MM-yyyy").format(picked!),
+                                dept: selectRadiologyType!);
                       }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  buildDropDownButton(
-                    value: _selectedDoctor,
-                    label: 'Select Doctor',
-                    icon: Icons.local_hospital,
-                    suffixIcon: TextButton(
-                        onPressed: () {},
-                        child: const Text("check availability")),
-                    items: varprovider.doctorList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) async {
-                      int itemid = 0;
+                      await radiologyTimePickerFunctionProvider.callBookingId(
+                          dept: selectRadiologyType!);
                       setState(() {
-                        _selectedDoctor = newValue;
-                      });
-                      for (var i = 0; i < varprovider.doctorList.length; i++) {
-                        if (varprovider.doctorList[i] == _selectedDoctor) {
-                          itemid = i;
-                        }
-                      }
-                      _selectedDoctorId = varprovider.doctorIdList[itemid];
-                    },
-                    validate: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a doctor';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  CompositedTransformTarget(
-                      link: _layerLink,
-                      child: buildTextFormField(
-                        label: 'Enter Assistant Doctors',
-                        controller: _controller,
-                        readOnly:
-                            varprovider.patientBookingModel.list?[0].fname ==
-                                    null
-                                ? true
-                                : false,
-                        icon: Icons.people,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select doctors';
-                          }
-                          return null;
-                        },
-                        // onTapOutside: (event) {
-                        //   _hideOverlay();
-                        // },
-                        onChanged: (value) {
-                          setState(() {});
-                          // print(value.trim().split(',').last.trim());
-                          if (value.trim().split(',').last.trim().isNotEmpty) {
-                            if (_overlayEntry == null) {
-                              _showOverlay(
-                                  listOfDoctorsProvider: listOfDoctorsProvider);
-                            }
-                            _filterOptions(value, listOfDoctorsProvider);
-                          } else {
-                            _hideOverlay();
-                          }
-                        },
-                        onTap: () {
-                          if (_controller.text.isNotEmpty &&
-                              !_controller.text.trim().endsWith(',')) {
-                            _showOverlay(
-                                listOfDoctorsProvider: listOfDoctorsProvider);
-                          }
-                        },
-                      )
-                      // TextField(
-                      //   controller: _controller,
-                      //   focusNode: _focusNode,
-                      //   decoration: InputDecoration(labelText: 'Enter name'),
-                      // onChanged: (value) {
-                      //   setState(() {});
-                      //   print(value.trim().split(',').last.trim());
-
-                      //   if (value.trim().split(',').last.trim().isNotEmpty) {
-                      //     if (_overlayEntry == null) {
-                      //       _showOverlay();
-                      //     }
-                      //     _filterOptions(value);
-                      //   } else {
-                      //     _hideOverlay();
-                      //   }
-                      // },
-                      //   onTap: () {
-                      //     if (_controller.text.isNotEmpty &&
-                      //         !_controller.text.trim().endsWith(',')) {
-                      //       _showOverlay();
-                      //     }
-                      //   },
-                      // ),
-                      ),
-                  const SizedBox(height: 20.0),
-                  buildDropDownButton(
-                    label: 'OT Number',
-                    value: _selectedOT,
-                    icon: Icons.local_hospital,
-                    suffixIcon: null,
-                    items: ['OT 1', 'OT 2', 'OT 3', 'OT 4'].map((String value) {
-                      return DropdownMenuItem(value: value, child: Text(value));
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedOT = newValue;
+                        bookingCountController.text =
+                            radiologyTimePickerProvider.bookingId ?? '';
                       });
                     },
                     validate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please select a doctor';
+                        return 'Please select a type';
                       }
                       return null;
                     },
@@ -476,14 +328,17 @@ class _NewOtBookingState extends State<NewOtBooking> {
                     onTap: () {
                       _selectDate(
                           context: context,
-                          varprovider: varprovider,
-                          functionprovider: functionprovider);
+                          varprovider: radiologyTimePickerProvider,
+                          functionprovider:
+                              radiologyTimePickerFunctionProvider);
                     },
                   ),
                   const SizedBox(height: 20.0),
                   Wrap(
                     children: List.generate(
-                      varprovider.timeList.length,
+                      picked != null && selectRadiologyType != null
+                          ? radiologyTimePickerProvider.timeList.length
+                          : 0,
                       (index) {
                         return GestureDetector(
                           onTap: () {
@@ -492,7 +347,7 @@ class _NewOtBookingState extends State<NewOtBooking> {
                             // print(varprovider.selectedtimeList[selectedindex!]);
                             //
                             // ------------------------------------------
-                            varprovider.selectedtimeList
+                            radiologyTimePickerProvider.selectedtimeList
                                     .contains(index.toString())
                                 ? setState(() {
                                     selectedindex = index;
@@ -500,7 +355,8 @@ class _NewOtBookingState extends State<NewOtBooking> {
                                 : setState(() {
                                     selectedindex = null;
                                   });
-                            log(varprovider.timeList[selectedindex!]);
+                            log(radiologyTimePickerProvider
+                                .timeList[selectedindex!]);
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -516,12 +372,13 @@ class _NewOtBookingState extends State<NewOtBooking> {
                                 //     ? Colors.red[700] // Selected color
                                 //     : Colors.green, // Default color
                                 border: Border.all(
-                                    width: 2,
-                                    color: varprovider.selectedtimeList
+                                    width: 3,
+                                    color: radiologyTimePickerProvider
+                                            .selectedtimeList
                                             .contains(index.toString())
                                         ? selectedindex == index
-                                            ? Colors.green
-                                            : Colors.black
+                                            ? ColorConstants.mainRed
+                                            : ColorConstants.mainGreen
                                         : Colors.grey),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7)),
@@ -529,13 +386,14 @@ class _NewOtBookingState extends State<NewOtBooking> {
                               child: Text(
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: varprovider.selectedtimeList
+                                    color: radiologyTimePickerProvider
+                                            .selectedtimeList
                                             .contains(index.toString())
                                         ? selectedindex == index
-                                            ? Colors.green
-                                            : Colors.black
+                                            ? ColorConstants.mainRed
+                                            : ColorConstants.mainGreen
                                         : Colors.grey),
-                                varprovider.timeList[index],
+                                radiologyTimePickerProvider.timeList[index],
                               ),
                             ),
                           ),
@@ -549,23 +407,21 @@ class _NewOtBookingState extends State<NewOtBooking> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
-                        print(_selectedDoctorId);
-                        print(_selectedDoctor);
                         if (_formKey.currentState?.validate() ?? false) {
-                          // await functionprovider.patientBooking(
-                          //   patientId: patientidcontroller.text.trim(),
-                          //   fName: firstnamecontroller.text.trim(),
-                          //   lName: lastnamecontroller.text.trim(),
-                          //   eMail: _emailController.text.trim(),
-                          //   phNum: phoneNumber,
-                          //   dept: _selectedDepartment!,
-                          //   docId: _selectedDoctorId!,
-                          //   reason: _reasonController.text.trim(),
-                          //   date: _dateController.text.trim(),
-                          //   // timeeee
-                          //   time: varprovider.timeList[selectedindex!],
-                          // );
-                          varprovider.isSuccessful == true
+                          await bookingPatientFunctionController.patientBooking(
+                            patientId: patientidcontroller.text.trim(),
+                            fName: firstnamecontroller.text.trim(),
+                            lName: lastnamecontroller.text.trim(),
+                            eMail: _emailController.text.trim(),
+                            phNum: phoneNumber,
+                            dept: selectRadiologyType!,
+                            docId: docId!,
+                            reason: '',
+                            date: _dateController.text.trim(),
+                            time: radiologyTimePickerProvider
+                                .timeList[selectedindex!],
+                          );
+                          bookingPatientController.isSuccessful == true
                               ? showDialog(
                                   context: context,
                                   builder: (context) {
@@ -578,21 +434,27 @@ class _NewOtBookingState extends State<NewOtBooking> {
                                           onPressed: () {
                                             patientidcontroller.clear();
                                             _emailController.clear();
-                                            _reasonController.clear();
                                             _dateController.clear();
                                             firstnamecontroller.clear();
                                             lastnamecontroller.clear();
                                             phnumbercontroller.clear();
                                             // varprovider.deptList.clear();
-                                            varprovider.doctorIdList.clear();
-                                            varprovider.doctorList.clear();
-                                            varprovider.timeList.clear();
-                                            varprovider.selectedtimeList
+                                            departmentcontroller.clear();
+                                            selectRadiologyType = null;
+                                            doctorcontroller.clear();
+                                            bookingCountController.clear();
+                                            bookingPatientController
+                                                .doctorIdList
                                                 .clear();
-                                            _selectedDepartment = null;
-                                            _selectedDoctor = null;
-                                            _selectedDoctorId = null;
+                                            bookingPatientController.doctorList
+                                                .clear();
+                                            bookingPatientController.timeList
+                                                .clear();
+                                            bookingPatientController
+                                                .selectedtimeList
+                                                .clear();
                                             selectedindex = null;
+                                            picked = null;
 
                                             setState(() {});
                                             Navigator.pop(context);
@@ -672,7 +534,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
     required String label,
     required String? value,
     required IconData icon,
-    required Widget? suffixIcon,
     required List<DropdownMenuItem<String>>? items,
     required ValueChanged<String?> onChanged,
     required FormFieldValidator<String?> validate,
@@ -685,7 +546,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
           icon,
           color: ColorConstants.mainBlue,
         ),
-        suffix: suffixIcon,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         filled: true,
         fillColor: Colors.white,
