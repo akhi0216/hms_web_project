@@ -4,8 +4,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class RadiologyTimePickerController with ChangeNotifier {
+class RadiologyController with ChangeNotifier {
   List<String> selectedtimeList = [];
+  List radiologyHistoryList = [];
   String? bookingId;
   List<String> timeList = [
     '8:00',
@@ -58,8 +59,20 @@ class RadiologyTimePickerController with ChangeNotifier {
     String url = 'https://cybot.avanzosolutions.in/hms/countid.php';
     var res = await http.post(Uri.parse(url), body: {
       'departmentidcontroller': dept,
-    });
+    }); 
     log(res.body);
     bookingId = res.body;
+  }
+
+  Future<void> radiologyHistory() async {
+    String url = 'https://cybot.avanzosolutions.in/hms/radiology_history.php';
+    var res = await http.get(Uri.parse(url));
+    // log(res.body);
+    radiologyHistoryList = (jsonDecode(res.body) as List)
+        .map(
+          (json) => json,
+        )
+        .toList();
+    log(radiologyHistoryList.toString());
   }
 }

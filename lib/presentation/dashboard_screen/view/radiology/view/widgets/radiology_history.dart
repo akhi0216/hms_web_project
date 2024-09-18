@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_controller.dart';
+import 'package:provider/provider.dart';
 
 class RadiologyHistory extends StatefulWidget {
   const RadiologyHistory({super.key});
@@ -11,50 +15,74 @@ class RadiologyHistory extends StatefulWidget {
 class _RadiologyHistoryState extends State<RadiologyHistory> {
   TextEditingController searchController = TextEditingController();
   List<Map<String, String>> searchList = [];
-  List<Map<String, String>> patientList = [
-    {
-      'id': '001',
-      'patient': 'Nithin',
-      'doctor': 'Hari',
-      'time': '10.00',
-      'ot': '3',
-      'ot1': '3',
-    },
-    {
-      'id': '002',
-      'patient': 'Hari',
-      'doctor': 'Athulya',
-      'time': '1.00',
-      'ot': '2',
-      'ot1': '3',
-    },
-    {
-      'id': '003',
-      'patient': 'Athulya',
-      'doctor': 'Nithin',
-      'time': '12.00',
-      'ot': '3',
-      'ot1': '3',
-    },
-    {
-      'id': '004',
-      'patient': 'Akhila',
-      'doctor': 'Adharsh',
-      'time': '3.00',
-      'ot': '1',
-      'ot1': '3',
-    },
-    {
-      'id': '005',
-      'patient': 'Adharsh',
-      'doctor': 'Nithin',
-      'time': '9.00',
-      'ot': '1',
-      'ot1': '3',
-    },
-  ];
+  // List<Map<String, String>> patientList = [
+  //   {
+  //     'id': '001',
+  //     'patient': 'Nithin',
+  //     'doctor': 'Hari',
+  //     'time': '10.00',
+  //     'ot': '3',
+  //     'type': '3',
+  //     'reason': '3',
+  //   },
+  //   {
+  //     'id': '002',
+  //     'patient': 'Hari',
+  //     'doctor': 'Athulya',
+  //     'time': '1.00',
+  //     'ot': '2',
+  //     'type': '3',
+  //     'reason': '3',
+  //   },
+  //   {
+  //     'id': '003',
+  //     'patient': 'Athulya',
+  //     'doctor': 'Nithin',
+  //     'time': '12.00',
+  //     'ot': '3',
+  //     'type': '3',
+  //     'reason': '3',
+  //   },
+  //   {
+  //     'id': '004',
+  //     'patient': 'Akhila',
+  //     'doctor': 'Adharsh',
+  //     'time': '3.00',
+  //     'ot': '1',
+  //     'type': '3',
+  //     'reason': '3',
+  //   },
+  //   {
+  //     'id': '005',
+  //     'patient': 'Adharsh',
+  //     'doctor': 'Nithin',
+  //     'time': '9.00',
+  //     'ot': '1',
+  //     'type': '3',
+  //     'reason': '3',
+  //   },
+  // ];
+
+  // fetchData() async {
+  //   await Provider.of<RadiologyController>(context, listen: false)
+  //       .radiologyHistory();
+  //   radiologyHistoryList = List.from(
+  //       Provider.of<RadiologyController>(context, listen: false)
+  //           .radiologyHistoryList);
+  //   log(radiologyHistoryList.toString());
+  // }
+
+  // List radiologyHistoryList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var radiologyHistoryProvider = Provider.of<RadiologyController>(context);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -84,11 +112,18 @@ class _RadiologyHistoryState extends State<RadiologyHistory> {
                     onChanged: (value) {
                       // print(value);
                       searchList.clear();
-                      print(patientList[0]['id']?.contains(value));
+                      // print(patientList[0]['id']?.contains(value));
                       if (value.isNotEmpty) {
-                        for (var i = 0; i < patientList.length; i++) {
-                          if (patientList[i]['id']!.contains(value)) {
-                            searchList.add(patientList[i]);
+                        for (var i = 0;
+                            i <
+                                radiologyHistoryProvider
+                                    .radiologyHistoryList.length;
+                            i++) {
+                          if (radiologyHistoryProvider.radiologyHistoryList[i]
+                                  ['id']!
+                              .contains(value)) {
+                            searchList.add(radiologyHistoryProvider
+                                .radiologyHistoryList[i]);
                           }
                         }
                       }
@@ -144,17 +179,44 @@ class _RadiologyHistoryState extends State<RadiologyHistory> {
                 DataColumn(
                   label: Text('Type'),
                 ),
+                DataColumn(
+                  label: Text('Reason'),
+                ),
               ],
               rows: List.generate(
-                searchList.isNotEmpty ? searchList.length : patientList.length,
-                (index) => searchList.isEmpty
+                  searchList.isNotEmpty
+                      ? searchList.length
+                      : radiologyHistoryProvider.radiologyHistoryList.length,
+                  (index) {
+                String firstName = radiologyHistoryProvider
+                        .radiologyHistoryList[index]['FirstName'] ??
+                    "";
+                String lastName = radiologyHistoryProvider
+                        .radiologyHistoryList[index]['LastName'] ??
+                    "";
+                String fullName = "$firstName $lastName".trim();
+                return searchList.isEmpty
                     ? DataRow(cells: [
-                        DataCell(Text(patientList[index]['id'] ?? "")),
-                        DataCell(Text(patientList[index]['patient'] ?? "")),
-                        DataCell(Text(patientList[index]['doctor'] ?? "")),
-                        DataCell(Text(patientList[index]['time'] ?? "")),
-                        DataCell(Text(patientList[index]['ot'] ?? "")),
-                        DataCell(Text(patientList[index]['ot1'] ?? "")),
+                        DataCell(Text(radiologyHistoryProvider
+                                .radiologyHistoryList[index]['patientid'] ??
+                            "")),
+                        DataCell(Text(fullName)),
+                        DataCell(Text(radiologyHistoryProvider
+                                .radiologyHistoryList[index]['doctor_name'] ??
+                            "")),
+                        DataCell(Text(
+                            radiologyHistoryProvider.radiologyHistoryList[index]
+                                    ['time_book_start'] ??
+                                "")),
+                        DataCell(Text(radiologyHistoryProvider
+                                .radiologyHistoryList[index]['date_book'] ??
+                            "")),
+                        DataCell(Text(radiologyHistoryProvider
+                                .radiologyHistoryList[index]['department'] ??
+                            "")),
+                        DataCell(Text(radiologyHistoryProvider
+                                .radiologyHistoryList[index]['reason'] ??
+                            "")),
                       ])
                     : DataRow(cells: [
                         DataCell(Text(searchList[index]['id'] ?? "")),
@@ -162,9 +224,10 @@ class _RadiologyHistoryState extends State<RadiologyHistory> {
                         DataCell(Text(searchList[index]['doctor'] ?? "")),
                         DataCell(Text(searchList[index]['time'] ?? "")),
                         DataCell(Text(searchList[index]['ot'] ?? "")),
-                        DataCell(Text(searchList[index]['ot1'] ?? "")),
-                      ]),
-              ),
+                        DataCell(Text(searchList[index]['type'] ?? "")),
+                        DataCell(Text(searchList[index]['reason'] ?? "")),
+                      ]);
+              }),
             ),
           ),
         ],
