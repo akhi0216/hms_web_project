@@ -14,7 +14,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/conto
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/feedback_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_time_picker_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/supplier_contoller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LeaveReqControllers(),
         ),
         ChangeNotifierProvider(
-          create: (context) => RadiologyTimePickerController(),
+          create: (context) => RadiologyController(),
         ),
         ChangeNotifierProvider(
           create: (context) => FeedbackController(),

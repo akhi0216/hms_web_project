@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_time_picker_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -66,8 +66,8 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
 
   Future<void> _selectDate(
       {required BuildContext context,
-      required RadiologyTimePickerController varprovider,
-      required RadiologyTimePickerController functionprovider}) async {
+      required RadiologyController varprovider,
+      required RadiologyController functionprovider}) async {
     picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -93,10 +93,9 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
     var bookingPatientController =
         Provider.of<BookingPatientController>(context);
 
-    var radiologyTimePickerProvider =
-        Provider.of<RadiologyTimePickerController>(context);
+    var radiologyTimePickerProvider = Provider.of<RadiologyController>(context);
     var radiologyTimePickerFunctionProvider =
-        Provider.of<RadiologyTimePickerController>(context, listen: false);
+        Provider.of<RadiologyController>(context, listen: false);
 
     fieldSubmitted() async {
       bookingPatientController.doctorList.clear();
