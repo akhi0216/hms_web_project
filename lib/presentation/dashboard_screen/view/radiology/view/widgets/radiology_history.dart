@@ -184,7 +184,7 @@ class _RadiologyHistoryState extends State<RadiologyHistory> {
                 ),
               ],
               rows: List.generate(
-                  searchList.isNotEmpty
+                  searchList.isNotEmpty 
                       ? searchList.length
                       : radiologyHistoryProvider.radiologyHistoryList.length,
                   (index) {
@@ -197,7 +197,8 @@ class _RadiologyHistoryState extends State<RadiologyHistory> {
                 String fullName = "$firstName $lastName".trim();
                 return searchList.isEmpty
                     ? DataRow(cells: [
-                        DataCell(Text(radiologyHistoryProvider
+                        DataCell(
+                          Text(radiologyHistoryProvider
                                 .radiologyHistoryList[index]['patientid'] ??
                             "")),
                         DataCell(Text(fullName)),

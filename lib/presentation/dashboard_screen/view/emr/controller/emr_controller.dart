@@ -36,7 +36,7 @@ class EmrScreenController with ChangeNotifier {
     String uri = "https://cybot.avanzosolutions.in/hms/emrop.php";
     var res = await http.post(Uri.parse(uri), body: {
       'patientidcontroller': pid,
-      'ipnocontroller': opid,
+      'opnocontroller': opid,
     });
     print(res.body);
     var json = await jsonDecode(res.body) as Map<String, dynamic>;
