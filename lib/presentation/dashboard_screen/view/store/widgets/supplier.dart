@@ -189,10 +189,16 @@ class _SupplierState extends State<Supplier> {
                     children: [
                       Expanded(
                         child: TextFormField(
+                          // decoration: InputDecoration(
+                          //   labelText: "GST No :",
+                          //   contentPadding:
+                          //       EdgeInsets.symmetric(horizontal: 12),
+                          // ),
                           decoration: InputDecoration(
                             labelText: "GST No :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
@@ -207,6 +213,7 @@ class _SupplierState extends State<Supplier> {
                             labelText: "CGST :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
@@ -221,6 +228,7 @@ class _SupplierState extends State<Supplier> {
                             labelText: "IGST :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
@@ -235,6 +243,7 @@ class _SupplierState extends State<Supplier> {
                             labelText: "SGST :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
@@ -249,6 +258,7 @@ class _SupplierState extends State<Supplier> {
                             labelText: "TDS :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
@@ -263,12 +273,21 @@ class _SupplierState extends State<Supplier> {
                             labelText: "Products :",
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 12),
+                            border: InputBorder.none, // Removes the underline
                           ),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 16),
+                  Container(
+                    height: 3,
+                    width: double.infinity,
+                    color: ColorConstants.majenta,
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -293,6 +312,14 @@ class _SupplierState extends State<Supplier> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Container(
+                    height: 3,
+                    width: double.infinity,
+                    color: ColorConstants.majenta,
                   ),
                   SizedBox(height: 20),
                   Center(
