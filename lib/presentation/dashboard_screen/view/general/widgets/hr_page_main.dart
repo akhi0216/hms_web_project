@@ -27,7 +27,7 @@ class _PassingSectionState extends State<HrPage> {
     List<Map> pageList = [
       {
         "title": "View Concerns",
-        "itemimage": "assets/images/bad.png",
+        "itemimage": "assets/images/info.png",
         "page": Hr1()
       },
       {
