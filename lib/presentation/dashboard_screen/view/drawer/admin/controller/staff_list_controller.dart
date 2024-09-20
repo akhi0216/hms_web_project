@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_model_class.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_search.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class StaffListController with ChangeNotifier {
@@ -12,7 +13,7 @@ class StaffListController with ChangeNotifier {
   // List<String> doctorList = [];
   Doctorsmodelclass? doctorsmodelclass;
   department() async {
-    String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
+    String uri = "${AppUtils.baseURL}/departments.php";
     try {
       var res = await http.get(Uri.parse(uri));
       deptList = List<String>.from(await jsonDecode(res.body));
@@ -24,7 +25,7 @@ class StaffListController with ChangeNotifier {
   }
 
   staffListFunction() async {
-    String uri = "https://cybot.avanzosolutions.in/hms/department_select.php";
+    String uri = "${AppUtils.baseURL}/department_select.php";
     try {
       for (var i = 0; i < deptList.length; i++) {
         var res = await http

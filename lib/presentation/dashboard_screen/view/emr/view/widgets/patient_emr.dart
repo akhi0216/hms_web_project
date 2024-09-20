@@ -299,6 +299,8 @@ class _PatientEmrState extends State<PatientEmr> {
                 pid: pidController.text.trim(),
                 ipid: ipSelectedValue.toString(),
               );
+              await emrprovider.emrRadiologyDetails(
+                  pid: pidController.text.trim());
               _scrollToBottom();
               if (emrprovider.emrIpModel.ipno == ipSelectedValue.toString()) {
                 setState(() {
@@ -363,6 +365,7 @@ class _PatientEmrState extends State<PatientEmr> {
                 pid: pidController.text.trim(),
                 opid: opSelectedValue.toString(),
               );
+
               _scrollToBottom();
               if (emrprovider.emrOpModel.opno == opSelectedValue.toString()) {
                 setState(() {
@@ -737,6 +740,8 @@ class _PatientEmrState extends State<PatientEmr> {
             DataColumn(label: Text("Date")),
             DataColumn(label: Text("Reason")),
           ], rows: []),
+
+          // ===============================================radiology table
           SizedBox(height: MediaQuery.sizeOf(context).height * .01),
           Visibility(
             visible: opVisible ? false : true,

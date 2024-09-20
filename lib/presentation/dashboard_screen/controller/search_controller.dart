@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_search.dart';
 import 'package:hms_web_project/repositories/api/model/patient_search_model.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class TextSearchController with ChangeNotifier {
@@ -15,7 +16,7 @@ class TextSearchController with ChangeNotifier {
   searchPatient(String searchText) async {
     notifyListeners();
     ret.clear();
-    String url = "https://cybot.avanzosolutions.in/hms/patientname.php";
+    String url = "${AppUtils.baseURL}/patientname.php";
     try {
       var res = await http.post(Uri.parse(url), body: {
         "patientnamecontroller": searchText,
@@ -34,7 +35,7 @@ class TextSearchController with ChangeNotifier {
 
   searchDoctor(String searchText) async {
     retDoc.clear();
-    String url = "https://cybot.avanzosolutions.in/hms/doctorsearch.php";
+    String url = "${AppUtils.baseURL}/doctorsearch.php";
     try {
       var res = await http.post(Uri.parse(url), body: {
         "patientnamecontroller": searchText,

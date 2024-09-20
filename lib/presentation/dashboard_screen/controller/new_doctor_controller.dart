@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class NewDoctorController with ChangeNotifier {
   List<String> deptList = [];
 
   department() async {
-    String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
+    String uri = "${AppUtils.baseURL}/departments.php";
     try {
       var res = await http.get(Uri.parse(uri));
       deptList = List<String>.from(await jsonDecode(res.body));
@@ -43,7 +44,7 @@ class NewDoctorController with ChangeNotifier {
   //   required String endTime,
   //   required String onCall,
   // }) async {
-  //   String uri = "https://cybot.avanzosolutions.in/hms/newdoctorbooking.php";
+  //   String uri = "${AppUtils.baseURL}/newdoctorbooking.php";
   //   var res = await http.post(
   //     Uri.parse(uri),
   //     //  body: {
@@ -102,7 +103,7 @@ class NewDoctorController with ChangeNotifier {
     required String endTime,
     required String onCall,
   }) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/newdoctorbooking.php";
+    String uri = "${AppUtils.baseURL}/newdoctorbooking.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         'titlecontroller': title,
