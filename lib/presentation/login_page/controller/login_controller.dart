@@ -5,6 +5,7 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
 import 'package:hms_web_project/repositories/api/model/user_details_model.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController with ChangeNotifier {
@@ -19,7 +20,7 @@ class LoginController with ChangeNotifier {
       required String password,
       required BuildContext context}) async {
     try {
-      var url = "https://cybot.avanzosolutions.in/hms/loginverify.php";
+      var url = "${AppUtils.baseURL}/loginverify.php";
       var res = await http.post(Uri.parse(url), body: {
         "loginusernamecontroller": username,
         "loginpasswordcontroller": password,
@@ -30,7 +31,7 @@ class LoginController with ChangeNotifier {
     }
     if (isLoggined == 200) {
       try {
-        var url = "https://cybot.avanzosolutions.in/hms/loginname.php";
+        var url = "${AppUtils.baseURL}/loginname.php";
         var res = await http.post(Uri.parse(url), body: {
           "loginusernamecontroller": username,
           "loginpasswordcontroller": password,

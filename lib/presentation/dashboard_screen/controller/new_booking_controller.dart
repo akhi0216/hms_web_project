@@ -5,6 +5,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/model/doctor_model
 // import 'package:hms_project/model/booking_patient_model.dart';
 // import 'package:hms_project/model/doctors_model.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/model/newbooking_model.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class BookingPatientController with ChangeNotifier {
@@ -23,7 +24,7 @@ class BookingPatientController with ChangeNotifier {
   department() async {
     deptList.clear();
     listOfDoctors.clear();
-    String uri = "https://cybot.avanzosolutions.in/hms/departments.php";
+    String uri = "${AppUtils.baseURL}/departments.php";
     try {
       var res = await http.get(Uri.parse(uri));
       deptList = List<String>.from(await jsonDecode(res.body));
@@ -37,7 +38,7 @@ class BookingPatientController with ChangeNotifier {
   Future<void> doctors(String? dept) async {
     doctorList.clear();
     doctorIdList.clear();
-    String uri = "https://cybot.avanzosolutions.in/hms/department_select.php";
+    String uri = "${AppUtils.baseURL}/department_select.php";
     try {
       var res =
           await http.post(Uri.parse(uri), body: {"patientidcontroller": dept});
@@ -58,7 +59,7 @@ class BookingPatientController with ChangeNotifier {
 
   doctorTime(String? empid) async {
     timeList.clear();
-    String uri = "https://cybot.avanzosolutions.in/hms/doctortiming.php";
+    String uri = "${AppUtils.baseURL}/doctortiming.php";
     try {
       var res = await http
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
@@ -97,7 +98,7 @@ class BookingPatientController with ChangeNotifier {
     required String? date,
   }) async {
     selectedtimeList.clear();
-    String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+    String uri = "${AppUtils.baseURL}/booktimeslots.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         "doctoridcontroller": empid,
@@ -124,7 +125,7 @@ class BookingPatientController with ChangeNotifier {
 
   Future<void> patientdata(String searchText) async {
     notifyListeners();
-    String uri = "https://cybot.avanzosolutions.in/hms/bookingpatient.php";
+    String uri = "${AppUtils.baseURL}/bookingpatient.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         "patientidcontroller": searchText,
@@ -150,7 +151,7 @@ class BookingPatientController with ChangeNotifier {
     required String date,
     required String time,
   }) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/bookingsave.php";
+    String uri = "${AppUtils.baseURL}/bookingsave.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         "patientidcontroller": patientId,
@@ -178,7 +179,7 @@ class BookingPatientController with ChangeNotifier {
   //   required String dept,
   //   required String docId,
   // }) async {
-  //   String uri = "https://cybot.avanzosolutions.in/hms/booktimeslots.php";
+  //   String uri = "${AppUtils.baseURL}/booktimeslots.php";
   //   try {
   //     var res = await http.post(Uri.parse(uri), body: {
   //       "departmentcontroller": dept,

@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class ConcernsController with ChangeNotifier {
   List<String> designationList = [];
   designations() async {
-    String uri = "https://cybot.avanzosolutions.in/hms/designations.php";
+    String uri = "${AppUtils.baseURL}/designations.php";
     try {
       var res = await http.get(Uri.parse(uri));
       designationList = List<String>.from(await jsonDecode(res.body));
@@ -25,7 +26,7 @@ class ConcernsController with ChangeNotifier {
     required String towhom,
     required String complaints,
   }) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/complaintreg.php";
+    String uri = "${AppUtils.baseURL}/complaintreg.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         'empcodecontroller': empcode,
