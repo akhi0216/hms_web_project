@@ -78,24 +78,23 @@ class _ExistingPatientsPageState extends State<ExistingPatientsPage> {
                   suffixIcon: IconButton(
                     onPressed: () async {
                       setState(() {});
-                      visible = true;
-                      varProvider.patientSearchModel.list?[0].fname = "";
-                      varProvider.patientSearchModel.list?[0].lname = "";
-                      varProvider.patientSearchModel.list?[0].pid = "";
-                      varProvider.patientSearchModel.list?[0].doc = "";
-                      varProvider.patientSearchModel.list?[0].presc = "";
-                      varProvider.patientSearchModel.list?[0].mob = "";
-                      varProvider.patientSearchModel.list?[0].dob = "";
-                      varProvider.patientSearchModel.list?[0].address = "";
-                      varProvider.patientSearchModel.list?[0].department = "";
-                      varProvider.patientSearchModel.list?[0].email = "";
-                      varProvider.patientSearchModel.list?[0].img = "";
-                      isLoading = true;
-                      await functionProvider
-                          .searchPatient(searchController.text.trim());
-                      setState(() {
-                        isLoading = false;
-                      });
+                      if (functionProvider.patientSearchModel.list == null &&
+                          functionProvider.patientSearchModel.list!.isEmpty) {
+                        visible = true;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('No patient found'),
+                            backgroundColor: ColorConstants.mainRed,
+                          ),
+                        );
+                      } else {
+                        isLoading = true;
+                        await functionProvider
+                            .searchPatient(searchController.text.trim());
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
                     },
                     icon: Icon(Icons.search),
                     color: ColorConstants.mainBlue,

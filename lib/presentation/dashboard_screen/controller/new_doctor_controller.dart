@@ -90,7 +90,7 @@ class NewDoctorController with ChangeNotifier {
     required String email,
     required String resAddress,
     required String medLicNumber,
-    required String department,
+    required String? department,
     required String medSchool,
     required String gradYear,
     required String resInfo,

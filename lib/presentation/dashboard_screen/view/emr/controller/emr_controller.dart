@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_ip_model.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_op_model.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_radiology_model.dart';
 import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +12,7 @@ class EmrScreenController with ChangeNotifier {
   EmrOpModel emrOpModel = EmrOpModel();
   List<String> ipIdList = [];
   List<String> opIdList = [];
-  List emrRadiologyList = [];
+  List<EmrRadiologyModel> emrRadiologyList = [];
   // ipEmrDetails() async {
   //   String url = "";
   //   var res = await http.get(Uri.parse(url));
@@ -72,16 +73,18 @@ class EmrScreenController with ChangeNotifier {
   }
 
   Future<void> emrRadiologyDetails({required String pid}) async {
-    String url =
-        '${AppUtils.baseURL}/radiology_patient_details.php';
+    String url = '${AppUtils.baseURL}/radiology_patient_details.php';
 
     var res = await http.post(Uri.parse(url), body: {
       'patientidcontroller': pid,
     });
-    // print("hi");
     print(res.body);
-    // emrRadiologyList = List.from(jsonDecode(res.body));
-    // print(emrRadiologyDetails);
+    emrRadiologyList = (jsonDecode(res.body) as List)
+        .map(
+          (json) => EmrRadiologyModel.fromJson(json),
+        )
+        .toList();
+    print(emrRadiologyList);
     notifyListeners();
   }
 }

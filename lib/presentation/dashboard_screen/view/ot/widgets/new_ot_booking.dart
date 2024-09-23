@@ -212,7 +212,6 @@ class _NewOtBookingState extends State<NewOtBooking> {
         doctorsList =
             Provider.of<StaffListController>(context, listen: false).staffList;
         setState(() {});
-
         firstnamecontroller.text =
             varprovider.patientBookingModel.list?[0].fname ?? "";
         lastnamecontroller.text =
