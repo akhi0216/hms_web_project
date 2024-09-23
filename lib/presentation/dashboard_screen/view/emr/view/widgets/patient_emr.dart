@@ -295,11 +295,11 @@ class _PatientEmrState extends State<PatientEmr> {
             onChanged: (value) async {
               setState(() {});
               ipSelectedValue = value;
-              await emrprovider.ipEmrDetails(
+              await emrFunctionProvider.ipEmrDetails(
                 pid: pidController.text.trim(),
                 ipid: ipSelectedValue.toString(),
               );
-              await emrprovider.emrRadiologyDetails(
+              await emrFunctionProvider.emrRadiologyDetails(
                   pid: pidController.text.trim());
               _scrollToBottom();
               if (emrprovider.emrIpModel.ipno == ipSelectedValue.toString()) {
@@ -361,7 +361,7 @@ class _PatientEmrState extends State<PatientEmr> {
             onChanged: (value) async {
               setState(() {});
               opSelectedValue = value;
-              await emrprovider.opEmrDetails(
+              await emrFunctionProvider.opEmrDetails(
                 pid: pidController.text.trim(),
                 opid: opSelectedValue.toString(),
               );
@@ -453,6 +453,7 @@ class _PatientEmrState extends State<PatientEmr> {
             "floor": "Floor",
           },
           labTests: emrprovider.emrIpModel.labTestName,
+          emrprovider: emrprovider,
         ),
         patientEmrView(
           visibility: opVisible,
@@ -470,10 +471,12 @@ class _PatientEmrState extends State<PatientEmr> {
             "floor": "Floor",
           },
           labTests: emrprovider.emrOpModel.labTestName,
+          emrprovider: emrprovider,
         ),
         patientEmrView(
           visibility: daycareVisible,
           patientDetails: daycarePatientDetails,
+          emrprovider: emrprovider,
         ),
         SizedBox(height: size.height * .01),
       ],
@@ -596,7 +599,8 @@ class _PatientEmrState extends State<PatientEmr> {
       {required bool visibility,
       required Map<String, String> patientDetails,
       Map<String, dynamic>? emrDetails,
-      List<LabTestName>? labTests}) {
+      List<LabTestName>? labTests,
+      EmrScreenController? emrprovider}) {
     return Visibility(
       visible: visibility,
       child: Column(
@@ -734,12 +738,40 @@ class _PatientEmrState extends State<PatientEmr> {
                 DataColumn(label: Text("Price")),
               ]),
           SizedBox(height: MediaQuery.sizeOf(context).height * .01),
-          buildTable(columns: [
-            DataColumn(label: Text("Test")),
-            DataColumn(label: Text("Time")),
-            DataColumn(label: Text("Date")),
-            DataColumn(label: Text("Reason")),
-          ], rows: []),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          Text(
+            "Radiology Details",
+            style: MyTextStyle.normalText,
+          ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          buildTable(
+              columns: [
+                DataColumn(label: Text("Test")),
+                DataColumn(label: Text("Time")),
+                DataColumn(label: Text("Date")),
+                DataColumn(label: Text("Reason")),
+              ],
+              rows: List.generate(
+                emrprovider!.emrRadiologyList.length,
+                (index) {
+                  return DataRow(cells: [
+                    DataCell(
+                      Text(
+                          emrprovider.emrRadiologyList[index].department ?? ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].dateBook ?? ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].timeBookStart ??
+                          ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].reason ?? ""),
+                    ),
+                  ]);
+                },
+              )),
 
           // ===============================================radiology table
           SizedBox(height: MediaQuery.sizeOf(context).height * .01),

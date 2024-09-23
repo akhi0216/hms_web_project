@@ -7,7 +7,7 @@ import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class TextSearchController with ChangeNotifier {
-  Map<String, dynamic> ret = {};
+  Map<String, dynamic> json = {};
   Map<String, dynamic> retDoc = {};
 
   PatientSearchModel patientSearchModel = PatientSearchModel();
@@ -15,22 +15,22 @@ class TextSearchController with ChangeNotifier {
 
   searchPatient(String searchText) async {
     notifyListeners();
-    ret.clear();
+    // ret.clear();
     String url = "${AppUtils.baseURL}/patientname.php";
     try {
       var res = await http.post(Uri.parse(url), body: {
         "patientnamecontroller": searchText,
       });
       print(res.body);
-      ret = jsonDecode(res.body);
-      print(ret);
-      patientSearchModel = PatientSearchModel.fromJson(ret);
+      json = jsonDecode(res.body);
+      print(json);
+      patientSearchModel = PatientSearchModel.fromJson(json);
     } on Exception catch (e) {
       patientSearchModel.list?.clear();
       print(e);
     }
     notifyListeners();
-    return ret;
+    // return ret;
   }
 
   searchDoctor(String searchText) async {

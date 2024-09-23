@@ -41,7 +41,7 @@ class _NewDoctorState extends State<NewDoctor> {
   String specialization = 'Pg';
   String _nationality = 'India';
   String _onCall = "Yes";
-  String _specialty = 'Cardiology'; // Default value for the dropdown
+  String? _specialty; // Default value for the dropdown
 
   String startTimeFormat = "am";
   String endTimeFormat = "am";
@@ -539,7 +539,7 @@ class _NewDoctorState extends State<NewDoctor> {
 
   // ---------------------------------------------------------------------------------------------------------------
 
-  Widget buildDropdownFormField(String label, String currentValue,
+  Widget buildDropdownFormField(String label, String? currentValue,
       List<String> items, ValueChanged<String?> onChanged, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
