@@ -95,7 +95,7 @@ class _NewOtBookingState extends State<NewOtBooking> {
   List<Map<String, dynamic>> _filteredOptions = [];
   List<Map<String, dynamic>> doctorsList = [];
 
-  void _showOverlay({required StaffListController listOfDoctorsProvider}) {
+  void _showOverlay() {
     _overlayEntry = _createOverlayEntry();
     Overlay.of(context).insert(_overlayEntry!);
   }
@@ -169,7 +169,7 @@ class _NewOtBookingState extends State<NewOtBooking> {
     );
   }
 
-  void _filterOptions(String input, StaffListController listOfDoctorsProvider) {
+  void _filterOptions(String input) {
     setState(() {
       _filteredOptions = doctorsList
           .where((option) => option['doc']
@@ -399,10 +399,9 @@ class _NewOtBookingState extends State<NewOtBooking> {
                           // print(value.trim().split(',').last.trim());
                           if (value.trim().split(',').last.trim().isNotEmpty) {
                             if (_overlayEntry == null) {
-                              _showOverlay(
-                                  listOfDoctorsProvider: listOfDoctorsProvider);
+                              _showOverlay();
                             }
-                            _filterOptions(value, listOfDoctorsProvider);
+                            _filterOptions(value);
                           } else {
                             _hideOverlay();
                           }
@@ -410,8 +409,7 @@ class _NewOtBookingState extends State<NewOtBooking> {
                         onTap: () {
                           if (_controller.text.isNotEmpty &&
                               !_controller.text.trim().endsWith(',')) {
-                            _showOverlay(
-                                listOfDoctorsProvider: listOfDoctorsProvider);
+                            _showOverlay();
                           }
                         },
                       )

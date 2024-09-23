@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/model/billing_pharmacy_model.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,10 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
   final TextEditingController fullAmountController = TextEditingController();
   late TextEditingController medicineController = TextEditingController();
 
+  final TextEditingController patientidController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   List<BillingPharmacyModel> showableMedicines = [];
 
   // State variables for quantity and total amount
@@ -157,6 +162,47 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
 
   @override
   Widget build(BuildContext context) {
+    var functionprovider =
+        Provider.of<BookingPatientController>(context, listen: false);
+    var varprovider = Provider.of<BookingPatientController>(context);
+    fieldSubmitted() async {
+      varprovider.doctorList.clear();
+      varprovider.deptList[0];
+      varprovider.timeList.clear();
+      varprovider.patientBookingModel.list?.clear();
+      await functionprovider.patientdata(patientidController.text.trim());
+      if (varprovider.patientBookingModel.list == null ||
+          varprovider.patientBookingModel.list!.isEmpty) {
+        // _emailController.clear();
+        // _reasonController.clear();
+        // firstnamecontroller.clear();
+        // lastnamecontroller.clear();
+        // phnumbercontroller.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No patient found'),
+            backgroundColor: ColorConstants.mainRed,
+          ),
+        );
+      } else {
+        setState(() {});
+        nameController.text =
+            varprovider.patientBookingModel.list?[0].fname ?? "";
+        emailController.text =
+            varprovider.patientBookingModel.list?[0].email ?? "";
+
+        phoneController.text =
+            varprovider.patientBookingModel.list?[0].fname ?? "";
+        // phnumbercontroller.text =
+        //     varprovider.patientBookingModel.list?[0].phn ?? "";
+        // _selectedDepartment = varprovider.patientBookingModel.list?[0].dep;
+        // await functionprovider.doctors(_selectedDepartment);
+        // _selectedDoctor = varprovider.doctorList[0];
+        // _selectedDoctorId = varprovider.doctorIdList[0];
+      }
+      // print(departmentcontroller.text);
+    }
+
     Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
       // scrollDirection: Axis.vertical,
@@ -194,7 +240,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               child: Container(
                                 // width: size.width * .15,
                                 child: TextFormField(
-                                  // controller: ,
+                                  controller: patientidController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
@@ -206,6 +252,9 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                         vertical: 12, horizontal: 8),
                                     hintText: 'Enter Your patient id',
                                   ),
+                                  onFieldSubmitted: (value) async {
+                                    await fieldSubmitted();
+                                  },
                                 ),
                               ),
                             ),
@@ -228,7 +277,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               child: Container(
                                 // width: size.width * .15,
                                 child: TextFormField(
-                                  // controller: ,
+                                  controller: nameController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
@@ -252,7 +301,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: const Text("Address:",
+                              child: const Text("Email:",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -262,6 +311,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               child: Container(
                                 // width: size.width * .15,
                                 child: TextFormField(
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
@@ -271,7 +321,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                                     ),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 8),
-                                    hintText: 'Enter address',
+                                    hintText: 'Enter email',
                                   ),
                                 ),
                               ),
@@ -296,6 +346,7 @@ class _BillingPharmacyState extends State<BillingPharmacy> {
                               child: Container(
                                 // width: size.width * .15,
                                 child: TextFormField(
+                                  controller: phoneController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(

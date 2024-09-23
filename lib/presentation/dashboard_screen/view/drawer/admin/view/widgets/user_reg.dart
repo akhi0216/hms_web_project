@@ -13,6 +13,9 @@ class UserReg extends StatefulWidget {
 
 class _UserRegState extends State<UserReg> {
   TextEditingController searchController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController pswdController = TextEditingController();
+  String? selectedRole;
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -131,7 +134,7 @@ class _UserRegState extends State<UserReg> {
                       SizedBox(
                         width: 300,
                         child: TextFormField(
-                          controller: searchController,
+                          controller: usernameController,
                           onFieldSubmitted: (value) async {
                             // setState(() {});
                             // await functionProvider
@@ -149,20 +152,23 @@ class _UserRegState extends State<UserReg> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text("Password",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold)),
                       SizedBox(
                         width: 300,
                         child: TextFormField(
-                          controller: searchController,
+                          controller: pswdController,
                           onFieldSubmitted: (value) async {
                             // setState(() {});
                             // await functionProvider
                             //     .searchDoctor(searchController.text.trim());
                           },
                           decoration: InputDecoration(
-                            hintText: 'Enter username',
+                            hintText: 'Enter password',
                             helperStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: ColorConstants.mainBlack),
@@ -171,6 +177,37 @@ class _UserRegState extends State<UserReg> {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 10),
                           ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text("Designation",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+
+                      SizedBox(
+                        width: 300,
+                        child: DropdownButtonFormField<String>(
+                          value: selectedRole,
+                          hint: Text("Select des"),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                          ),
+                          items: ["admin", "staff", "pharmacist"]
+                              .map((role) => DropdownMenuItem<String>(
+                                    value: role,
+                                    child: Text(role),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRole = value;
+                            });
+                          },
                         ),
                       ),
                     ],
