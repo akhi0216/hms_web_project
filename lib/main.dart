@@ -7,6 +7,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/billing/contr
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/user_pswdgenerating.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
@@ -88,7 +89,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => SupplierContoller(),
-        )
+        ), 
+        ChangeNotifierProvider(create: (context) => UserpswdgeneratingController(),)
+       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

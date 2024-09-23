@@ -59,7 +59,7 @@ class _UserAuthState extends State<UserAuth> {
                   border: Border.all(color: ColorConstants.mainBlue, width: 2)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Date"), Text(formattedDate)],
+                children: [Text("Date : "), Text(formattedDate)],
               ),
             ),
             SizedBox(
