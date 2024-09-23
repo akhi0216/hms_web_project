@@ -20,9 +20,9 @@ class TextSearchController with ChangeNotifier {
       var res = await http.post(Uri.parse(url), body: {
         "patientnamecontroller": searchText,
       });
-      print(res.body);
+      print("{0000000000000000-${res.body}}");
       ret = jsonDecode(res.body);
-      print(ret);
+      print("rettttt---${ret}");
       patientSearchModel = PatientSearchModel.fromJson(ret);
     } on Exception catch (e) {
       patientSearchModel.list?.clear();
