@@ -344,10 +344,10 @@ class _OpBillingState extends State<OpBilling> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "Mental Health",
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
+                          // Text(
+                          //   "Mental Health",
+                          //   style: TextStyle(color: ColorConstants.mainBlack),
+                          // ),
                         ],
                       ),
                     ],
@@ -366,10 +366,10 @@ class _OpBillingState extends State<OpBilling> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "Adharsh PS",
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
+                          // Text(
+                          //   "Adharsh PS",
+                          //   style: TextStyle(color: ColorConstants.mainBlack),
+                          // ),
                         ],
                       ),
                       Row(
@@ -381,10 +381,10 @@ class _OpBillingState extends State<OpBilling> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "221133446655",
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
+                          // Text(
+                          //   "221133446655",
+                          //   style: TextStyle(color: ColorConstants.mainBlack),
+                          // ),
                         ],
                       ),
                     ],
@@ -403,10 +403,10 @@ class _OpBillingState extends State<OpBilling> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "Nithin MD",
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
+                          // Text(
+                          //   "Nithin MD",
+                          //   style: TextStyle(color: ColorConstants.mainBlack),
+                          // ),
                         ],
                       ),
                       Row(
@@ -418,21 +418,25 @@ class _OpBillingState extends State<OpBilling> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "07-04-2024",
-                            style: TextStyle(color: ColorConstants.mainBlack),
-                          ),
+                          // Text(
+                          //   "07-04-2024",
+                          //   style: TextStyle(color: ColorConstants.mainBlack),
+                          // ),
                         ],
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 11,
                   ),
                   Row(
                     children: [
                       Text(
                         "OP Bill No : ",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       ),
-                      Text("24")
+                      // Text("24")
                     ],
                   )
                 ],

@@ -132,10 +132,7 @@ class _OpBillingState extends State<OpBilling> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "Mental Health",
-                          style: TextStyle(color: ColorConstants.mainBlack),
-                        ),
+                        //  add dept as text
                       ],
                     ),
                   ],
@@ -154,10 +151,6 @@ class _OpBillingState extends State<OpBilling> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "Adharsh PS",
-                          style: TextStyle(color: ColorConstants.mainBlack),
-                        ),
                       ],
                     ),
                     Row(
@@ -168,10 +161,6 @@ class _OpBillingState extends State<OpBilling> {
                             color: ColorConstants.mainBlack,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        Text(
-                          "221133446655",
-                          style: TextStyle(color: ColorConstants.mainBlack),
                         ),
                       ],
                     ),
@@ -191,10 +180,6 @@ class _OpBillingState extends State<OpBilling> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "Nithin MD",
-                          style: TextStyle(color: ColorConstants.mainBlack),
-                        ),
                       ],
                     ),
                     Row(
@@ -205,10 +190,6 @@ class _OpBillingState extends State<OpBilling> {
                             color: ColorConstants.mainBlack,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        Text(
-                          "07-04-2024",
-                          style: TextStyle(color: ColorConstants.mainBlack),
                         ),
                       ],
                     ),

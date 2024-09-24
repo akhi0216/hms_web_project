@@ -1,12 +1,16 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
+import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'dart:developer';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+
+import 'patient_cards.dart';
 
 class NewPatientRegistrationscreen extends StatefulWidget {
   const NewPatientRegistrationscreen({super.key});
@@ -38,6 +42,7 @@ class _NewPatientRegistrationscreenState
   TextEditingController maritalStatusController = TextEditingController();
   TextEditingController remarkscontroller = TextEditingController();
   TextEditingController contactController = TextEditingController();
+  TextEditingController currentdateController = TextEditingController();
 
   String? _selectedGender;
   String? _selectedBloodGroup;
@@ -46,7 +51,7 @@ class _NewPatientRegistrationscreenState
   String? _selectedDoctor;
   String? _selectedDoctorEmpId;
   String? imageName;
-
+  bool _showPatientCard = false;
   bool _termsAccepted = false;
 
   final List<String> _genders = ['Male', 'Female', 'Other'];
@@ -72,7 +77,8 @@ class _NewPatientRegistrationscreenState
     'Parent',
     'Sibling',
     'Spouse',
-    'Child',
+    'Son',
+    'Daughter',
     'Relative',
     'Friend',
     'Other',
@@ -140,6 +146,71 @@ class _NewPatientRegistrationscreenState
     }
   }
 
+  void _showPatientCardDialog() {
+    // Retrieve values before clearing the controllers
+    String fullName = "${firstnamecontroller.text} ${lastnamecontroller.text}";
+    String address = addressController.text;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Patient Card",
+            style: TextStyle(
+                color: ColorConstants.mainBlue, fontWeight: FontWeight.bold),
+          ),
+          content: SizedBox(
+            width: 600,
+            child: PatientCards(
+              name: fullName,
+              patientId: "12345",
+              address: address,
+              dateOfRegistration: currentdateController.text,
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                print("Print button pressed");
+
+                _clearControllers();
+
+                Navigator.of(context).pop();
+              },
+              child: Text("Print"),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Clear the controllers after showing the dialog
+    _clearControllers();
+  }
+
+  void _clearControllers() {
+    firstnamecontroller.clear();
+    lastnamecontroller.clear();
+    dobController.clear();
+    occupationController.clear();
+    fatherHusbandNameController.clear();
+    nationalityController.clear();
+    addressController.clear();
+    phoneNumberController.clear();
+    mobileController.clear();
+    emailController.clear();
+    idDocumentProvidedController.clear();
+    departmentController.clear();
+    genderController.clear();
+    bloodGroupController.clear();
+    maritalStatusController.clear();
+    remarkscontroller.clear();
+    selectedRelationship = null;
+    contactController.clear();
+    // _selectedDoctorEmpId = null;
+  }
+
   Future<void> insertrecord() async {
     try {
       String uri =
@@ -170,16 +241,9 @@ class _NewPatientRegistrationscreenState
 
       if (res.statusCode == 200) {
         print("Record inserted");
-        // Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => const HomePage()),
-        //     (route) => false);
+        _showPatientCardDialog(); // Show the dialog after insert
       } else {
-        print("false");
-        // Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => const HomePage()),
-        //     (route) => false);
+        print("Failed to insert record");
       }
     } catch (e) {
       log(e.toString());
@@ -238,6 +302,10 @@ class _NewPatientRegistrationscreenState
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    // Format the date
+    String formattedDate = DateFormat('dd-MM-yyyy').format(now);
+    currentdateController.text = formattedDate;
     var functionprovider =
         Provider.of<BookingPatientController>(context, listen: false);
     var varprovider = Provider.of<BookingPatientController>(context);
@@ -742,6 +810,27 @@ class _NewPatientRegistrationscreenState
                   ),
                   validator: _validateNotEmpty,
                 ),
+                const SizedBox(height: 16.0),
+
+                TextFormField(
+                  controller: currentdateController,
+                  decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    labelText: '',
+                    prefixIcon: Icon(
+                      Icons.calendar_today,
+                      color: ColorConstants.mainBlue,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  // validator: _validateEmail,
+                ),
+
                 Visibility(
                   visible: visible,
                   child: Column(
@@ -796,42 +885,47 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(
+                      backgroundColor: MaterialStateProperty.all(
                         _termsAccepted
                             ? const Color(0xff0ea69f)
                             : const Color(0xff8d8d8d),
                       ),
                     ),
-                    // onPressed:
-                    // _termsAccepted
-                    //     ? () async {
-                    //         bool profile = false;
-                    //         bool fileupload = false;
-                    //         if (_formKey.currentState!.validate()) {
-                    //           // Form is valid, proceed with submission
-                    //           if (_profileImage != null) {
-                    //             profile = true;
-                    //           } else {
-                    //             profile = false;
-                    //             imageName = "0";
-                    //           }
-                    //           fileupload = files != null ? true : false;
-                    //           await insertrecord();
-                    //           if (profile) {
-                    //             await uploadImage(_profileImage!);
-                    //           }
-                    //           if (fileupload) {
-                    //             await uploadFile(files!);
-                    //           }
-                    //           //  print("Form submitted");
-                    //         } else {
-                    //           print("Form is invalid");
-                    //         }
-                    //       }
-                    //     : null,
-                    onPressed: () async {
-                      await insertrecord();
-                    },
+                    onPressed: _termsAccepted
+                        ? () async {
+                            // Perform form validation
+                            if (_formKey.currentState!.validate()) {
+                              // Initialize profile and file upload flags
+                              bool profile = false;
+                              bool fileupload = false;
+
+                              // Check if profile image exists
+                              if (_profileImage != null) {
+                                profile = true;
+                              } else {
+                                profile = false;
+                                imageName =
+                                    "0"; // If no image, assign default value
+                              }
+
+                              // Check if files exist
+                              fileupload = files != null ? true : false;
+
+                              // Insert the patient record into the database
+                              await insertrecord();
+
+                              // If profile image is available, upload it
+                              if (profile) {
+                                await uploadImage(_profileImage!);
+                              }
+
+                              // If files are available, upload them
+                              if (fileupload) {
+                                await uploadFile(files!);
+                              }
+                            }
+                          }
+                        : null, // Disable button if terms are not accepted
                     child: const Text(
                       'Submit',
                       style: TextStyle(color: Colors.black),
@@ -845,6 +939,178 @@ class _NewPatientRegistrationscreenState
           ),
         ),
       ),
+    );
+  }
+}
+
+// PatientCards widget
+class PatientCards extends StatelessWidget {
+  final String name;
+  final String patientId;
+  final String address;
+  final String dateOfRegistration;
+
+  const PatientCards({
+    Key? key,
+    required this.name,
+    required this.patientId,
+    required this.address,
+    required this.dateOfRegistration,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        constraints: BoxConstraints(maxWidth: 600), // Set max width constraint
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.white,
+              ColorConstants.mainLightBlue,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 4,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildPatientDetailRow("Name :", name),
+                      buildPatientDetailRow("Patient ID :", patientId),
+                      buildPatientDetailRow("Address :", address),
+                      buildPatientDetailRow(
+                          "Date of registration :", dateOfRegistration),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 5),
+                Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage(ImageConstants
+                          .highlandlogo), // Ensure this path is correct
+                      fit: BoxFit.fill,
+                    ),
+                    border: Border.all(color: Colors.black12, width: 2),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/qr-code.png"), // Ensure this path is correct
+                      fit: BoxFit.contain,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.withOpacity(0.5)),
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    children: [
+                      buildDivider(),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.phone, color: ColorConstants.mainBlue),
+                          SizedBox(width: 10),
+                          Text(
+                            '+1 234 567 890', // Replace with actual phone number
+                            style:
+                                TextStyle(color: Colors.black87, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.email, color: ColorConstants.mainBlue),
+                          SizedBox(width: 10),
+                          Text(
+                            'info@highlandhospital.com', // Replace with actual email
+                            style:
+                                TextStyle(color: Colors.black87, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      buildDivider(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildPatientDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(width: 10),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDivider() {
+    return Container(
+      height: 2,
+      width: double.infinity,
+      color: ColorConstants.mainOrange,
     );
   }
 }

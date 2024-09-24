@@ -39,11 +39,10 @@ class _OtScreenMainState extends State<OtScreenMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(
-                      label: "New Booking", newScreen: PreviousOtBooking()),
+                  buttonCall(label: "New Booking", newScreen: NewOtBooking()),
                   buttonCall(
                       label: "Previous Booking",
-                      newScreen: TextFieldWithPopup()),
+                      newScreen: PreviousOtBooking()),
                   buttonCall(label: "OT Status", newScreen: OtStatus()),
                 ],
               ),

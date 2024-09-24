@@ -128,7 +128,7 @@ class _ConcernsScreenState extends State<ConcernsScreen> {
                               Text("Employee Code:",
                                   style: MyTextStyle.normalText),
                               Container(
-                                width: 200, 
+                                width: 200,
                                 child: TextFormField(
                                   controller: empcodecontroller,
                                   decoration: InputDecoration(
@@ -233,23 +233,22 @@ class _ConcernsScreenState extends State<ConcernsScreen> {
                         ),
                         SizedBox(width: 16),
                         // Expanded(
-                        //   flex: 1,
+                        // flex: 1,
                         // child:
-
                         Container(
                           height: 250,
                           width: 250,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                    'assets/images/3658163.jpg',
+                                    'assets/images/privacy.png',
                                     // fit: BoxFit.cover,
                                   ),
-                                  fit: BoxFit.fill)),
+                                  fit: BoxFit.cover)),
                         )
-                        // Image.asset(
-                        //   'assets/images/3658163.jpg',
-                        //   // fit: BoxFit.cover,
+                        //     Image.asset(
+                        //   'assets/images/privacy.png',
+                        //   fit: BoxFit.cover,
                         // ),
                         // ),
                       ],

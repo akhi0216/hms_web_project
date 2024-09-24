@@ -50,7 +50,7 @@ class _DialysisMainState extends State<DialysisMain> {
                   buttonCall(
                       label: "Previous Recods",
                       newScreen: PreviousDialysisBooking()),
-                  buttonCall(label: "Room Status", newScreen: DummyPage()),
+                  // buttonCall(label: "Room Status", newScreen: DummyPage()),
                 ],
               ),
             ],

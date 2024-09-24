@@ -19,27 +19,8 @@ class LabMain extends StatefulWidget {
 }
 
 class LabMainState extends State<LabMain> {
-  String value = "Lab Records";
-  Widget screen = LabDetailsPage(patientName: 'Akhila',
-        testsDone: [
-          TestDetail(
-            name: 'Blood Test',
-            date: '2024-08-01',
-            report:
-                'No abnormalities detected. All levels within normal range.',
-          ),
-          TestDetail(
-            name: 'X-Ray',
-            date: '2024-08-05',
-            report: 'Chest X-Ray shows no significant findings.',
-          ),
-          TestDetail(
-            name: 'Urine Test',
-            date: '2024-08-10',
-            report: 'Normal results. No infections or abnormalities.',
-          ),
-        ],
-        doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',);
+  String value = "Lab Tests";
+  Widget screen = LabTests();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -62,8 +43,7 @@ class LabMainState extends State<LabMain> {
                 width: size.width * .199,
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
-                                   ImageConstants.highlandlogonobackground,
-
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -71,39 +51,34 @@ class LabMainState extends State<LabMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
-                  buttonCall(label: "Lab Records", newScreen: LabDetailsPage(
-
-
-               patientName: 'Akhila',
-        testsDone: [
-          TestDetail(
-            name: 'Blood Test',
-            date: '2024-08-01',
-            report:
-                'No abnormalities detected. All levels within normal range.',
-          ),
-          TestDetail(
-            name: 'X-Ray',
-            date: '2024-08-05',
-            report: 'Chest X-Ray shows no significant findings.',
-          ),
-          TestDetail(
-            name: 'Urine Test',
-            date: '2024-08-10',
-            report: 'Normal results. No infections or abnormalities.',
-          ),
-        ],
-        doctorRemarks: 'The patient is in good health. Follow-up in 6 months.',
-
-
-
-
-
-                  )),
                   buttonCall(
-                      label: "Lab Tests",
-                      newScreen: LabTests()),
-                 
+                      label: "Lab Records",
+                      newScreen: LabDetailsPage(
+                        patientName: 'Akhila',
+                        testsDone: [
+                          TestDetail(
+                            name: 'Blood Test',
+                            date: '2024-08-01',
+                            report:
+                                'No abnormalities detected. All levels within normal range.',
+                          ),
+                          TestDetail(
+                            name: 'X-Ray',
+                            date: '2024-08-05',
+                            report:
+                                'Chest X-Ray shows no significant findings.',
+                          ),
+                          TestDetail(
+                            name: 'Urine Test',
+                            date: '2024-08-10',
+                            report:
+                                'Normal results. No infections or abnormalities.',
+                          ),
+                        ],
+                        doctorRemarks:
+                            'The patient is in good health. Follow-up in 6 months.',
+                      )),
+                  buttonCall(label: "Lab Tests", newScreen: LabTests()),
                 ],
               ),
             ],
