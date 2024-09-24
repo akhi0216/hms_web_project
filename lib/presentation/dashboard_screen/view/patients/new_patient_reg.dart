@@ -1,9 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
 import 'package:hms_web_project/repositories/api/services/app_utils.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:developer';
 import 'package:provider/provider.dart';
@@ -94,18 +95,48 @@ class _NewPatientRegistrationscreenState
     callFuction();
   }
 
-  File? _profileImage;
-  final ImagePicker _picker = ImagePicker();
-  File? files;
-  Future<void> _pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _profileImage = File(image.path);
-      });
+  List<String?> fileNames = [];
+  List<Uint8List?> pickedFiles = [];
+  Uint8List? profileImage;
+  Future<void> pickImage({required bool allowMultiple}) async {
+    // ---------------------------------------------File Picker
+    // FilePickerResult? result =
+    //     await FilePicker.platform.pickFiles();
+    // if (result != null) {
+    //   files = File(result.files.single.path!);
+    // }
+    final result = await FilePicker.platform
+        .pickFiles(type: FileType.any, allowMultiple: allowMultiple);
+
+    if (result != null && result.files.isNotEmpty) {
+      if (allowMultiple == true) {
+        List<Uint8List?> fileBytes = result.files
+            .map(
+              (path) => path.bytes,
+            )
+            .toList();
+        List<String?> fileName = result.files
+            .map(
+              (path) => path.name,
+            )
+            .toList();
+        // final fileName = result.files.first.name;
+        pickedFiles = List<Uint8List?>.from(fileBytes);
+        fileNames = List<String?>.from(fileName);
+        log(fileNames.toString());
+        setState(() {
+          visible = true;
+        });
+      } else {
+        final fileBytes = result.files.single.bytes;
+        final fileName = result.files.single.name;
+        profileImage = fileBytes;
+        log(fileName);
+        setState(() {});
+      }
+      // upload file
+      // await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
     }
-    imageName = _profileImage?.path.split('/').last;
-    print(_profileImage?.path.split('/').last);
   }
 
   Future<void> uploadImage(File image) async {
@@ -143,8 +174,7 @@ class _NewPatientRegistrationscreenState
 
   Future<void> insertrecord() async {
     try {
-      String uri =
-          "${AppUtils.baseURL}/patientregisteration.php";
+      String uri = "${AppUtils.baseURL}/patientregisteration.php";
       var res = await http.post(Uri.parse(uri), body: {
         "firstnamecontroller": firstnamecontroller.text.trim(),
         "lastnamecontroller": lastnamecontroller.text.trim(),
@@ -260,20 +290,26 @@ class _NewPatientRegistrationscreenState
               children: [
                 Center(
                   child: GestureDetector(
-                    onTap: _pickImage,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey.shade300,
-                      backgroundImage: _profileImage != null
-                          ? FileImage(_profileImage!)
-                          : null,
-                      child: _profileImage == null
+                    onTap: () async {
+                      await pickImage(allowMultiple: false);
+                    },
+                    child: Container(
+                      height: 100, width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        shape: BoxShape.circle,
+                      ),
+                      // backgroundImage: profileImage != null
+                      //     ?
+                      //     : null,
+                      clipBehavior: Clip.antiAlias,
+                      child: profileImage == null
                           ? const Icon(
                               Icons.add_a_photo,
                               color: Colors.white,
                               size: 50,
                             )
-                          : null,
+                          : Image.memory(profileImage!, fit: BoxFit.scaleDown),
                     ),
                   ),
                 ),
@@ -753,7 +789,11 @@ class _NewPatientRegistrationscreenState
                           height: MediaQuery.sizeOf(context).height * .1,
                         ),
                       ),
-                      Text(files?.path.split('/').last ?? ""),
+                      Text(fileNames.length > 1
+                          ? "${fileNames[0]}.etc."
+                          : fileNames.length > 0
+                            ? fileNames[0] ?? ""
+                              : ""),
                     ],
                   ),
                 ),
@@ -761,15 +801,7 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      FilePickerResult? result =
-                          await FilePicker.platform.pickFiles();
-                      if (result != null) {
-                        files = File(result.files.single.path!);
-                      }
-                      setState(() {
-                        visible = true;
-                      });
-                      print(files);
+                      pickImage(allowMultiple: true);
                     },
                     child: Container(
                       height: 50,
