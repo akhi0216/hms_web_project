@@ -44,7 +44,6 @@ class LabMainState extends State<LabMain> {
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
                   ImageConstants.highlandlogonobackground,
-                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
