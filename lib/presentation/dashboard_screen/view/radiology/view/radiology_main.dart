@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/view/widgets/radiology_booking.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/view/widgets/radiology_history.dart';
+import 'package:provider/provider.dart';
 
 class RadiologyMain extends StatefulWidget {
   const RadiologyMain({super.key});
@@ -53,13 +55,24 @@ class _RadiologyMainState extends State<RadiologyMain> {
                 children: [
                   SizedBox(height: size.height * .05),
                   buttonCall(
-                    label: "Booking",
-                    newScreen: RadiologyBooking(),
-                  ),
+                      label: "Booking",
+                      onTap: () async {
+                        value = "Booking";
+                        setState(() {
+                          screen = RadiologyBooking();
+                        });
+                      }),
                   buttonCall(
-                    label: "Booking History",
-                    newScreen: RadiologyHistory(),
-                  ),
+                      label: "Booking History",
+                      onTap: () async {
+                        value = "Booking History";
+                        await Provider.of<RadiologyController>(context,
+                                listen: false)
+                            .radiologyHistory();
+                        setState(() {
+                          screen = RadiologyHistory();
+                        });
+                      }),
                 ],
               ),
             ],
@@ -83,15 +96,10 @@ class _RadiologyMainState extends State<RadiologyMain> {
     );
   }
 
-  Widget buttonCall({required String label, required Widget newScreen}) {
+  Widget buttonCall({required String label, required VoidCallback onTap}) {
     return LayoutBuilder(builder: (context, constraints) {
       return InkWell(
-        onTap: () {
-          value = label;
-          setState(() {
-            screen = newScreen;
-          });
-        },
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(

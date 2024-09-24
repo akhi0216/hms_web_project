@@ -44,6 +44,7 @@ class LabMainState extends State<LabMain> {
                 color: ColorConstants.mainwhite,
                 child: Image.asset(
                   ImageConstants.highlandlogonobackground,
+                  ImageConstants.highlandlogonobackground,
                 ),
               ),
               SizedBox(height: size.height * .01),
@@ -51,6 +52,34 @@ class LabMainState extends State<LabMain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * .05),
+                  buttonCall(
+                      label: "Lab Records",
+                      newScreen: LabDetailsPage(
+                        patientName: 'Akhila',
+                        testsDone: [
+                          TestDetail(
+                            name: 'Blood Test',
+                            date: '2024-08-01',
+                            report:
+                                'No abnormalities detected. All levels within normal range.',
+                          ),
+                          TestDetail(
+                            name: 'X-Ray',
+                            date: '2024-08-05',
+                            report:
+                                'Chest X-Ray shows no significant findings.',
+                          ),
+                          TestDetail(
+                            name: 'Urine Test',
+                            date: '2024-08-10',
+                            report:
+                                'Normal results. No infections or abnormalities.',
+                          ),
+                        ],
+                        doctorRemarks:
+                            'The patient is in good health. Follow-up in 6 months.',
+                      )),
+                  buttonCall(label: "Lab Tests", newScreen: LabTests()),
                   buttonCall(
                       label: "Lab Records",
                       newScreen: LabDetailsPage(

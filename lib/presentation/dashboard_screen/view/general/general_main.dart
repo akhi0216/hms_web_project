@@ -76,7 +76,7 @@ class GeneralMainState extends State<GeneralMain> {
                         buttonCall(label: "SMS Center", newScreen: DummyPage()),
                         buttonCall(label: "Reminders", newScreen: DummyPage()),
                         buttonCall(
-                            label: "Passing Section",
+                            label: "Authorization",
                             newScreen: PassingSection()),
                         buttonCall(label: "HR", newScreen: HrPage()),
                       ],

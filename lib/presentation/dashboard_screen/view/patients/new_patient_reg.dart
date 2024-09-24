@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/new_booking_controller.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
@@ -114,7 +115,7 @@ class _NewPatientRegistrationscreenState
   }
 
   Future<void> uploadImage(File image) async {
-    final uri = Uri.parse("https://cybot.avanzosolutions.in/hms/test.php");
+    final uri = Uri.parse("${AppUtils.baseURL}/test.php");
     var request = http.MultipartRequest('POST', uri);
 
     var pic = await http.MultipartFile.fromPath("image", image.path);
@@ -131,7 +132,7 @@ class _NewPatientRegistrationscreenState
 
   Future<void> uploadFile(File receipt) async {
     print("xjhhhc");
-    final uri = Uri.parse("https://cybot.avanzosolutions.in/hms/testdoc.php");
+    final uri = Uri.parse("${AppUtils.baseURL}/testdoc.php");
     var request = http.MultipartRequest('POST', uri);
 
     var pic = await http.MultipartFile.fromPath("receipt", receipt.path);
@@ -214,7 +215,7 @@ class _NewPatientRegistrationscreenState
   Future<void> insertrecord() async {
     try {
       String uri =
-          "https://cybot.avanzosolutions.in/hms/patientregisteration.php";
+          "${AppUtils.baseURL}/patientregisteration.php";
       var res = await http.post(Uri.parse(uri), body: {
         "firstnamecontroller": firstnamecontroller.text.trim(),
         "lastnamecontroller": lastnamecontroller.text.trim(),

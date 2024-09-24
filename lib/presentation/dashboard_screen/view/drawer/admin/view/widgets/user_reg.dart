@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/controller/search_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/user_pswdgenerating.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,10 @@ class _UserRegState extends State<UserReg> {
   TextEditingController searchController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController pswdController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
+  TextEditingController phnController = TextEditingController();
+  TextEditingController deptController = TextEditingController();
   String? selectedRole;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,10 @@ class _UserRegState extends State<UserReg> {
     var varProvider = Provider.of<TextSearchController>(context);
     var functionProvider =
         Provider.of<TextSearchController>(context, listen: false);
-
+    var userpswdvarprovider =
+        Provider.of<UserpswdgeneratingController>(context);
+    var userpswdfunctionprovider =
+        Provider.of<UserpswdgeneratingController>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Padding(
@@ -91,6 +99,14 @@ class _UserRegState extends State<UserReg> {
                             setState(() {});
                             await functionProvider
                                 .searchDoctor(searchController.text.trim());
+                            nameController.text =
+                                varProvider.doctorSearchModel.fname ?? "";
+                            deptController.text =
+                                varProvider.doctorSearchModel.department ?? "";
+                            phnController.text =
+                                varProvider.doctorSearchModel.mob ?? "";
+                            mailController.text =
+                                varProvider.doctorSearchModel.email ?? "";
                           },
                           decoration: InputDecoration(
                             hintText: 'Enter emp id',
@@ -117,15 +133,21 @@ class _UserRegState extends State<UserReg> {
                         height: 3,
                       ),
                       // buildTextField("Employee ID", "${varProvider.doctorSearchModel.fname ?? ""}"),
-                      buildTextField(" Name",
-                          "${varProvider.doctorSearchModel.fname ?? ""}"),
+                      buildTextField(
+                        label: " Name",
+                        controller: nameController,
+                      ),
+                      // "${varProvider.doctorSearchModel.fname ?? ""}"),
                       // buildTextField("Last Name", "Last Name"),
-                      buildTextField("Department",
-                          "${varProvider.doctorSearchModel.department ?? ""}"),
-                      buildTextField("Phone No",
-                          "${varProvider.doctorSearchModel.mob ?? ""}"),
-                      buildTextField("E-mail",
-                          "${varProvider.doctorSearchModel.email ?? ""}"),
+                      buildTextField(
+                          label: "Department", controller: deptController),
+                      // "${varProvider.doctorSearchModel.department ?? ""}"),
+                      buildTextField(
+                          label: "Phone No", controller: phnController),
+                      // "${varProvider.doctorSearchModel.mob ?? ""}"),
+                      buildTextField(
+                          label: "E-mail", controller: mailController),
+                      // "${varProvider.doctorSearchModel.email ?? ""}"),
                       // buildTextField("Username", "Username"),
                       // buildTextField("Password", "Password"),
                       Text("Username",
@@ -258,9 +280,43 @@ class _UserRegState extends State<UserReg> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildButton("Apply", Colors.greenAccent),
+                // buildButton("Apply", Colors.greenAccent),
+                // SizedBox(width: 20),
+                // buildButton("Cancel", Colors.redAccent),
+
+                InkWell(
+                  onTap: () async {
+                    await userpswdfunctionprovider.userpswdsaving(
+                        empid: searchController.text,
+                        username: usernameController.text,
+                        password: pswdController.text,
+                        // mob: varProvider.doctorSearchModel.mob ?? "",
+                        mob: phnController.text,
+                        des: selectedRole.toString(),
+                        // name: varProvider.doctorSearchModel.fname ?? "");
+                        name: nameController.text);
+
+                    searchController.clear();
+                    selectedRole = null;
+                    usernameController.clear();
+                    pswdController.clear();
+                    phnController.clear();
+                    nameController.clear();
+                    deptController.clear();
+                    mailController.clear();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(7),
+                    decoration: BoxDecoration(color: Colors.greenAccent),
+                    child: Text("Apply"),
+                  ),
+                ),
                 SizedBox(width: 20),
-                buildButton("Cancel", Colors.redAccent),
+                Container(
+                  padding: EdgeInsets.all(7),
+                  decoration: BoxDecoration(color: Colors.red),
+                  child: Text("Cancel"),
+                ),
               ],
             ),
           ],
@@ -269,17 +325,8 @@ class _UserRegState extends State<UserReg> {
     );
   }
 
-// Widget detailsContainer({required String label, required String title}) {
-//   return Container(
-//     height: 60,
-//     decoration:
-//         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
-//     child: Row(
-//       children: [Text(label), Text(title)],
-//     ),
-//   );
-// }
-  Widget buildTextField(String label, String title) {
+  Widget buildTextField(
+      {required String label, required TextEditingController controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: Column(
@@ -291,8 +338,9 @@ class _UserRegState extends State<UserReg> {
           Container(
             constraints: const BoxConstraints(maxWidth: 300),
             child: TextFormField(
+              controller: controller,
               decoration: InputDecoration(
-                hintText: title,
+                // hintText: title,
                 // border: OutlineInputBorder(
                 //   borderRadius: BorderRadius.circular(10.0),
                 //   borderSide: BorderSide(color: ColorConstants.mainBlue),

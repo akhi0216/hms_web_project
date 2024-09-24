@@ -56,7 +56,7 @@ class _EmrMainState extends State<EmrMain> {
                       label: "Patient Records",
                       newScreen: PatientEmr(
                         scrollController: _scrollController,
-                      )),
+                      ),),
                   // label: "IN Patient Records", newScreen: IpBillingEMR()),
                   // buttonCall(label: "Patient Records", newScreen: EmrPage()),
                 ],

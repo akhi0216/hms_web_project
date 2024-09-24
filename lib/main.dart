@@ -7,6 +7,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/billing/contr
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dialysis/controller/booking_dialysis_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/staff_list_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/user_pswdgenerating.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/controller/view_concerns_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/controller/emr_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/alloted_leave_controller.dart';
@@ -14,7 +15,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/conto
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/feedback_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/contoller/leave_req.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/controller/billing_pharmacy_controller.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_time_picker_controller.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/controller/radiology_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/store_controller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/controller/supplier_contoller.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/user_dashboard.dart';
@@ -81,14 +82,16 @@ class MyApp extends StatelessWidget {
           create: (context) => LeaveReqControllers(),
         ),
         ChangeNotifierProvider(
-          create: (context) => RadiologyTimePickerController(),
+          create: (context) => RadiologyController(),
         ),
         ChangeNotifierProvider(
           create: (context) => FeedbackController(),
         ),
         ChangeNotifierProvider(
           create: (context) => SupplierContoller(),
-        )
+        ), 
+        ChangeNotifierProvider(create: (context) => UserpswdgeneratingController(),)
+       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

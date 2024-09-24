@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/model/concerns_model.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -13,7 +14,7 @@ class ViewConcernsController with ChangeNotifier {
       {required String complaintId,
       required String modeController,
       String? reason}) async {
-    String url = "https://cybot.avanzosolutions.in/hms/complaintauth.php";
+    String url = "${AppUtils.baseURL}/complaintauth.php";
     var res = await http.post(Uri.parse(url), body: {
       'compidcontroller': complaintId,
       'modecontroller': modeController,
@@ -29,7 +30,7 @@ class ViewConcernsController with ChangeNotifier {
   }) async {
     try {
       String uri =
-          "https://cybot.avanzosolutions.in/hms/complaintfetchWithoutdate.php";
+          "${AppUtils.baseURL}/complaintfetchWithoutdate.php";
       var res = await http.post(Uri.parse(uri), body: {
         'designationcontroller': des,
         'empcodecontroller': empcode,

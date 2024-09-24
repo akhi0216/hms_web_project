@@ -295,10 +295,12 @@ class _PatientEmrState extends State<PatientEmr> {
             onChanged: (value) async {
               setState(() {});
               ipSelectedValue = value;
-              await emrprovider.ipEmrDetails(
+              await emrFunctionProvider.ipEmrDetails(
                 pid: pidController.text.trim(),
                 ipid: ipSelectedValue.toString(),
               );
+              await emrFunctionProvider.emrRadiologyDetails(
+                  pid: pidController.text.trim());
               _scrollToBottom();
               if (emrprovider.emrIpModel.ipno == ipSelectedValue.toString()) {
                 setState(() {
@@ -359,10 +361,11 @@ class _PatientEmrState extends State<PatientEmr> {
             onChanged: (value) async {
               setState(() {});
               opSelectedValue = value;
-              await emrprovider.opEmrDetails(
+              await emrFunctionProvider.opEmrDetails(
                 pid: pidController.text.trim(),
                 opid: opSelectedValue.toString(),
               );
+
               _scrollToBottom();
               if (emrprovider.emrOpModel.opno == opSelectedValue.toString()) {
                 setState(() {
@@ -450,6 +453,7 @@ class _PatientEmrState extends State<PatientEmr> {
             "floor": "Floor",
           },
           labTests: emrprovider.emrIpModel.labTestName,
+          emrprovider: emrprovider,
         ),
         patientEmrView(
           visibility: opVisible,
@@ -467,10 +471,12 @@ class _PatientEmrState extends State<PatientEmr> {
             "floor": "Floor",
           },
           labTests: emrprovider.emrOpModel.labTestName,
+          emrprovider: emrprovider,
         ),
         patientEmrView(
           visibility: daycareVisible,
           patientDetails: daycarePatientDetails,
+          emrprovider: emrprovider,
         ),
         SizedBox(height: size.height * .01),
       ],
@@ -593,7 +599,8 @@ class _PatientEmrState extends State<PatientEmr> {
       {required bool visibility,
       required Map<String, String> patientDetails,
       Map<String, dynamic>? emrDetails,
-      List<LabTestName>? labTests}) {
+      List<LabTestName>? labTests,
+      EmrScreenController? emrprovider}) {
     return Visibility(
       visible: visibility,
       child: Column(
@@ -703,70 +710,70 @@ class _PatientEmrState extends State<PatientEmr> {
               ),
             ],
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  // width: MediaQuery.sizeOf(context).width * .7,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: DataTable(
-                    // border: TableBorder(),
-                    headingRowColor: WidgetStateColor.resolveWith(
-                      (states) => ColorConstants.mainBlue,
+          // ------------------------------------------------------------------------------------------------------------
+          buildTable(
+              rows: List.generate(
+                labTests?.length ?? 0,
+                (index) {
+                  return DataRow(cells: [
+                    DataCell(
+                      Text(labTests?[index].testName ?? ''),
                     ),
-                    headingTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    DataCell(
+                      Text(labTests?[index].duration ?? ''),
                     ),
-                    // clipBehavior: Clip.antiAlias,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.only(
-                    //     topLeft: Radius.circular(10),
-                    //     topRight: Radius.circular(10),
-                    //   ),
-                    // ),
-                    columns: [
-                      DataColumn(label: Text("Test")),
-                      DataColumn(label: Text("Duration")),
-                      DataColumn(label: Text("Staff Alloted")),
-                      DataColumn(label: Text("price")),
-                    ],
-                    rows: List.generate(
-                      labTests?.length ?? 0,
-                      (index) {
-                        return DataRow(cells: [
-                          DataCell(
-                            Text(labTests?[index].testName ?? ''),
-                          ),
-                          DataCell(
-                            Text(labTests?[index].duration ?? ''),
-                          ),
-                          DataCell(
-                            Text(labTests?[index].staffAlloted ?? ''),
-                          ),
-                          DataCell(
-                            Text(labTests?[index].price ?? ''),
-                          ),
-                        ]);
-                      },
+                    DataCell(
+                      Text(labTests?[index].staffAlloted ?? ''),
                     ),
-                  ),
-                ),
+                    DataCell(
+                      Text(labTests?[index].price ?? ''),
+                    ),
+                  ]);
+                },
               ),
-            ],
+              columns: [
+                DataColumn(label: Text("Test")),
+                DataColumn(label: Text("Duration")),
+                DataColumn(label: Text("Staff Alloted")),
+                DataColumn(label: Text("Price")),
+              ]),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          Text(
+            "Radiology Details",
+            style: MyTextStyle.normalText,
           ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * .01),
+          buildTable(
+              columns: [
+                DataColumn(label: Text("Test")),
+                DataColumn(label: Text("Time")),
+                DataColumn(label: Text("Date")),
+                DataColumn(label: Text("Reason")),
+              ],
+              rows: List.generate(
+                emrprovider!.emrRadiologyList.length,
+                (index) {
+                  return DataRow(cells: [
+                    DataCell(
+                      Text(
+                          emrprovider.emrRadiologyList[index].department ?? ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].dateBook ?? ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].timeBookStart ??
+                          ""),
+                    ),
+                    DataCell(
+                      Text(emrprovider.emrRadiologyList[index].reason ?? ""),
+                    ),
+                  ]);
+                },
+              )),
+
+          // ===============================================radiology table
           SizedBox(height: MediaQuery.sizeOf(context).height * .01),
           Visibility(
             visible: opVisible ? false : true,
@@ -912,5 +919,50 @@ class _PatientEmrState extends State<PatientEmr> {
     //     return option.value.toString();
     //   },
     // );
+  }
+
+  Widget buildTable(
+      {required List<DataColumn> columns, required List<DataRow> rows}) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            // width: MediaQuery.sizeOf(context).width * .7,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: DataTable(
+              // border: TableBorder(),
+              headingRowColor: WidgetStateColor.resolveWith(
+                (states) => ColorConstants.mainBlue,
+              ),
+              headingTextStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              // clipBehavior: Clip.antiAlias,
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(10),
+              //     topRight: Radius.circular(10),
+              //   ),
+              // ),
+              columns: columns,
+              rows: rows,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

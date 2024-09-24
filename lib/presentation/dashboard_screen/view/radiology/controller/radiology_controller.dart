@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
-class RadiologyTimePickerController with ChangeNotifier {
+class RadiologyController with ChangeNotifier {
   List<String> selectedtimeList = [];
+  List radiologyHistoryList = [];
   String? bookingId;
   List<String> timeList = [
     '8:00',
@@ -30,7 +32,7 @@ class RadiologyTimePickerController with ChangeNotifier {
       log("Error: Date is empty or invalid.");
       return;
     }
-    String uri = "https://cybot.avanzosolutions.in/hms/radiologytimeslot.php";
+    String uri = "${AppUtils.baseURL}/radiologytimeslot.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         'datecontroller': date,
@@ -55,11 +57,23 @@ class RadiologyTimePickerController with ChangeNotifier {
   }
 
   Future<void> callBookingId({required String dept}) async {
-    String url = 'https://cybot.avanzosolutions.in/hms/countid.php';
+    String url = '${AppUtils.baseURL}/countid.php';
     var res = await http.post(Uri.parse(url), body: {
       'departmentidcontroller': dept,
-    });
+    }); 
     log(res.body);
     bookingId = res.body;
+  }
+
+  Future<void> radiologyHistory() async {
+    String url = '${AppUtils.baseURL}/radiology_history.php';
+    var res = await http.get(Uri.parse(url));
+    // log(res.body);
+    radiologyHistoryList = (jsonDecode(res.body) as List)
+        .map(
+          (json) => json,
+        )
+        .toList();
+    log(radiologyHistoryList.toString());
   }
 }

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_ip_model.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_op_model.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/emr/model/emr_radiology_model.dart';
+import 'package:hms_web_project/repositories/api/services/app_utils.dart';
 import 'package:http/http.dart' as http;
 
 class EmrScreenController with ChangeNotifier {
@@ -10,13 +12,14 @@ class EmrScreenController with ChangeNotifier {
   EmrOpModel emrOpModel = EmrOpModel();
   List<String> ipIdList = [];
   List<String> opIdList = [];
+  List<EmrRadiologyModel> emrRadiologyList = [];
   // ipEmrDetails() async {
   //   String url = "";
   //   var res = await http.get(Uri.parse(url));
   //   print(res.body);
   // }
   Future<void> ipEmrDetails({required String pid, required String ipid}) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/emrtestnew.php";
+    String uri = "${AppUtils.baseURL}/emrtestnew.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {
         'patientidcontroller': pid,
@@ -33,10 +36,10 @@ class EmrScreenController with ChangeNotifier {
   }
 
   Future<void> opEmrDetails({required String pid, required String opid}) async {
-    String uri = "https://cybot.avanzosolutions.in/hms/emrop.php";
+    String uri = "${AppUtils.baseURL}/emrop.php";
     var res = await http.post(Uri.parse(uri), body: {
       'patientidcontroller': pid,
-      'ipnocontroller': opid,
+      'opnocontroller': opid,
     });
     print(res.body);
     var json = await jsonDecode(res.body) as Map<String, dynamic>;
@@ -47,7 +50,7 @@ class EmrScreenController with ChangeNotifier {
 
   Future<void> ipidFetch({required String pid}) async {
     ipIdList.clear();
-    String url = 'https://cybot.avanzosolutions.in/hms/ipnofetch.php';
+    String url = '${AppUtils.baseURL}/ipnofetch.php';
     var res = await http.post(Uri.parse(url), body: {
       'patientidcontroller': pid,
     });
@@ -59,13 +62,29 @@ class EmrScreenController with ChangeNotifier {
 
   Future<void> opidFetch({required String pid}) async {
     opIdList.clear();
-    String url = 'https://cybot.avanzosolutions.in/hms/opnofetch.php';
+    String url = '${AppUtils.baseURL}/opnofetch.php';
     var res = await http.post(Uri.parse(url), body: {
       'patientidcontroller': pid,
     });
     print(res.body);
     opIdList = List<String>.from(jsonDecode(res.body));
     print(opIdList);
+    notifyListeners();
+  }
+
+  Future<void> emrRadiologyDetails({required String pid}) async {
+    String url = '${AppUtils.baseURL}/radiology_patient_details.php';
+
+    var res = await http.post(Uri.parse(url), body: {
+      'patientidcontroller': pid,
+    });
+    print(res.body);
+    emrRadiologyList = (jsonDecode(res.body) as List)
+        .map(
+          (json) => EmrRadiologyModel.fromJson(json),
+        )
+        .toList();
+    print(emrRadiologyList);
     notifyListeners();
   }
 }
