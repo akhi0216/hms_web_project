@@ -89,15 +89,16 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => SupplierContoller(),
-        ), 
-        ChangeNotifierProvider(create: (context) => UserpswdgeneratingController(),)
-       
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserpswdgeneratingController(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
-        home: Dashboardsecondscreen(
-            userName: "Admin", empId: "009", des: "Admin"),
+        home: SplashScreen(),
+        // home: Dashboardsecondscreen(
+        //     userName: "Admin", empId: "009", des: "Admin"),
         // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),
       ),
     );

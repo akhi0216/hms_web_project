@@ -164,31 +164,50 @@ class _HomeDashboardState extends State<HomeDashboard> {
               Container(
                 padding: EdgeInsets.all(20),
                 color: ColorConstants.mainBlue,
-                child: Column(
+                child: Row(
                   children: [
                     Text(
-                      '© 2024 Highland Hospital. All Rights Reserved.',
+                      "© An ISO 27001:2022 Certified Hospital",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    SizedBox(
+                      width: 350,
+                    ),
+                    Column(
                       children: [
-                        Icon(Icons.phone, color: Colors.white),
-                        SizedBox(width: 10),
+                        // Text(
+                        //   "© An ISO 27001:2022 Certified Hospital",
+                        //   style: TextStyle(color: Colors.white),
+                        // ),
+                        SizedBox(height: 10),
                         Text(
-                          '+1 234 567 890',
-                          style: TextStyle(color: Colors.white),
+                          '© 2024 Highland Hospital. All Rights Reserved.',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
                         ),
-                        SizedBox(width: 20),
-                        Icon(Icons.email, color: Colors.white),
-                        SizedBox(width: 10),
-                        Text(
-                          'info@highlandhospital.com',
-                          style: TextStyle(color: Colors.white),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.phone, color: Colors.white),
+                            SizedBox(width: 10),
+                            Text(
+                              '+1 234 567 890',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            SizedBox(width: 20),
+                            Icon(Icons.email, color: Colors.white),
+                            SizedBox(width: 10),
+                            Text(
+                              'info@highlandhospital.com',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
                       ],
                     ),

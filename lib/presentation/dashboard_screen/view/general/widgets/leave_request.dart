@@ -230,7 +230,7 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                               color: ColorConstants.mainBlue,
                                               width: 2)),
                                       child: Text(
-                                        "Authorise",
+                                        "Approve",
                                         style: TextStyle(
                                             color: ColorConstants.mainwhite),
                                       ),
@@ -273,7 +273,7 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                               color: ColorConstants.mainBlue,
                                               width: 2)),
                                       child: Text(
-                                        "Unauthorise",
+                                        "Decline",
                                         style: TextStyle(
                                             color: ColorConstants.mainwhite),
                                       ),

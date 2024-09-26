@@ -666,36 +666,36 @@ class _OpBillingState extends State<OpBilling> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: ColorConstants.mainBlack,
-                                    width: 1.5),
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                              ),
-                              child: Text(
-                                  "Main Stock: ${selectedMedicine!.stock}"),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: ColorConstants.mainBlack,
-                                    width: 1.5),
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                              ),
-                              child: Text(
-                                  // ---------------------------------------------------------------------------------
-                                  "Current Stock: ${int.parse(selectedMedicine!.stock ?? "") - quantity}"),
-                            ),
-                          ),
+                          // Expanded(
+                          //   child: Container(
+                          //     padding: const EdgeInsets.all(8),
+                          //     decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //           color: ColorConstants.mainBlack,
+                          //           width: 1.5),
+                          //       borderRadius: BorderRadius.circular(8),
+                          //       color: Colors.white,
+                          //     ),
+                          //     child: Text(
+                          //         "Main Stock: ${selectedMedicine!.stock}"),
+                          //   ),
+                          // ),
+                          // const SizedBox(width: 10),
+                          // Expanded(
+                          //   child: Container(
+                          //     padding: const EdgeInsets.all(8),
+                          //     decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //           color: ColorConstants.mainBlack,
+                          //           width: 1.5),
+                          //       borderRadius: BorderRadius.circular(8),
+                          //       color: Colors.white,
+                          //     ),
+                          //     child: Text(
+                          //         // ---------------------------------------------------------------------------------
+                          //         "Current Stock: ${int.parse(selectedMedicine!.stock ?? "") - quantity}"),
+                          //   ),
+                          // ),
                           Expanded(
                             child: Container(
                                 padding: const EdgeInsets.all(8),
@@ -813,36 +813,36 @@ class _OpBillingState extends State<OpBilling> {
                                 const SizedBox(width: 10),
 
                                 // ------------------------------------------------------------
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: ColorConstants.mainBlack,
-                                          width: 1.5),
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.white,
-                                    ),
-                                    child:
-                                        Text("Main stock: ${medicines.stock}"),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: ColorConstants.mainBlack,
-                                          width: 1.5),
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.white,
-                                    ),
-                                    child: Text(
-                                        "Current Stock: ${int.parse(medicines.stock!) - quantity}"),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
+                                // Expanded(
+                                //   child: Container(
+                                //     padding: const EdgeInsets.all(8),
+                                //     decoration: BoxDecoration(
+                                //       border: Border.all(
+                                //           color: ColorConstants.mainBlack,
+                                //           width: 1.5),
+                                //       borderRadius: BorderRadius.circular(8),
+                                //       color: Colors.white,
+                                //     ),
+                                //     child:
+                                //         Text("Main stock: ${medicines.stock}"),
+                                //   ),
+                                // ),
+                                // const SizedBox(width: 10),
+                                // Expanded(
+                                //   child: Container(
+                                //     padding: const EdgeInsets.all(8),
+                                //     decoration: BoxDecoration(
+                                //       border: Border.all(
+                                //           color: ColorConstants.mainBlack,
+                                //           width: 1.5),
+                                //       borderRadius: BorderRadius.circular(8),
+                                //       color: Colors.white,
+                                //     ),
+                                //     child: Text(
+                                //         "Current Stock: ${int.parse(medicines.stock!) - quantity}"),
+                                //   ),
+                                // ),
+                                // const SizedBox(width: 10),
 
                                 //--------------------------------------------------------------
                                 Expanded(

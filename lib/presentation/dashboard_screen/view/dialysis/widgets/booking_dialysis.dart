@@ -127,6 +127,8 @@ class _DialysisBookingState extends State<DialysisBooking> {
             varprovider.patientBookingModel.list?[0].lname ?? "";
         _emailController.text =
             varprovider.patientBookingModel.list?[0].email ?? "";
+        phnumbercontroller.text =
+            varprovider.patientBookingModel.list?[0].phn ?? "";
 
         doctorcontroller.text =
             varprovider.patientBookingModel.list?[0].doc ?? "";
