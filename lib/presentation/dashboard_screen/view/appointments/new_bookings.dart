@@ -335,22 +335,22 @@ class _NewBookingsState extends State<NewBookings> {
                 ),
                 const SizedBox(height: 20.0),
 
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Book your slot",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff0ea69f),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50.0, vertical: 15.0),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
+                // ElevatedButton(
+                //   onPressed: () {},
+                //   child: Text(
+                //     "Book your slot",
+                //     style: TextStyle(color: Colors.white),
+                //   ),
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: const Color(0xff0ea69f),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(8.0),
+                //     ),
+                //     padding: const EdgeInsets.symmetric(
+                //         horizontal: 50.0, vertical: 15.0),
+                //   ),
+                // ),
+                // const SizedBox(height: 20.0),
                 // DropdownButtonFormField<String>(
                 //   value: _selectedTimeSlot,
                 //   hint: const Text('Select Time Slot'),
@@ -410,7 +410,27 @@ class _NewBookingsState extends State<NewBookings> {
                 //             );
                 //           },
                 //         ),
-
+                Visibility(
+                  visible: varprovider.timeList.isNotEmpty,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      timeSlotHelp(
+                          fillColor: ColorConstants.selectedTextColor,
+                          borderColor: ColorConstants.selectedTimeSlotColor,
+                          label: "Available"),
+                      timeSlotHelp(
+                          fillColor: ColorConstants.selectedTimeSlotColor,
+                          borderColor: ColorConstants.selectedTimeSlotColor,
+                          label: "Selected"),
+                      timeSlotHelp(
+                          fillColor: ColorConstants.bookedTimeSlotColor,
+                          borderColor: ColorConstants.bookedTimeSlotColor,
+                          label: "Booked"),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20.0),
                 Wrap(
                   children: List.generate(
                     varprovider.timeList.length,
@@ -438,10 +458,12 @@ class _NewBookingsState extends State<NewBookings> {
                           child: Container(
                             padding: EdgeInsets.all(7),
                             decoration: BoxDecoration(
-                              // color:
-                              // index == selectedindex
-                              //     ? Colors.grey
-                              //     : Colors.green,
+                              color: varprovider.selectedtimeList
+                                      .contains(index.toString())
+                                  ? selectedindex == index
+                                      ? ColorConstants.selectedTimeSlotColor
+                                      : ColorConstants.transparent
+                                  : ColorConstants.bookedTimeSlotColor,
                               // color: isSelected
                               //     ? Colors.red[700] // Selected color
                               //     : Colors.green, // Default color
@@ -450,10 +472,9 @@ class _NewBookingsState extends State<NewBookings> {
                                   color: varprovider.selectedtimeList
                                           .contains(index.toString())
                                       ? selectedindex == index
-                                          ? Colors.red
-                                          : const Color.fromARGB(
-                                              255, 72, 184, 76)
-                                      : Colors.grey),
+                                          ? ColorConstants.selectedTimeSlotColor
+                                          : ColorConstants.selectedTimeSlotColor
+                                      : ColorConstants.bookedTimeSlotColor),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(7)),
                             ),
@@ -463,10 +484,9 @@ class _NewBookingsState extends State<NewBookings> {
                                   color: varprovider.selectedtimeList
                                           .contains(index.toString())
                                       ? selectedindex == index
-                                          ? Colors.red
-                                          : const Color.fromARGB(
-                                              255, 72, 184, 76)
-                                      : Colors.grey),
+                                          ? ColorConstants.selectedTextColor
+                                          : ColorConstants.selectedTimeSlotColor
+                                      : ColorConstants.selectedTextColor),
                               varprovider.timeList[index],
                             ),
                           ),
@@ -568,6 +588,27 @@ class _NewBookingsState extends State<NewBookings> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget timeSlotHelp(
+      {required Color fillColor,
+      required Color borderColor,
+      required String label}) {
+    return Row(
+      children: [
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: fillColor,
+            border: Border.all(color: borderColor, width: 2),
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(label),
+      ],
     );
   }
 }

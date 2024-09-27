@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/medicine_search.dart';
 
 class BillingPharmacyMain extends StatefulWidget {
   BillingPharmacyMain({
@@ -41,7 +40,7 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
               width: size.width * .199,
               color: ColorConstants.mainwhite,
               child: Image.asset(
-                  ImageConstants.highlandlogonobackground,
+                ImageConstants.highlandlogonobackground,
               ),
             ),
             SizedBox(height: size.height * .01),
@@ -65,7 +64,8 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
     ]);
   }
 
-  Widget buttonCall({required String label, required Widget newScreen}) {
+  Widget buttonCall(
+      {required String label, required Widget newScreen, bool? submodule}) {
     return LayoutBuilder(builder: (context, constraints) {
       return InkWell(
         onTap: () {
@@ -95,5 +95,19 @@ class _BillingPharmacyMainState extends State<BillingPharmacyMain> {
         ),
       );
     });
+  }
+
+  Widget subButtons(
+      {required String label, required Widget screen, required bool visible}) {
+    return Visibility(
+      visible: visible,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Column(
+          children: [
+            buttonCall(label: label, newScreen: screen),
+          ],
+        );
+      }),
+    );
   }
 }
