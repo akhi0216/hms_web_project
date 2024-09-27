@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ColorConstants {
@@ -21,4 +20,9 @@ class ColorConstants {
   static const Color majenta = Color(0xffbe6791);
 
   // ---
+
+  static const Color selectedTimeSlotColor = Colors.green;
+  static const Color bookedTimeSlotColor = Colors.red;
+  static const Color selectedTextColor = Colors.white;
+  static const Color transparent = Colors.transparent;
 }

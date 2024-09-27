@@ -31,7 +31,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/patients/pati
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/billing_pharmacy_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/billing_pharmacy.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/notifications/notifications_screen.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/medicine_search.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/pharmacy/billing_pharmacy/widgets/medicine_search.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/radiology/view/radiology_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/store/store_screen.dart';
 import 'package:hms_web_project/presentation/login_page/controller/login_controller.dart';
