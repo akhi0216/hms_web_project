@@ -95,21 +95,22 @@ class _NewPatientRegistrationscreenState
     callFuction();
   }
 
-  List<String?> fileNames = [];
-  List<Uint8List?> pickedFiles = [];
+  List<String> fileNames = [];
+  List<Uint8List> pickedFiles = [];
   Uint8List? profileImage;
-  Future<void> pickImage({required bool allowMultiple}) async {
+  String? profileName;
+  Future<void> pickFile({required bool allowMultiple}) async {
     // ---------------------------------------------File Picker
     // FilePickerResult? result =
     //     await FilePicker.platform.pickFiles();
     // if (result != null) {
     //   files = File(result.files.single.path!);
     // }
-    final result = await FilePicker.platform
-        .pickFiles(type: FileType.any, allowMultiple: allowMultiple);
+    if (allowMultiple == true) {
+      final result = await FilePicker.platform
+          .pickFiles(type: FileType.any, allowMultiple: allowMultiple);
 
-    if (result != null && result.files.isNotEmpty) {
-      if (allowMultiple == true) {
+      if (result != null && result.files.isNotEmpty) {
         List<Uint8List?> fileBytes = result.files
             .map(
               (path) => path.bytes,
@@ -121,54 +122,81 @@ class _NewPatientRegistrationscreenState
             )
             .toList();
         // final fileName = result.files.first.name;
-        pickedFiles = List<Uint8List?>.from(fileBytes);
-        fileNames = List<String?>.from(fileName);
+        pickedFiles = List<Uint8List>.from(fileBytes);
+        fileNames = List<String>.from(fileName);
         log(fileNames.toString());
         setState(() {
           visible = true;
         });
-      } else {
+      }
+    } else {
+      final result = await FilePicker.platform
+          .pickFiles(type: FileType.image, allowMultiple: false);
+      if (result != null && result.files.isNotEmpty) {
         final fileBytes = result.files.single.bytes;
         final fileName = result.files.single.name;
         profileImage = fileBytes;
+        profileName = fileName;
         log(fileName);
         setState(() {});
       }
-      // upload file
-      // await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
     }
+    // upload file
+    // await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
   }
 
-  Future<void> uploadImage(File image) async {
+  Future<void> uploadImage(Uint8List imageBytes, String fileName) async {
     final uri = Uri.parse("${AppUtils.baseURL}/test.php");
+
+    // Create MultipartRequest for uploading the image
     var request = http.MultipartRequest('POST', uri);
 
-    var pic = await http.MultipartFile.fromPath("image", image.path);
-    request.files.add(pic);
+    // Create MultipartFile from bytes
+    var pic = http.MultipartFile.fromBytes(
+      'image', // Field name for the image on the server
+      imageBytes, // File as byte array
+      filename: fileName, // Original file name
+    );
 
+    request.files.add(pic); // Add the file to the request
+
+    // Send the request
     var response = await request.send();
-    print(response.statusCode);
+
     if (response.statusCode == 200) {
-      print('Image Uploaded');
+      print('Image Uploaded Successfully');
     } else {
-      print('Image Not Uploaded');
+      print('Image Upload Failed: ${response.statusCode}');
     }
   }
 
-  Future<void> uploadFile(File receipt) async {
-    print("xjhhhc");
-    final uri = Uri.parse("${AppUtils.baseURL}/testdoc.php");
+  Future<void> uploadFiles(List<Uint8List> files, List<String> fileNames) async {
+    final uri = Uri.parse("${AppUtils.baseURL}/testdoc.php");  
+
     var request = http.MultipartRequest('POST', uri);
-
-    var pic = await http.MultipartFile.fromPath("receipt", receipt.path);
-    request.files.add(pic);
-
+    log("file length : ${files.length}");
+    // Loop through the selected files and add each to the request
+    for (int i = 0; i < files.length; i++) {
+      // log(i.toString());
+      var multipartFile = http.MultipartFile.fromBytes(
+        'files[]', // Field name for multiple files on server side
+        files[i], // File as bytes (Uint8List)
+        filename: fileNames[i], // Original file name
+      );
+      log("multipart file :${multipartFile.filename}");
+      request.files.add(multipartFile);
+    }
+    log("request : ${request.files}");
     var response = await request.send();
-    print(response.statusCode);
+
+    log(response.statusCode.toString());
+    log("after for loop");
+    // Send the request
+
     if (response.statusCode == 200) {
-      print('File Uploaded');
+      print('All Files Uploaded Successfully');
     } else {
-      print('File Not Uploaded');
+      print('File Upload Failed: ${response.statusCode}');
     }
   }
 
@@ -201,6 +229,8 @@ class _NewPatientRegistrationscreenState
 
       if (res.statusCode == 200) {
         print("Record inserted");
+        await uploadImage(profileImage!, profileName!);
+        await uploadFiles(pickedFiles, fileNames);
         // Navigator.pushAndRemoveUntil(
         //     context,
         //     MaterialPageRoute(builder: (context) => const HomePage()),
@@ -213,7 +243,7 @@ class _NewPatientRegistrationscreenState
         //     (route) => false);
       }
     } catch (e) {
-      log(e.toString());
+      log("exception :$e");
     }
   }
 
@@ -291,7 +321,7 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: GestureDetector(
                     onTap: () async {
-                      await pickImage(allowMultiple: false);
+                      await pickFile(allowMultiple: false);
                     },
                     child: Container(
                       height: 100, width: 100,
@@ -543,19 +573,19 @@ class _NewPatientRegistrationscreenState
                     );
                   }).toList(),
                   onChanged: (String? newValue) async {
-                    setState(() {
-                      _selectedDoctor = newValue;
-                      // doctorToBeConsultedController.text = newValue ?? '';
-                    });
+                    setState(() {});
+                    _selectedDoctor = newValue;
+                    // doctorToBeConsultedController.text = newValue ?? '';
+
                     int itemid = 0;
-                    _doctors.clear();
                     await functionprovider.doctors(_selectedDepartment);
                     for (var i = 0; i < _doctors.length; i++) {
-                      if (_doctors[i] == _selectedDoctor) {
+                      if (_doctors[i] == newValue) {
                         itemid = i;
                       }
                     }
                     _selectedDoctorEmpId = _doctors[itemid];
+                    setState(() {});
                   },
                   validator: _validateDropdown,
                 ),
@@ -792,7 +822,7 @@ class _NewPatientRegistrationscreenState
                       Text(fileNames.length > 1
                           ? "${fileNames[0]}.etc."
                           : fileNames.length > 0
-                            ? fileNames[0] ?? ""
+                              ? fileNames[0]
                               : ""),
                     ],
                   ),
@@ -801,7 +831,7 @@ class _NewPatientRegistrationscreenState
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      pickImage(allowMultiple: true);
+                      pickFile(allowMultiple: true);
                     },
                     child: Container(
                       height: 50,
@@ -863,7 +893,11 @@ class _NewPatientRegistrationscreenState
                     //       }
                     //     : null,
                     onPressed: () async {
-                      await insertrecord();
+                      // File profile = File.fromRawPath(profileImage!);
+                      // await insertrecord();
+                      log("file length : ${pickedFiles.length}");
+                      await uploadFiles(pickedFiles, fileNames);
+                      // await uploadImage(profileImage!, profileName!);
                     },
                     child: const Text(
                       'Submit',
