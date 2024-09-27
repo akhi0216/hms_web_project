@@ -3,6 +3,7 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/emergency.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 
@@ -10,6 +11,7 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/widge
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/leave_request_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/supplimentaries.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/home_dashboard/widgets/emergency_home.dart';
 
 class GeneralMain extends StatefulWidget {
   const GeneralMain({super.key});
@@ -63,6 +65,7 @@ class GeneralMainState extends State<GeneralMain> {
                         buttonCall(
                             label: "HouseKeeping", newScreen: Housekeeping()),
                         buttonCall(label: "Accounts", newScreen: DummyPage()),
+                        buttonCall(label: "Emergency", newScreen: Emergency()),
                         buttonCall(
                             label: "Concerns", newScreen: ConcernsScreen()),
                         buttonCall(

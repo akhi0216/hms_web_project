@@ -439,6 +439,38 @@ class _NewOtBookingState extends State<NewOtBooking> {
                       // ),
                       ),
                   const SizedBox(height: 20.0),
+
+                  buildTextFormField(
+                    label: 'Enter Anaesthetist',
+                    controller: _emailController,
+                    icon: Icons.email,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your address';
+                      }
+                      return null;
+                    },
+                    onTap: () {},
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+
+                  const SizedBox(height: 20.0),
+
+                  buildTextFormField(
+                    label: 'Enter ip, op or daycare number',
+                    controller: _emailController,
+                    icon: Icons.email,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your address';
+                      }
+                      return null;
+                    },
+                    onTap: () {},
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+
+                  const SizedBox(height: 20.0),
                   buildDropDownButton(
                     label: 'OT Number',
                     value: _selectedOT,

@@ -262,6 +262,17 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
                     },
                     onTap: () {},
                   ),
+                  const SizedBox(height: 20.0),
+                  buildTextFormField(
+                    label: 'Referred Doctor',
+                    readOnly: true,
+                    controller: doctorcontroller,
+                    icon: Icons.person,
+                    validate: (value) {
+                      return null;
+                    },
+                    onTap: () {},
+                  ),
                   Visibility(
                     visible: selectRadiologyType != null ? true : false,
                     child: SizedBox(height: 20.0),
