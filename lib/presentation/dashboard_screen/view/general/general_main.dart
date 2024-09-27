@@ -6,7 +6,6 @@ import 'package:hms_web_project/presentation/dashboard_screen/view/general/widge
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/emergency_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
-
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_page_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/leave_request_screen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/passing_section.dart';

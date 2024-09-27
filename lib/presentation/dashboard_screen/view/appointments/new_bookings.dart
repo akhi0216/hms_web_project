@@ -244,9 +244,9 @@ class _NewBookingsState extends State<NewBookings> {
                     ),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    suffix: TextButton(
-                        onPressed: () {},
-                        child: const Text("check availability")),
+                    // suffix: TextButton(
+                    //     onPressed: () {},
+                    //     child: const Text("check availability")),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
