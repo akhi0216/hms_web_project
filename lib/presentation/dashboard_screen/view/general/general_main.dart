@@ -67,7 +67,6 @@ class GeneralMainState extends State<GeneralMain> {
                         buttonCall(
                             label: "Emergency", newScreen: EmergencyMain()),
                         buttonCall(label: "Accounts", newScreen: DummyPage()),
-                        buttonCall(label: "Emergency", newScreen: Emergency()),
                         buttonCall(
                             label: "Concerns", newScreen: ConcernsScreen()),
                         buttonCall(

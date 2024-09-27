@@ -96,9 +96,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        // home: Dashboardsecondscreen(
-        //     userName: "Admin", empId: "009", des: "Admin"),
+        // home: SplashScreen(),
+        home: Dashboardsecondscreen(
+            userName: "Admin", empId: "009", des: "Admin"),
         // home: UserDashBoardScreen(userName: "User", empId: "001", des: "user"),
       ),
     );
