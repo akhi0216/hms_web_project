@@ -63,6 +63,7 @@ class BookingPatientController with ChangeNotifier {
     try {
       var res = await http
           .post(Uri.parse(uri), body: {"patienttimecontroller": empid});
+      log(res.body);
       timeList = List<String>.from(await jsonDecode(res.body));
       // listOfTimeList.add(List<String>.from(await jsonDecode(res.body)));
       // print(timeList);

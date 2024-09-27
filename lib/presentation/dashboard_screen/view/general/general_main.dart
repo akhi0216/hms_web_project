@@ -3,7 +3,7 @@ import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/dashboardscreen.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/concerns.dart';
-import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/emergency.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/emergency_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/housekeeping.dart';
 
@@ -64,6 +64,8 @@ class GeneralMainState extends State<GeneralMain> {
                         SizedBox(height: size.height * .02),
                         buttonCall(
                             label: "HouseKeeping", newScreen: Housekeeping()),
+                        buttonCall(
+                            label: "Emergency", newScreen: EmergencyMain()),
                         buttonCall(label: "Accounts", newScreen: DummyPage()),
                         buttonCall(label: "Emergency", newScreen: Emergency()),
                         buttonCall(

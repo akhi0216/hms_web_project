@@ -344,6 +344,28 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
                     },
                   ),
                   const SizedBox(height: 20.0),
+                  Visibility(
+                    visible:
+                        radiologyTimePickerProvider.selectedtimeList.isNotEmpty,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        timeSlotHelp(
+                            fillColor: ColorConstants.selectedTextColor,
+                            borderColor: ColorConstants.selectedTimeSlotColor,
+                            label: "Available"),
+                        timeSlotHelp(
+                            fillColor: ColorConstants.selectedTimeSlotColor,
+                            borderColor: ColorConstants.selectedTimeSlotColor,
+                            label: "Selected"),
+                        timeSlotHelp(
+                            fillColor: ColorConstants.bookedTimeSlotColor,
+                            borderColor: ColorConstants.bookedTimeSlotColor,
+                            label: "Booked"),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
                   Wrap(
                     children: List.generate(
                       picked != null && selectRadiologyType != null
@@ -374,10 +396,13 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
                             child: Container(
                               padding: EdgeInsets.all(7),
                               decoration: BoxDecoration(
-                                // color:
-                                // index == selectedindex
-                                //     ? Colors.grey
-                                //     : Colors.green,
+                                color: radiologyTimePickerProvider
+                                        .selectedtimeList
+                                        .contains(index.toString())
+                                    ? index == selectedindex
+                                        ? ColorConstants.selectedTimeSlotColor
+                                        : ColorConstants.transparent
+                                    : ColorConstants.bookedTimeSlotColor,
                                 // color: isSelected
                                 //     ? Colors.red[700] // Selected color
                                 //     : Colors.green, // Default color
@@ -387,9 +412,11 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
                                             .selectedtimeList
                                             .contains(index.toString())
                                         ? selectedindex == index
-                                            ? ColorConstants.mainRed
-                                            : ColorConstants.mainGreen
-                                        : Colors.grey),
+                                            ? ColorConstants
+                                                .selectedTimeSlotColor
+                                            : ColorConstants
+                                                .selectedTimeSlotColor
+                                        : ColorConstants.bookedTimeSlotColor),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7)),
                               ),
@@ -400,9 +427,10 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
                                             .selectedtimeList
                                             .contains(index.toString())
                                         ? selectedindex == index
-                                            ? ColorConstants.mainRed
-                                            : ColorConstants.mainGreen
-                                        : Colors.grey),
+                                            ? ColorConstants.selectedTextColor
+                                            : ColorConstants
+                                                .selectedTimeSlotColor
+                                        : ColorConstants.selectedTextColor),
                                 radiologyTimePickerProvider.timeList[index],
                               ),
                             ),
@@ -566,6 +594,27 @@ class _RadiologyBookingState extends State<RadiologyBooking> {
       items: items,
       onChanged: onChanged,
       validator: validate,
+    );
+  }
+
+  Widget timeSlotHelp(
+      {required Color fillColor,
+      required Color borderColor,
+      required String label}) {
+    return Row(
+      children: [
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: fillColor,
+            border: Border.all(color: borderColor, width: 2),
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(label),
+      ],
     );
   }
 }
