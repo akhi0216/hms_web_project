@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/drawer/admin/view/widgets/view_concerns.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/alloted_leave.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/attendance_register.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/feedback_response.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_1.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/hr_staff_details.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/leave_request.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/newstaff_auth.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/purchase_auth.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/shift_management.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/general/widgets/user_auth.dart';
 
 class HrPage extends StatefulWidget {
@@ -48,13 +50,18 @@ class _PassingSectionState extends State<HrPage> {
       {
         "title": "Attendance register",
         "itemimage": "assets/images/attendance.png",
-        "page": Hr1(),
+        "page": AttendanceRegister(),
       },
       {
-        "title": "job details",
-        "itemimage": "assets/images/web-browser.png",
-        "page": Hr1(),
+        "title": "Shift management",
+        "itemimage": "assets/images/change-management.png",
+        "page": ShiftManagement(),
       },
+      // {
+      //   "title": "job details",
+      //   "itemimage": "assets/images/web-browser.png",
+      //   "page": Hr1(),
+      // },
     ];
 
     return Stack(

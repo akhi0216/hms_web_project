@@ -486,10 +486,7 @@ class _NewPatientRegistrationscreenState
                 const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
                   value: _selectedGender,
-                  // decoration: const InputDecoration(
-                  //   labelText: 'Gender',
-                  //   border: OutlineInputBorder(),
-                  // ),
+                  
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 20),

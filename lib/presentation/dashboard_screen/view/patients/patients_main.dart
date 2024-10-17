@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hms_web_project/constants/color_constants.dart';
 import 'package:hms_web_project/constants/image_constants.dart';
+import 'package:hms_web_project/presentation/dashboard_screen/view/patients/emergency_main.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/existing_patients.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/new_patient_reg.dart';
 import 'package:hms_web_project/presentation/dashboard_screen/view/patients/patient_cards.dart';
@@ -56,6 +57,7 @@ class _PatientsMainState extends State<PatientsMain> {
                   buttonCall(
                       label: "Existing Patients",
                       newScreen: ExistingPatientsPage()),
+                  buttonCall(label: "Admission", newScreen: EmergencyMain()),
                   // buttonCall(label: "Patient cards", newScreen: PatientCards()),
                   // buttonCall(label: "Open Stock", newScreen: OpenStock()),
                   // buttonCall(label: "New Stock", newScreen: NewStock()),

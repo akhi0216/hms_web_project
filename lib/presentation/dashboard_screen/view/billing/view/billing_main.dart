@@ -53,6 +53,7 @@ class BillingMainState extends State<BillingMain> {
                   SizedBox(height: size.height * .05),
                   // buttonCall(label: "IP Billing", newScreen:IpBilling()),
                   buttonCall(label: "OP Billing", newScreen: OpBilling()),
+                  buttonCall(label: "IP Billing", newScreen: IpBilling()),
                 ],
               ),
             ],
